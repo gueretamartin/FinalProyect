@@ -1,0 +1,215 @@
+﻿@model IEnumerable<Octopus.Models.VEHICULOS>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_MARCA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_MODELO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_VERSION)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_CILINDRADAS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_COLOR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_TIPO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_KILOMETROS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_DETALLES)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_PUERTAS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_TIPOCOMBUSTIBLE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_AÑO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_PATENTE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_TIPOVEHICULO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_VIGENTE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_PRECIO_INGRESO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_CIERRE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_LLANTAS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_AIRBAG)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_AIRE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_LEVANTA_VIDRIOS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_FRENOS_ABS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_NEBLINEROS)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_ESPEJOS_AUTOM)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_ASIENTOS_CUERO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_RUEDA_AUXILIAR)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_STEREO_MODELO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VEH_STEREO_CODIGO)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CLIENTES.CLI_NOMBRE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.INGRESOS.VEH_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SUCURSALES.SUC_DESCRIP)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_MARCA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_MODELO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_VERSION)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_CILINDRADAS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_COLOR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_TIPO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_KILOMETROS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_DETALLES)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_PUERTAS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_TIPOCOMBUSTIBLE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_AÑO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_PATENTE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_TIPOVEHICULO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_VIGENTE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_PRECIO_INGRESO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_CIERRE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_LLANTAS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_AIRBAG)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_AIRE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_LEVANTA_VIDRIOS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_FRENOS_ABS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_NEBLINEROS)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_ESPEJOS_AUTOM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_ASIENTOS_CUERO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_RUEDA_AUXILIAR)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_STEREO_MODELO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VEH_STEREO_CODIGO)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CLIENTES.CLI_NOMBRE)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.INGRESOS.VEH_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SUCURSALES.SUC_DESCRIP)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.VEH_ID }) |
+                @Html.ActionLink("Details", "Details", new { id=item.VEH_ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.VEH_ID })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

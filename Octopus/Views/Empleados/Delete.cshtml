@@ -1,0 +1,128 @@
+﻿@model Octopus.Models.EMPLEADOS
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>EMPLEADOS</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_CODPOSTAL)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_CODPOSTAL)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_NOMBRE)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_NOMBRE)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_APELLIDO)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_APELLIDO)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_EMAIL)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_EMAIL)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_USER)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_USER)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_PASSWORD)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_PASSWORD)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_TIPO)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_TIPO)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_DIRECCION)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_DIRECCION)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_TELEFONO)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_TELEFONO)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_DNI)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_DNI)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.EMP_APELLIDO_NOMBRE)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.EMP_APELLIDO_NOMBRE)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.SUCURSALES.SUC_DESCRIP)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.SUCURSALES.SUC_DESCRIP)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

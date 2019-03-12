@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Octopus.Models.CLIENTES>
+
+@{
+    ViewBag.Title = "Clientes";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+}
+
+<!-- Page Content-->-->
+<section class="full-width pageContent">
+    <div>
+        <div class="mdl-tabs__tab-bar">
+            <a href="@Url.Action("Create","Clientes")" class="mdl-tabs__tab">NUEVO</a>
+            <a href="@Url.Action("List","Clientes")" class="mdl-tabs__tab" style="color: #2e6da4">LISTA</a>
+        </div>
+        <div class="mdl-tabs__panel" id="tabListClient">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            LISTA DE CLIENTES
+                        </div>
+                        <div class="full-width panel-content">
+                            @using (Html.BeginForm("List", "Clientes", FormMethod.Get))
+                            {
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchClient">
+                                        <i class="zmdi zmdi-search" onclick="Ocultar()"></i>
+                                    </label>
+                                    <div class="mdl-textfield__expandable-holder">
+                                        @Html.TextBox("searchClient", null, new { @class = "mdl-textfield__input" })
+                                    </div>
+                                    <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color:none; visibility:hidden" />
+                                </div>
+                            }
+                            <div class="mdl-list">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="mdl-list__item mdl-list__item--two-line">
+                                        <span class="mdl-list__item-primary-content">
+                                            <i class="zmdi zmdi-account mdl-list__item-avatar"></i>
+                                            @if(item.CLI_CONDICIONIVA.Equals("CONSUMIDOR_FINAL"))
+                                            { 
+                                                <span>Consumidor Final: @Html.DisplayFor(modelItem => item.CLI_CF_APELLIDO) @Html.DisplayFor(modelItem => item.CLI_CF_NOMBRE)</span>
+                                                <span class="mdl-list__item-sub-title">@Html.DisplayFor(modelItem => item.CLI_CF_TIPODOC): @Html.DisplayFor(modelItem => item.CLI_CF_DOC)</span>
+                                            }
+                                            else
+                                            {
+                                                <span>Responsable Inscripto: @Html.DisplayFor(modelItem => item.CLI_RI_RAZONSOCIAL)</span>
+                                                <span class="mdl-list__item-sub-title">Cuit: @Html.DisplayFor(modelItem => item.CLI_RI_CUIT)</span>
+                                            }
+                                        </span>
+                                        <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Clientes", new { id = item.CLI_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                    </div>
+                                    <li class="full-width divider-menu-h"></li>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

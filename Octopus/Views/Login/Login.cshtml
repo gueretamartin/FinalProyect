@@ -1,0 +1,69 @@
+﻿
+@{
+    Layout = null;
+}
+@model Octopus.Models.USUARIOS
+@{
+    ViewBag.Title = "Login";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ingresar</title>
+    <link rel="stylesheet" href="~/Css/normalize.css">
+    <link rel="stylesheet" href="~/Css/sweetalert2.css">
+    <link rel="stylesheet" href="~/Css/material.min.css">
+    <link rel="stylesheet" href="~/Css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="~/Css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="~/Css/main.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> <!-- Script para efecto al ingresar user - pass -->
+    <script>window.jQuery || document.write('<script src="~/Js/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="~/Js/material.min.js"></script>
+    <script src="~/Js/sweetalert2.min.js"></script>
+    <script src="~/Js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Js/main.js"></script>
+</head>
+<body class="cover">
+    <div class="container-login">
+        <p class="text-center" style="font-size: 80px;">
+            <i class="zmdi zmdi-account-circle"></i>
+        </p>
+        <p class="text-center text-condensedLight" style="font-size: 23px;;"><b>OCTOPUS CARS</b></p>
+
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+        {
+            <div>
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <div>
+                        @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "Text" })
+                        <label class="mdl-textfield__label" for="userName">Usuario</label>
+                        <div>@Html.ValidationMessageFor(a => a.Usuario)</div>
+                    </div>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    @Html.PasswordFor(a => a.Contraseña, new { @class = "mdl-textfield__input", @typeof = "Password" })
+                    <label class="mdl-textfield__label" for="pass">Contraseña</label>
+                    @Html.ValidationMessageFor(a => a.Contraseña)
+                </div>
+                <button id="SingIn" class="mdl-button mdl-js-button mdl-js-ripple-effect" style="color: #3F51B5; float:right;">
+                    Ingresar <i class="zmdi zmdi-mail-send"></i>
+                </button>
+                @if (@ViewBag.Message != null)
+                {
+                    <div style="border: 1px solid red">
+                        @ViewBag.Message
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</body>
+</html>

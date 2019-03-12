@@ -1,0 +1,217 @@
+﻿@using Octopus.Models
+@model Octopus.Models.CLIENTES
+@using System.Web.UI.WebControls
+
+@{
+    ViewBag.Title = "Clientes - Detalle";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+}
+
+@if (@Model.CLI_CONDICIONIVA.Equals("CONSUMIDOR_FINAL"))
+{
+    @:ShowCF();
+}
+else if (@Model.CLI_CONDICIONIVA.Equals("RESPONSABLE_INSCRIPTO"))
+{
+    @:ShowRI();
+}
+
+
+
+<!-- pageContent -->
+<section class="full-width pageContent">
+    <div>
+        <div class="mdl-tabs__tab-bar">
+            <a href="@Url.Action("Create","Clientes")" class="mdl-tabs__tab">NUEVO</a>
+            <a href="@Url.Action("List","Clientes")" class="mdl-tabs__tab">LISTA</a>
+            <a href="@Url.Action("Edit","Clientes")" class="mdl-tabs__tab" style="color: #2e6da4">DETALLES</a>
+        </div>
+        <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            DETALLES CLIENTE
+                        </div>
+                        <div class="full-width panel-content">
+                            @using (Html.BeginForm("Acciones", "Clientes", new { cli_id = @Model.CLI_ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                
+                                //Valor de variable de session CONDICION IVA
+                                <input type="hidden" value="@Session["CONDICIONIVA"]" id="myHiddenVar" />
+                                <div class="mdl-grid">
+                                    <div class="mdl-textfield mdl-js-textfield">
+                                        @Html.TextBoxFor(a => a.CLI_CONDICIONIVA, new { @class = "mdl-textfield__input", @id="CONDICIONIVA", @typeof = "text", tabindex = "3", disabled = "disabled", @Style = "color:dimgrey" })
+                                    </div>
+
+                                    <div id="PersonalesL" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">DATOS PERSONALES</h5>
+                                        <div class="mdl-textfield mdl-js-textfield">
+                                            @Html.TextBoxFor(a => a.CLI_CF_TIPODOC, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Tipo Doc</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_TIPODOC)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_NOMBRE)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_DIRECCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Dirección</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_DIRECCION)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_PROVINCIA, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "7", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Provincia</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_PROVINCIA)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_EMAIL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "9", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">E - Mail</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_EMAIL)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "11", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Teléfono</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_TELEFONO)</div>
+                                        </div>
+                                    </div>
+
+                                    <div id="PersonalesR" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">&nbsp;</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_DOC, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "2", disabled = "disabled", Value = String.Format("{0:C0}", Model.CLI_CF_DOC), @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nro Documento</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_DOC)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_APELLIDO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "4", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_APELLIDO)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_LOCALIDAD, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Localidad</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_LOCALIDAD)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_PAIS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "8", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">País</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_PAIS)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_CODPOSTAL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "10", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Código Postal</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_CODPOSTAL)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_CF_CUIL, new { @class = "mdl-textfield__input", @typeof = "string", tabindex = "12", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Cuil</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_CF_CUIL)</div>
+                                        </div>
+                                    </div>
+
+                                    <div id="EmpresaLU" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">DATOS DE LA EMPRESA</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_RI_CUIT, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CUIT</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_CUIT)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_RI_DIRECCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Dirección</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_DIRECCION)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_RI_PROVINCIA, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Provincia</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_PROVINCIA)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_RI_CODPOSTAL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "7", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Código Postal</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_CODPOSTAL)</div>
+                                        </div>
+                                    </div>
+
+                                    <div id="EmpresaRU" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">&nbsp;</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_RI_RAZONSOCIAL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Razón Social</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_RAZONSOCIAL)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_RI_LOCALIDAD, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Localidad</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_LOCALIDAD)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_RI_PAIS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">País</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_PAIS)</div>
+                                        </div>
+                                    </div>
+
+                                    <div id="EmpresaLD" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">Contacto</h5>
+                                        <div class="mdl-textfield mdl-js-textfield">
+                                            @Html.TextBoxFor(a => a.CLI_RI_CON_TIPODOC, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Tipo Doc</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_CON_TIPODOC)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_RI_CON_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_CON_NOMBRE)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_RI_CON_EMAIL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "7", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Email</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_CON_EMAIL)</div>
+                                        </div>
+                                    </div>
+
+                                    <div id="EmpresaRD" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">&nbsp;</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="height:26.1%;">
+                                            @Html.TextBoxFor(a => a.CLI_RI_CON_DOC, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Documento</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_CON_DOC)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="height:25.8%;">
+                                            @Html.TextBoxFor(a => a.CLI_RI_CON_APELLIDO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_CON_APELLIDO)</div>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLI_RI_CON_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "7", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Teléfono</label>
+                                            <div>@Html.ValidationMessageFor(a => a.CLI_RI_CON_TELEFONO)</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="text-center" id="Buttons">
+                                    <button name="Action" value="Edit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-editClient">
+                                        <i class="zmdi zmdi-edit"></i>
+                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button name="Action" value="Delete" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-deleteClient">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                    <div class="mdl-tooltip" for="btn-EditVehic">Editar Cliente</div>
+                                    <div class="mdl-tooltip" for="btn-DeleteVehic">Eliminar Cliente</div>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

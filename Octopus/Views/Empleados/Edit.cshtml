@@ -1,0 +1,133 @@
+﻿@model Octopus.Models.EMPLEADOS
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <h4>EMPLEADOS</h4>
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.EMP_ID)
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.SUC_ID, "SUC_ID", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("SUC_ID", String.Empty)
+                    @Html.ValidationMessageFor(model => model.SUC_ID)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_CODPOSTAL, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_CODPOSTAL)
+                    @Html.ValidationMessageFor(model => model.EMP_CODPOSTAL)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_NOMBRE, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_NOMBRE)
+                    @Html.ValidationMessageFor(model => model.EMP_NOMBRE)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_APELLIDO, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_APELLIDO)
+                    @Html.ValidationMessageFor(model => model.EMP_APELLIDO)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_EMAIL, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_EMAIL)
+                    @Html.ValidationMessageFor(model => model.EMP_EMAIL)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_USER, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_USER)
+                    @Html.ValidationMessageFor(model => model.EMP_USER)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_PASSWORD, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_PASSWORD)
+                    @Html.ValidationMessageFor(model => model.EMP_PASSWORD)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_TIPO, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_TIPO)
+                    @Html.ValidationMessageFor(model => model.EMP_TIPO)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_DIRECCION, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_DIRECCION)
+                    @Html.ValidationMessageFor(model => model.EMP_DIRECCION)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_TELEFONO, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_TELEFONO)
+                    @Html.ValidationMessageFor(model => model.EMP_TELEFONO)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_DNI, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_DNI)
+                    @Html.ValidationMessageFor(model => model.EMP_DNI)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.EMP_APELLIDO_NOMBRE, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EMP_APELLIDO_NOMBRE)
+                    @Html.ValidationMessageFor(model => model.EMP_APELLIDO_NOMBRE)
+                </div>
+            </div>
+    
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</body>
+</html>
