@@ -3,7 +3,7 @@ using System.Web.Optimization;
 
 namespace Octopus
 {
-    public class BundleConfig //coment
+    public class BundleConfig //comentsss
     {
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
