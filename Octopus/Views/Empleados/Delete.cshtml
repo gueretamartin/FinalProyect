@@ -1,128 +1,37 @@
-﻿@model Octopus.Models.EMPLEADOS
+﻿@using Octopus.Models
+@model Octopus.Models.EMPLEADOS
 
 @{
-    Layout = null;
+    ViewBag.Title = "Empleados - Eliminar";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
-</head>
-<body>
-    <h3>Are you sure you want to delete this?</h3>
+<section class="full-width pageContent">    
     <div>
-        <h4>EMPLEADOS</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_CODPOSTAL)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_CODPOSTAL)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_NOMBRE)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_NOMBRE)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_APELLIDO)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_APELLIDO)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_EMAIL)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_EMAIL)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_USER)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_USER)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_PASSWORD)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_PASSWORD)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_TIPO)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_TIPO)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_DIRECCION)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_DIRECCION)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_TELEFONO)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_TELEFONO)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_DNI)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_DNI)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_APELLIDO_NOMBRE)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_APELLIDO_NOMBRE)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.SUCURSALES.SUC_DESCRIP)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.SUCURSALES.SUC_DESCRIP)
-            </dd>
-    
-        </dl>
-    
-        @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
-    
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "Index")
+          <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            DETALLES EMPLEADOS
+                        </div>
+                        <div class="full-width panel-content">
+                            @using (Html.BeginForm())
+                                {
+                                
+                                  @Html.AntiForgeryToken()
+                                  @Html.ValidationSummary(true)
+                                  <p class="text-center">
+                                    <button name="Action" value="Edit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-elimClient">
+                                        <i class="zmdi zmdi-save"></i>
+                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="mdl-tooltip" for="btn-elimEmpleado">Guardar Cambios</div>
+                                </p>
+                                }
+                        </div>
+                    </div>
+                </div>
             </div>
-        }
+        </div>
     </div>
-</body>
-</html>
+</section>

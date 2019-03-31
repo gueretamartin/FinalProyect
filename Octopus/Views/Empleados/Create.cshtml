@@ -1,132 +1,105 @@
-﻿@model Octopus.Models.EMPLEADOS
+﻿@using Octopus.Models
+@model Octopus.Models.EMPLEADOS
+@using System.Web.UI.WebControls
 
 @{
-    Layout = null;
+    ViewBag.Title = "Empleados - Nuevo";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
-    @using (Html.BeginForm()) 
-    {
-        @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>EMPLEADOS</h4>
-            <hr />
-            @Html.ValidationSummary(true)
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.SUC_ID, "SUC_ID", new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("SUC_ID", String.Empty)
-                    @Html.ValidationMessageFor(model => model.SUC_ID)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_CODPOSTAL, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_CODPOSTAL)
-                    @Html.ValidationMessageFor(model => model.EMP_CODPOSTAL)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_NOMBRE, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_NOMBRE)
-                    @Html.ValidationMessageFor(model => model.EMP_NOMBRE)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_APELLIDO, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_APELLIDO)
-                    @Html.ValidationMessageFor(model => model.EMP_APELLIDO)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_EMAIL, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_EMAIL)
-                    @Html.ValidationMessageFor(model => model.EMP_EMAIL)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_USER, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_USER)
-                    @Html.ValidationMessageFor(model => model.EMP_USER)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_PASSWORD, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_PASSWORD)
-                    @Html.ValidationMessageFor(model => model.EMP_PASSWORD)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_TIPO, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_TIPO)
-                    @Html.ValidationMessageFor(model => model.EMP_TIPO)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_DIRECCION, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_DIRECCION)
-                    @Html.ValidationMessageFor(model => model.EMP_DIRECCION)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_TELEFONO, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_TELEFONO)
-                    @Html.ValidationMessageFor(model => model.EMP_TELEFONO)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_DNI, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_DNI)
-                    @Html.ValidationMessageFor(model => model.EMP_DNI)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.EMP_APELLIDO_NOMBRE, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.EMP_APELLIDO_NOMBRE)
-                    @Html.ValidationMessageFor(model => model.EMP_APELLIDO_NOMBRE)
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+<!-- pageContent -->
+<section class="full-width pageContent">
+    <div>
+        <div class="mdl-tabs__tab-bar">
+           <a href="@Url.Action("List","Empleados")" class="mdl-tabs__tab">LISTA</a>
+        </div>
+        <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            NUEVO EMPLEADO
+                        </div>
+                        <div class="full-width panel-content">
+                            @using (Html.BeginForm("Create", "Empleados", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.SUC_ID)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_APELLIDO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_NOMBRE)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_DNI)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_CODPOSTAL)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_DIRECCION)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TELEFONO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_EMAIL)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TIPO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_USER)</div>
+
+                                <div class="mdl-grid">
+                                              <div class="mdl-textfield mdl-js-textfield">
+
+                                                @Html.TextBoxFor(a => a.EMP_DNI, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DNI</label>
+
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                @Html.TextBoxFor(a => a.EMP_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                @Html.TextBoxFor(a => a.EMP_APELLIDO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                    @Html.LabelFor(a => a.SUC_ID, "Sucursal", new { @class = "mdl-textfield__input", required = "required" })
+                                                    @Html.DropDownList("SUC_ID")
+                                                    @Html.ValidationMessageFor(a => a.SUC_ID)
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                @Html.TextBoxFor(a => a.EMP_TIPO, new { @class = "mdl-textfield__input ", @typeof = "text", tabindex = "5", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Cargo</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                @Html.TextBoxFor(a => a.EMP_EMAIL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">E - Mail</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                @Html.TextBoxFor(a => a.EMP_USER, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "7", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Usuario</label>
+                                            </div>
+
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                @Html.TextBoxFor(a => a.EMP_DIRECCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "8", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Direccion</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                                                @Html.TextBoxFor(a => a.EMP_CODPOSTAL, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "9", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Código Postal</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                                                @Html.TextBoxFor(a => a.EMP_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "10" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Teléfono</label>
+                                            </div>
+                                        </div>
+                               
+                                <p  class="text-center">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin">
+                                        <i class="zmdi zmdi-account-add"></i>
+                                    </button>
+                                    <div class="mdl-tooltip" for="btn-addAdmin">Agregar Empleado</div>
+                                </p>
+                            }
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
     </div>
-</body>
-</html>
+</section>
+
+
+                               

@@ -1,108 +1,73 @@
 ﻿@model IEnumerable<Octopus.Models.EMPLEADOS>
 
-@{
-    ViewBag.Title = "Empleados";
-    Layout = "~/Views/Shared/_HomePanel.cshtml";
+@{ //if(Session["Usuario"] != null)
+    //{
+     // USUARIOS user = Session["Usuario"] as USUARIOS;
+      ViewBag.Title = "Empleados";
+      Layout = "~/Views/Shared/_HomePanel.cshtml";
+   // }
+   //else
+   //{
+     //  @Url.Action("Login","Login")
+  // }
 }
+
+
 
 <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>List</title>
-</head>
-<body>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_CODPOSTAL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_NOMBRE)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_APELLIDO)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_EMAIL)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_USER)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_PASSWORD)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_TIPO)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_DIRECCION)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_TELEFONO)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_DNI)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EMP_APELLIDO_NOMBRE)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SUCURSALES.SUC_DESCRIP)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_CODPOSTAL)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_NOMBRE)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_APELLIDO)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_EMAIL)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_USER)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_PASSWORD)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_TIPO)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_DIRECCION)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_TELEFONO)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_DNI)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EMP_APELLIDO_NOMBRE)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SUCURSALES.SUC_DESCRIP)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.EMP_ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.EMP_ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.EMP_ID })
-            </td>
-        </tr>
-    }
-    
-    </table>
-</body>
-</html>
+<!-- Page Content-->-->
+<section class="full-width pageContent">
+    <div>
+        <div class="mdl-tabs__tab-bar">
+            <a href="@Url.Action("Create","Empleados")" class="mdl-tabs__tab">NUEVO</a>
+            <a href="@Url.Action("List","Empleados")" class="mdl-tabs__tab" style="color: #2e6da4">LISTA</a>
+        </div>
+
+        <div class="mdl-tabs__panel" id="tabListEmpleados">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            LISTA DE EMPLEADOS
+                        </div>
+                        <div class="full-width panel-content">
+                            @using (Html.BeginForm("List", "Empleados", FormMethod.Get))
+                            {
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchEmpleado">
+                                        <i class="zmdi zmdi-search" onclick="Ocultar()"></i>
+                                    </label>
+                                    <div class="mdl-textfield__expandable-holder">
+                                        @Html.TextBox("searchEmpleado", null, new { @class = "mdl-textfield__input" })
+                                    </div>
+                                    <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color: none; visibility: hidden" />
+                                </div>
+                            }
+                            <div class="mdl-list">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="mdl-list__item mdl-list__item--two-line">
+                                        <span class="mdl-list__item-primary-content">
+                                            <i class="zmdi zmdi-account mdl-list__item-avatar"></i>
+                                                <span>Nombre y Apellido: @Html.DisplayFor(modelItem => item.EMP_NOMBRE), @Html.DisplayFor(modelItem => item.EMP_APELLIDO)</span><br />    
+                                             
+                                                <span class="mdl-list__item-sub-title">DNI: @Html.DisplayFor(modelItem => item.EMP_DNI)</span>
+                                        </span>
+                                      <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Empleados", new { id = item.EMP_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                    </div>
+                                    <li class="full-width divider-menu-h"></li>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+

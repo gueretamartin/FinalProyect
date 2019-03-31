@@ -1,122 +1,112 @@
-﻿@model Octopus.Models.EMPLEADOS
+﻿@using Octopus.Models
+@model Octopus.Models.EMPLEADOS
+@using System.Web.UI.WebControls
 
 @{
-    Layout = null;
+    ViewBag.Title = "Empleados - Detalle";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
 
-<!DOCTYPE html>
+<!-- pageContent -->
+<section class="full-width pageContent">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
     <div>
-        <h4>EMPLEADOS</h4>
-    	<hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_CODPOSTAL)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_CODPOSTAL)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_NOMBRE)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_NOMBRE)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_APELLIDO)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_APELLIDO)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_EMAIL)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_EMAIL)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_USER)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_USER)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_PASSWORD)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_PASSWORD)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_TIPO)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_TIPO)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_DIRECCION)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_DIRECCION)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_TELEFONO)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_TELEFONO)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_DNI)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_DNI)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EMP_APELLIDO_NOMBRE)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EMP_APELLIDO_NOMBRE)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.SUCURSALES.SUC_DESCRIP)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.SUCURSALES.SUC_DESCRIP)
-            </dd>
-    
-        </dl>
+        <div class="mdl-tabs__tab-bar">
+            <a href="@Url.Action("Create","Empleados")" class="mdl-tabs__tab">NUEVO</a>
+            <a href="@Url.Action("List", "Empleados")" class="mdl-tabs__tab">LISTA</a>
+        </div>
+        <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            DETALLE EMPLEADO
+                        </div>
+                        <div class="full-width panel-content">
+                            @using (Html.BeginForm("Acciones", "Empleados", new { emp_id = @Model.EMP_ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_DNI)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_APELLIDO_NOMBRE)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_EMAIL)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_USER)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TIPO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_DIRECCION)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TELEFONO)</div>
+                               
+                                 <div class="mdl-grid">
+                                   
+                                      <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                       
+                                         <h5 class="text-condensedLight" style="color: #2e6da4">DATOS PERSONALES</h5>
+                                        
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.EMP_APELLIDO_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido y Nombre</label>
+                                        </div>
+
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.EMP_TIPO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Cargo</label>
+                                        </div>
+
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.SUCURSALES.SUC_DESCRIP, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Sucursal</label>
+                                        </div>
+                                        
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.EMP_DNI, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DNI</label>
+                                        </div>
+                                        
+
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.EMP_EMAIL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">E-mail</label>
+                                        </div>
+
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.EMP_USER, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Usuario</label>
+                                        </div>
+
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.EMP_DIRECCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Dirección</label>
+                                        </div>
+
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.EMP_CODPOSTAL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Código Postal</label>
+                                        </div>
+
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.EMP_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Teléfono</label>
+                                        </div>
+
+                                         @Html.HiddenFor(a => a.EMP_PASSWORD, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                  
+                                    </div>
+                                </div>
+
+                                <p class="text-center">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Edit" id="btn-EditEmpleado">
+                                        <i class="zmdi zmdi-edit" style="display: inline-block; font: normal normal normal 14px/1"></i>
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Delete" id="btn-EliminarEmpleado" onclick="return confirm('¿Está seguro que quiere eliminar al Empleado @Model.EMP_APELLIDO_NOMBRE?');">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                    <div class="mdl-tooltip" >Editar Empleado</div>
+                                    <div class="mdl-tooltip" >Eliminar Empleado</div>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.EMP_ID }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+</section>

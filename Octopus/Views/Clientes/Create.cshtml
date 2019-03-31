@@ -52,7 +52,8 @@
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.CLI_RI_CON_TELEFONO)</div>
                                 
                                 <div class="mdl-grid">
-                                    <div class="mdl-textfield mdl-js-textfield">
+                                
+                                   <div class="mdl-textfield mdl-js-textfield">
                                         @Html.DropDownListFor(a => a.CLI_CONDICIONIVA, new SelectList(Enum.GetValues(typeof(Octopus.Models.CLIENTES.CLI_TIPO_IVA))), "Tipo de IVA", new { @class = "mdl-textfield__input", tabindex = "1", id = "OptionIVA" })
                                     </div>
                                     <div id="PersonalesL" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
@@ -184,7 +185,7 @@
                                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin">
                                         <i class="zmdi zmdi-account-add"></i>
                                     </button>
-                                    <div class="mdl-tooltip" for="btn-addAdmin">Agregar Cliente</div>
+                                    <div class="mdl-tooltip" for="btn-addAdmin">Agregar Empleado</div>
                                 </p>
                             }
                         </div>                                
