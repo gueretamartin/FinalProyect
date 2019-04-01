@@ -14,7 +14,7 @@ namespace Octopus.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View("~/Views/Login/Login.cshtml");
         }
 
         public ActionResult Home()

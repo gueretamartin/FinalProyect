@@ -1,0 +1,37 @@
+﻿@using Octopus.Models
+@model Octopus.Models.EMPLEADOS
+
+@{
+    ViewBag.Title = "Empleados - Eliminar";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+}
+//
+<section class="full-width pageContent">    
+    <div>
+          <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            DETALLES EMPLEADOS
+                        </div>
+                        <div class="full-width panel-content">
+                            @using (Html.BeginForm())
+                                {
+                                
+                                  @Html.AntiForgeryToken()
+                                  @Html.ValidationSummary(true)
+                                  <p class="text-center">
+                                    <button name="Action" value="Edit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-elimClient">
+                                        <i class="zmdi zmdi-save"></i>
+                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="mdl-tooltip" for="btn-elimEmpleado">Guardar Cambios</div>
+                                </p>
+                                }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
