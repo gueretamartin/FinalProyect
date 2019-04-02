@@ -1,9 +1,9 @@
-﻿@model IEnumerable<Octopus.Models.EMPLEADOS>
+﻿@model IEnumerable<Octopus.Models.SUCURSALES>
 
 @{ //if(Session["Usuario"] != null)
     //{
      // USUARIOS user = Session["Usuario"] as USUARIOS;
-      ViewBag.Title = "Empleados";
+      ViewBag.Title = "Sucursales";
       Layout = "~/Views/Shared/_HomePanel.cshtml";
    // }
    //else
@@ -20,26 +20,26 @@
 <section class="full-width pageContent">
     <div>
         <div class="mdl-tabs__tab-bar">
-            <a href="@Url.Action("Create","Empleados")" class="mdl-tabs__tab">NUEVO</a>
-            <a href="@Url.Action("List","Empleados")" class="mdl-tabs__tab" style="color: #2e6da4">LISTA</a>
+            <a href="@Url.Action("Create","Sucursales")" class="mdl-tabs__tab">NUEVO</a>
+            <a href="@Url.Action("List","Sucursales")" class="mdl-tabs__tab" style="color: #2e6da4">LISTA</a>
         </div>
 
-        <div class="mdl-tabs__panel" id="tabListEmpleados">
+        <div class="mdl-tabs__panel" id="tabListSucursales">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
                     <div class="full-width panel mdl-shadow--2dp">
                         <div class="full-width panel-tittle bg-primary text-center tittles">
-                            LISTA DE EMPLEADOS
+                            LISTA DE SUCURSALES
                         </div>
                         <div class="full-width panel-content">
-                            @using (Html.BeginForm("List", "Empleados", FormMethod.Get))
+                            @using (Html.BeginForm("List", "Sucursales", FormMethod.Get))
                             {
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchEmpleado">
+                                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchSucursal">
                                         <i class="zmdi zmdi-search" onclick="Ocultar()"></i>
                                     </label>
                                     <div class="mdl-textfield__expandable-holder">
-                                        @Html.TextBox("searchEmpleado", null, new { @class = "mdl-textfield__input" })
+                                        @Html.TextBox("searchSucursal", null, new { @class = "mdl-textfield__input" })
                                     </div>
                                     <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color: none; visibility: hidden" />
                                 </div>
@@ -50,13 +50,11 @@
                                     <div class="mdl-list__item mdl-list__item--two-line">
                                         <span class="mdl-list__item-primary-content">
                                             <i class="zmdi zmdi-account mdl-list__item-avatar"></i>
-                                                <span>Nombre y Apellido: @Html.DisplayFor(modelItem => item.EMP_NOMBRE), @Html.DisplayFor(modelItem => item.EMP_APELLIDO)</span><br />    
-                                             
-                                                <span class="mdl-list__item-sub-title">DNI: @Html.DisplayFor(modelItem => item.EMP_DNI)</span>
-                                        </span>
-                                      <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Empleados", new { id = item.EMP_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                                <span>Sucursal: @Html.DisplayFor(modelItem => item.SUC_DESCRIP)</span><br />    
+                                            </span> 
+                                      <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Sucursales", new { id = item.SUC_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
                                     </div>
-                                   
+                                    <li class="full-width divider-menu-h"></li>
 
                                 }
                             </div>

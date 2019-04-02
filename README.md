@@ -8,20 +8,20 @@ Repositorio para el Proyecto Final
 * EMPLEADOS 
 * USUARIOS 
 * VEHÍCULOS
+* SUCURSALES
 
 #ABM POR HACER
 
-* SUCURSALES
 * PRESUPUESTOS
 * RESERVAS
 * VENTAS
+* ENTREGAS? - Momento en el que se Entrega el auto, el momento de venta puede diferir del momento de entrega.
+
+
+FECHAS - No necesita ABM (Posible BI).
+
+#POR AHORA NO 
 * USOS_INTERNOS
-
-#ABM DUDAS
-
-* ENTREGAS?
-* FECHAS?
-* ORDENES_SERVICIOS? 
 * PRECIOS_RECOMENDADOS?
+* ORDENES_SERVICIOS? 
 * SERVICIOS? 
-

@@ -18,21 +18,24 @@
     <link rel="stylesheet" href="~/Css/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="~/Css/main.css">
     <link rel="stylesheet" type="text/css" href="~/Css/flaticon.css"> 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
-    <!--<script src="../Js/material.min.js"></script>-->
+   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    
+   <script src="../Js/material.min.js"></script>
     <script src="~/Js/material.min.js"></script>
     <script src="~/Js/sweetalert2.min.js"></script>
     <script src="~/Js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="~/Js/main.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.js">
+  
+
+     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.js">
     </script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js">
-    </script>
+   </script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js">
     </script>
     <script type='text/javascript' src="~/Js/Clientes.js"></script>
     <script type='text/javascript' src="~/Js/Vehiculos.js"></script>
+   <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="~/Js/main.js"></script>
 </head>
 <body>
     <!-- navBar -->
@@ -80,7 +83,7 @@
             <nav class="full-width">
                 <ul class="full-width list-unstyle menu-principal">
                     <li class="full-width">
-                        <a href="home.html" class="full-width">
+                        <a href="@Url.Action("Home","Home")" class="full-width">
                             <div class="navLateral-body-cl">
                                 <i class="zmdi zmdi-view-dashboard"></i>
                             </div>
@@ -93,7 +96,7 @@
                     <li class="full-width">
                         <a href="@Url.Action("List","Clientes")" class="full-width">
                             <div class="navLateral-body-cl">
-                                <i class="zmdi zmdi-account-box"></i>
+                                <i class="zmdi zmdi-star"></i>
                             </div>
                             <div class="navLateral-body-cr hide-on-tablet">
                                 CLIENTES
@@ -115,10 +118,21 @@
                     <li class="full-width">
                         <a href="@Url.Action("List","Empleados")" class="full-width">
                             <div class="navLateral-body-cl">
-                                <i class="zmdi zmdi-account-box"></i>
+                                <i class="zmdi zmdi-face"></i>
                             </div>
                             <div class="navLateral-body-cr hide-on-tablet">
                                 EMPLEADOS
+                            </div>
+                        </a>
+                    </li>
+                    <li class="full-width divider-menu-h"></li>
+                    <li class="full-width">
+                        <a href="@Url.Action("List","Sucursales")" class="full-width">
+                            <div class="navLateral-body-cl">
+                                <i class="zmdi zmdi-local-store"></i>
+                            </div>
+                            <div class="navLateral-body-cr hide-on-tablet">
+                                SUCURSALES
                             </div>
                         </a>
                     </li>
@@ -182,7 +196,11 @@
         </div>
     </section>
     @RenderBody()
-    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jquery") 
     @RenderSection("scripts", required: false)
+  
+       
+       
+       
 </body>
 </html>

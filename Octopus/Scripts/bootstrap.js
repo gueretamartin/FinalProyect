@@ -278,6 +278,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   // ===============
 
   $(document).on('click.bs.button.data-api', '[data-toggle^=button]', function (e) {
+      e.preventDefault()
     var $btn = $(e.target)
     if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
     $btn.button('toggle')
@@ -480,6 +481,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   // =================
 
   $(document).on('click.bs.carousel.data-api', '[data-slide], [data-slide-to]', function (e) {
+      e.preventDefault()
     var $this   = $(this), href
     var $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
     var options = $.extend({}, $target.data(), $this.data())

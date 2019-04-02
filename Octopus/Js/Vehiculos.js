@@ -1,9 +1,11 @@
 ﻿$(document).ready(function () {
+
     $('#VEH_CLI_RI_ID').hide();
     $('#VEH_CLI_CF_ID').hide();
 });
 
 $(document).ready(function () {
+
     $('#OptionIVA').change(function () {
         var ddlValue = $(this).val();
 
