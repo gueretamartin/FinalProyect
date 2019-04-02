@@ -1,0 +1,62 @@
+﻿@using Octopus.Models
+@model Octopus.Models.SUCURSALES
+@using System.Web.UI.WebControls
+
+@{
+    ViewBag.Title = "Sucursales - Detalle";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+}
+//
+<!-- pageContent -->
+<section class="full-width pageContent">
+
+    <div>
+        <div class="mdl-tabs__tab-bar">
+            <a href="@Url.Action("Create","Sucursales")" class="mdl-tabs__tab">NUEVO</a>
+            <a href="@Url.Action("List", "Sucursales")" class="mdl-tabs__tab">LISTA</a>
+        </div>
+        <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            DETALLE SUCURSAL
+                        </div>
+                        <div class="full-width panel-content">
+                            @using (Html.BeginForm("Acciones", "Sucursales", new { suc_id = @Model.SUC_ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.SUC_ID)</div>
+                                 
+                                 <div class="mdl-grid">
+                                   
+                                      <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                       
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.SUC_DESCRIP, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Sucursal</label>
+                                        </div>
+
+                                       
+                                    </div>
+                                </div>
+
+                                <p class="text-center">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Edit" id="btn-EditSucursal">
+                                        <i class="zmdi zmdi-edit" style="display: inline-block; font: normal normal normal 14px/1"></i>
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Delete" id="btn-EliminarSucursal" onclick="return confirm('¿Está seguro que quiere eliminar al Sucursal @Model.SUC_DESCRIP?');">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                    <div class="mdl-tooltip" >Editar Sucursal</div>
+                                    <div class="mdl-tooltip" >Eliminar Sucursal</div>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
