@@ -32,7 +32,7 @@ namespace Octopus.Controllers
             {
                 return HttpNotFound();
             }
-           // Session["CONDICIONIVA"] = USUARIOS.CLI_CONDICIONIVA.ToString();
+           // Session["CONDICIONIVA"] = USUARIOS.TC_ID.ToString();
             
             return View(USUARIOS);
         }
@@ -58,19 +58,19 @@ namespace Octopus.Controllers
         public ActionResult Create(USUARIOS USUARIOS)
         {
             //CHEQUEA SI EL DOCUMENTO YA FUE CARGADO
-          //  if ((db.USUARIOS.Any(c => c.CLI_CF_DOC.Equals(USUARIOS.CLI_CF_DOC)) && !String.IsNullOrEmpty(USUARIOS.CLI_CF_DOC))
+          //  if ((db.USUARIOS.Any(c => c.CLI_DOC.Equals(USUARIOS.CLI_DOC)) && !String.IsNullOrEmpty(USUARIOS.CLI_DOC))
             //    || (db.USUARIOS.Any(c => c.CLI_RI_CUIT.Equals(USUARIOS.CLI_RI_CUIT)) && !String.IsNullOrEmpty(USUARIOS.CLI_RI_CUIT)))
             
-                //ModelState.AddModelError("CLI_CF_DOC", "EL DNI/CUIT INGRESADO YA EXISTE");
+                //ModelState.AddModelError("CLI_DOC", "EL DNI/CUIT INGRESADO YA EXISTE");
                 //return View("Create");
             
 
             //CHEQUEA QUE HAYA COMPLETADO LO NECESARIO EN ALGUN TIPO DE CONDICIÓN IVA
-            //if((USUARIOS.CLI_CONDICIONIVA.Equals("CONSUMIDOR_FINAL") && (USUARIOS.CLI_CF_TIPODOC == null || USUARIOS.CLI_CF_DOC == null))
+            //if((USUARIOS.TC_ID.Equals("CONSUMIDOR_FINAL") && (USUARIOS.TD_ID == null || USUARIOS.CLI_DOC == null))
             //    ||
-            //   (USUARIOS.CLI_CONDICIONIVA.Equals("RESPONSABLE_INSCRIPTO") && USUARIOS.CLI_RI_CUIT == null))
+            //   (USUARIOS.TC_ID.Equals("RESPONSABLE_INSCRIPTO") && USUARIOS.CLI_RI_CUIT == null))
             //{
-            //    ModelState.AddModelError("CLI_CF_DOC", "DEBE REGISTRAR ALGÚN DOCUMENTO/CUIT");
+            //    ModelState.AddModelError("CLI_DOC", "DEBE REGISTRAR ALGÚN DOCUMENTO/CUIT");
             //    return View("Create");
             //}
 
@@ -103,9 +103,9 @@ namespace Octopus.Controllers
 
             //if (!String.IsNullOrEmpty(searchClient))
             //{
-            //    USUARIOS = USUARIOS.Where(c => c.CLI_CF_NOMBRE.Contains(searchClient)
+            //    USUARIOS = USUARIOS.Where(c => c.CLI_NOMBRE.Contains(searchClient)
             //        || c.CLI_CF_APELLIDO.Contains(searchClient)
-            //        || c.CLI_CF_DOC.Contains(searchClient));
+            //        || c.CLI_DOC.Contains(searchClient));
             //}
             return View(USUARIOS.ToList());
         }
@@ -151,7 +151,7 @@ namespace Octopus.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(USUARIOS USUARIOS)
         {
-           // USUARIOS.CLI_CONDICIONIVA = Session["CONDICIONIVA"].ToString();
+           // USUARIOS.TC_ID = Session["CONDICIONIVA"].ToString();
             if (ModelState.IsValid)
             {
                 db.Entry(USUARIOS).State = EntityState.Modified;

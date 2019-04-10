@@ -27,8 +27,8 @@ namespace Octopus.Models
         public string CLIENTE_APELLIDO { get; set; }
         public Nullable<int> CLIENTE_DOC { get; set; }
     
-        public virtual FECHAS FECHAS { get; set; }
         public virtual EMPLEADOS EMPLEADOS { get; set; }
+        public virtual FECHAS FECHAS { get; set; }
         public virtual VEHICULOS VEHICULOS { get; set; }
     }
 }

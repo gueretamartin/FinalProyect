@@ -54,6 +54,7 @@ namespace Octopus.Models
         public int EMP_ID { get; set; }
         public int FEC_ID { get; set; }
     
+        public virtual CLIENTES CLIENTES { get; set; }
         public virtual EMPLEADOS EMPLEADOS { get; set; }
         public virtual FECHAS FECHAS { get; set; }
         public virtual ICollection<IMAGENES> IMAGENES { get; set; }
@@ -61,6 +62,5 @@ namespace Octopus.Models
         public virtual SUCURSALES SUCURSALES { get; set; }
         public virtual ICollection<USOS_INTERNOS> USOS_INTERNOS { get; set; }
         public virtual ICollection<VENTAS> VENTAS { get; set; }
-        public virtual CLIENTES CLIENTES { get; set; }
     }
 }

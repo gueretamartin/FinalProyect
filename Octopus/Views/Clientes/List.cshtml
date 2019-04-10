@@ -9,8 +9,10 @@
 <section class="full-width pageContent">
     <div>
         <div class="mdl-tabs__tab-bar">
-            <a href="@Url.Action("Create","Clientes")" class="mdl-tabs__tab">NUEVO</a>
-            <a href="@Url.Action("List","Clientes")" class="mdl-tabs__tab" style="color: #2e6da4">LISTA</a>
+            <a href="@Url.Action("Create","Clientes")" class="mdl-tabs__tab" id="btn-Nuevo">NUEVO</a>
+            <div class="mdl-tooltip" for="btn-Nuevo">Nuevo Cliente</div>
+            <a href="@Url.Action("List","Clientes")" class="mdl-tabs__tab" style="color: #2e6da4" id="btn-Listar">LISTA</a>
+            <div class="mdl-tooltip" for="btn-Listar">Listar Clientes</div>
         </div>
         <div class="mdl-tabs__panel" id="tabListClient">
             <div class="mdl-grid">
@@ -23,9 +25,10 @@
                             @using (Html.BeginForm("List", "Clientes", FormMethod.Get))
                             {
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchClient">
-                                        <i class="zmdi zmdi-search" onclick="Ocultar()"></i>
+                                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchClient" id="btn-searchClient">
+                                        <i class="zmdi zmdi-search" onclick=""></i>
                                     </label>
+                                    <div class="mdl-tooltip" for="btn-searchClient">Buscar Clientes</div>
                                     <div class="mdl-textfield__expandable-holder">
                                         @Html.TextBox("searchClient", null, new { @class = "mdl-textfield__input" })
                                     </div>
@@ -33,26 +36,27 @@
                                 </div>
                             }
                             <div class="mdl-list">
+                                @{var cont = 0;}
                                 @foreach (var item in Model)
                                 {
                                     <div class="mdl-list__item mdl-list__item--two-line">
                                         <span class="mdl-list__item-primary-content">
                                             <i class="zmdi zmdi-account mdl-list__item-avatar"></i>
-                                            @if(item.CLI_CONDICIONIVA.Equals("CONSUMIDOR_FINAL"))
+                                            @if (item.TC_ID.Equals(1))
                                             { 
-                                                <span>Consumidor Final: @Html.DisplayFor(modelItem => item.CLI_CF_APELLIDO) @Html.DisplayFor(modelItem => item.CLI_CF_NOMBRE)</span>
-                                                <span class="mdl-list__item-sub-title">@Html.DisplayFor(modelItem => item.CLI_CF_TIPODOC): @Html.DisplayFor(modelItem => item.CLI_CF_DOC)</span>
+                                                <span><b>@Html.DisplayFor(modelItem => item.TIPO_CLIENTE.TC_DESCRIPCION): </b> @Html.DisplayFor(modelItem => item.CLI_APELLIDO) @Html.DisplayFor(modelItem => item.CLI_NOMBRE)</span>
+                                                <span class="mdl-list__item-sub-title">@Html.DisplayFor(modelItem => item.TIPO_DOCUMENTO.TD_DESCRIPCION): @Html.DisplayFor(modelItem => item.CLI_DOC)</span>
                                             }
                                             else
                                             {
-                                                <span>Responsable Inscripto: @Html.DisplayFor(modelItem => item.CLI_RI_RAZONSOCIAL)</span>
-                                                <span class="mdl-list__item-sub-title">Cuit: @Html.DisplayFor(modelItem => item.CLI_RI_CUIT)</span>
+                                                <span><b>@Html.DisplayFor(modelItem => item.TIPO_CLIENTE.TC_DESCRIPCION): </b> @Html.DisplayFor(modelItem => item.CLI_RI_RAZONSOCIAL)</span>
+                                                <span class="mdl-list__item-sub-title">CUIT: @Html.DisplayFor(modelItem => item.CLI_RI_CUIT)</span>
                                             }
                                         </span>
-                                        <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Clientes", new { id = item.CLI_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                        @{cont = cont + 1;}
+                                        <a id="btn-Detail@{@cont}" class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Clientes", new { id = item.CLI_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                        <div class="mdl-tooltip" for="btn-Detail@{@cont}">Detalle Cliente</div>
                                     </div>
-                                    <li class="full-width divider-menu-h"></li>
-
                                 }
                             </div>
                         </div>

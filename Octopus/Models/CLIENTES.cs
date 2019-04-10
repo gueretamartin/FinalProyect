@@ -22,33 +22,31 @@ namespace Octopus.Models
         }
     
         public int CLI_ID { get; set; }
-        public string CLI_CONDICIONIVA { get; set; }
-        public string CLI_CF_TIPODOC { get; set; }
-        public string CLI_CF_DOC { get; set; }
-        public string CLI_CF_CUIL { get; set; }
-        public string CLI_CF_NOMBRE { get; set; }
-        public string CLI_CF_APELLIDO { get; set; }
-        public string CLI_CF_EMAIL { get; set; }
-        public string CLI_CF_TELEFONO { get; set; }
-        public string CLI_CF_DIRECCION { get; set; }
-        public string CLI_CF_LOCALIDAD { get; set; }
-        public string CLI_CF_PROVINCIA { get; set; }
-        public string CLI_CF_PAIS { get; set; }
-        public Nullable<int> CLI_CF_CODPOSTAL { get; set; }
+        public string CLI_DOC { get; set; }
+        public string CLI_CUIL { get; set; }
+        public string CLI_NOMBRE { get; set; }
+        public string CLI_APELLIDO { get; set; }
+        public string CLI_EMAIL { get; set; }
+        public string CLI_TELEFONO { get; set; }
+        public string CLI_DIRECCION { get; set; }
+        public string CLI_LOCALIDAD { get; set; }
+        public string CLI_PROVINCIA { get; set; }
+        public string CLI_PAIS { get; set; }
         public string CLI_RI_CUIT { get; set; }
         public string CLI_RI_RAZONSOCIAL { get; set; }
         public string CLI_RI_DIRECCION { get; set; }
         public string CLI_RI_LOCALIDAD { get; set; }
         public string CLI_RI_PROVINCIA { get; set; }
         public string CLI_RI_PAIS { get; set; }
-        public Nullable<int> CLI_RI_CODPOSTAL { get; set; }
-        public string CLI_RI_CON_TIPODOC { get; set; }
-        public string CLI_RI_CON_DOC { get; set; }
-        public string CLI_RI_CON_NOMBRE { get; set; }
-        public string CLI_RI_CON_APELLIDO { get; set; }
-        public string CLI_RI_CON_EMAIL { get; set; }
-        public string CLI_RI_CON_TELEFONO { get; set; }
+        public Nullable<int> TC_ID { get; set; }
+        public string CLI_CODPOSTAL { get; set; }
+        public string CLI_RI_CODPOSTAL { get; set; }
+        public Nullable<int> TD_ID { get; set; }
+        public string CLI_RI_TELEFONO { get; set; }
+        public string CLI_RI_EMAIL { get; set; }
     
+        public virtual TIPO_CLIENTE TIPO_CLIENTE { get; set; }
+        public virtual TIPO_DOCUMENTO TIPO_DOCUMENTO { get; set; }
         public virtual ICollection<ENTREGAS> ENTREGAS { get; set; }
         public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
         public virtual ICollection<VENTAS> VENTAS { get; set; }

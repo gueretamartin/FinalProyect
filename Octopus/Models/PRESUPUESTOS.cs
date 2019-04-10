@@ -30,7 +30,7 @@ namespace Octopus.Models
         public string PRE_DETALLES { get; set; }
         public Nullable<int> PRE_VERPRESUP { get; set; }
     
-        public virtual FECHAS FECHAS { get; set; }
         public virtual EMPLEADOS EMPLEADOS { get; set; }
+        public virtual FECHAS FECHAS { get; set; }
     }
 }

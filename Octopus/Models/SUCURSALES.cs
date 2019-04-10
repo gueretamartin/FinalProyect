@@ -16,16 +16,16 @@ namespace Octopus.Models
     {
         public SUCURSALES()
         {
-            this.SERVICIOS = new HashSet<SERVICIOS>();
             this.EMPLEADOS = new HashSet<EMPLEADOS>();
+            this.SERVICIOS = new HashSet<SERVICIOS>();
             this.VEHICULOS = new HashSet<VEHICULOS>();
         }
     
         public int SUC_ID { get; set; }
         public string SUC_DESCRIP { get; set; }
     
-        public virtual ICollection<SERVICIOS> SERVICIOS { get; set; }
         public virtual ICollection<EMPLEADOS> EMPLEADOS { get; set; }
+        public virtual ICollection<SERVICIOS> SERVICIOS { get; set; }
         public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
     }
 }

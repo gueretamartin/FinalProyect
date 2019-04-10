@@ -39,20 +39,19 @@ namespace Octopus.Controllers
 
             //CONDICION IVA
             var condiciones = (from c in db.CLIENTES
-                               select c.CLI_CONDICIONIVA
-                                   ).Distinct();
-            ViewBag.CLI_CONDICIONIVA = new SelectList(condiciones);
+                               select c.TC_ID).Distinct();
+            ViewBag.TC_ID = new SelectList(condiciones);
 
             //CLIENTES EMPRESAS
             var empresas = (from c in db.CLIENTES
-                            where c.CLI_CONDICIONIVA == "RESPONSABLE_INSCRIPTO"
+                            where c.TC_ID == 2
                                 select c.CLI_RI_CUIT).Distinct();
             ViewBag.CLI_RI_ID = new SelectList(empresas);
 
             //CLIENTES FINALES
             var consumidores = (from c in db.CLIENTES
-                            where c.CLI_CONDICIONIVA == "CONSUMIDOR_FINAL"
-                            select c.CLI_CF_DOC).Distinct();
+                            where c.TC_ID == 1
+                            select c.CLI_DOC).Distinct();
             ViewBag.CLI_CF_ID = new SelectList(consumidores);
 
             return View();
@@ -63,14 +62,14 @@ namespace Octopus.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create( VEHICULOS vehiculos, DateTime fecha, HttpPostedFileBase image1, HttpPostedFileBase image2, HttpPostedFileBase image3, 
-                            HttpPostedFileBase image4, string CLI_RI_ID, string CLI_CF_ID, string CLI_CONDICIONIVA)
+                            HttpPostedFileBase image4, string CLI_RI_ID, string CLI_CF_ID, string TC_ID)
         {
             // VALIDA TIPO DE CLIENTE Y DNI/CUIT
-            if (CLI_CONDICIONIVA.Equals("CONSUMIDOR_FINAL") && !String.IsNullOrEmpty(CLI_CF_ID))
+            if (TC_ID.Equals("CONSUMIDOR_FINAL") && !String.IsNullOrEmpty(CLI_CF_ID))
             {
-                vehiculos.CLI_ID = (from c in db.CLIENTES where c.CLI_CF_DOC == CLI_CF_ID select c.CLI_ID).FirstOrDefault();
+                vehiculos.CLI_ID = (from c in db.CLIENTES where c.CLI_DOC == CLI_CF_ID select c.CLI_ID).FirstOrDefault();
             }
-            else if(CLI_CONDICIONIVA.Equals("RESPONSABLE_INSCRIPTO") && !String.IsNullOrEmpty(CLI_RI_ID))
+            else if(TC_ID.Equals("RESPONSABLE_INSCRIPTO") && !String.IsNullOrEmpty(CLI_RI_ID))
             {
                 vehiculos.CLI_ID = (from c in db.CLIENTES where c.CLI_RI_CUIT == CLI_RI_ID select c.CLI_ID).FirstOrDefault();
             }
@@ -82,20 +81,20 @@ namespace Octopus.Controllers
 
                 //CONDICION IVA
                 var condiciones = (from c in db.CLIENTES
-                                   select c.CLI_CONDICIONIVA
+                                   select c.TC_ID
                                        ).Distinct();
-                ViewBag.CLI_CONDICIONIVA = new SelectList(condiciones);
+                ViewBag.TC_ID = new SelectList(condiciones);
 
                 //CLIENTES EMPRESAS
                 var empresas = (from c in db.CLIENTES
-                                where c.CLI_CONDICIONIVA == "RESPONSABLE_INSCRIPTO"
+                                where c.TC_ID == 2
                                 select c.CLI_RI_CUIT).Distinct();
                 ViewBag.CLI_RI_ID = new SelectList(empresas);
 
                 //CLIENTES FINALES
                 var consumidores = (from c in db.CLIENTES
-                                    where c.CLI_CONDICIONIVA == "CONSUMIDOR_FINAL"
-                                    select c.CLI_CF_DOC).Distinct();
+                                    where c.TC_ID == 1
+                                    select c.CLI_DOC).Distinct();
                 ViewBag.CLI_CF_ID = new SelectList(consumidores);
                 ModelState.AddModelError("CLI_ID", "LOS CAMPOS 'CONDICION IVA' Y 'DNI/CUIT' SON OBLIGATORIOS");
                 return View("Create");

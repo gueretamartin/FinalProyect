@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ec06125702bb41bb88706bbfc69ac5a0" Name="Diagram1">
+        <EntityTypeShape EntityType="OctopusModel.CLIENTES" Width="1.5" PointX="6.75" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.EMPLEADOS" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.ENTREGAS" Width="1.5" PointX="3" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.FECHAS" Width="1.5" PointX="0.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.IMAGENES" Width="1.5" PointX="11.25" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.PRESUPUESTOS" Width="1.5" PointX="6" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.RESERVAS" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.SERVICIOS" Width="1.5" PointX="3.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.SUCURSALES" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.TIPO_CLIENTE" Width="1.5" PointX="4.5" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.TIPO_DOCUMENTO" Width="1.5" PointX="4.5" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.USOS_INTERNOS" Width="1.5" PointX="11.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.USUARIOS" Width="1.5" PointX="3.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.VEHICULOS" Width="1.5" PointX="9" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.VENTAS" Width="1.5" PointX="14.25" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="OctopusModel.FK_CLIENTES_TIPO_CLIENTE" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_CLIENTES_TIPO_DOCUMENTO" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_ENTREGAS_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_VEHICULOS_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_VENTAS_CLIENTES" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_EMPLEADOS_SUCURSALES" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_PRESUPUESTOS_EMPLEADOS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_RESERVAS_EMPLEADOS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_USOS_INTERNOS_EMPLEADOS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_VEHICULOS_EMPLEADOS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_VENTAS_EMPLEADOS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_ENTREGAS_FECHAS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_ENTREGAS_VENTAS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_PRESUPUESTOS_FECHAS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_RESERVAS_FECHAS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_VEHICULOS_FECHAS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_VENTAS_FECHAS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_IMAGENES_VEHICULOS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_RESERVAS_VEHICULOS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_SERVICIOS_SUCURSALES" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_VEHICULOS_SUCURSALES" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_USOS_INTERNOS_VEHICULOS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_VENTAS_VEHICULOS" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

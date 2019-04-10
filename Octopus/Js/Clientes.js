@@ -34,7 +34,7 @@ $(document).ready(function () {
     $('#OptionIVA').change(function () {
         var ddlValue = $(this).val();
 
-        if (ddlValue == "CONSUMIDOR_FINAL") {
+        if (ddlValue == 1) {
             // show time div, hide fromTo div
             $('#PersonalesL').show();
             $('#PersonalesR').show();
@@ -44,7 +44,7 @@ $(document).ready(function () {
             $('#EmpresaRD').hide();
             $('#Buttons').show();
         }
-        else if (ddlValue == "RESPONSABLE_INSCRIPTO") {
+        else if (ddlValue == 2) {
             // show fromTo div, hide time div
             $('#PersonalesL').hide();
             $('#PersonalesR').hide();
@@ -72,7 +72,7 @@ $(window).load(function () {
     //var condicion = '@Session["CONDICIONIVA"]';
     var condicion = $('#myHiddenVar').val();
 
-    if (condicion == "CONSUMIDOR_FINAL")
+    if (condicion == 1)
     {
         $('#PersonalesL').show();
         $('#PersonalesR').show();
@@ -82,7 +82,7 @@ $(window).load(function () {
         $('#EmpresaRD').hide();
         $('#Buttons').show();
     }
-    else if (condicion == "RESPONSABLE_INSCRIPTO")
+    else if (condicion == 2)
     {
         $('#PersonalesL').hide();
         $('#PersonalesR').hide();

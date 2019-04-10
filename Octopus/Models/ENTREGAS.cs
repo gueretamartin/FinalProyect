@@ -20,8 +20,8 @@ namespace Octopus.Models
         public Nullable<int> VEN_ID { get; set; }
         public Nullable<int> CLI_ID { get; set; }
     
+        public virtual CLIENTES CLIENTES { get; set; }
         public virtual FECHAS FECHAS { get; set; }
         public virtual VENTAS VENTAS { get; set; }
-        public virtual CLIENTES CLIENTES { get; set; }
     }
 }

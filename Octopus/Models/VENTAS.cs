@@ -26,10 +26,10 @@ namespace Octopus.Models
         public Nullable<int> EMP_ID { get; set; }
         public Nullable<int> MONTO { get; set; }
     
+        public virtual CLIENTES CLIENTES { get; set; }
+        public virtual EMPLEADOS EMPLEADOS { get; set; }
         public virtual ICollection<ENTREGAS> ENTREGAS { get; set; }
         public virtual FECHAS FECHAS { get; set; }
-        public virtual EMPLEADOS EMPLEADOS { get; set; }
         public virtual VEHICULOS VEHICULOS { get; set; }
-        public virtual CLIENTES CLIENTES { get; set; }
     }
 }
