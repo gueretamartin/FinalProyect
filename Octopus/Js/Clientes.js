@@ -1,8 +1,8 @@
 ﻿
 //var condicion = sessionStorage.getItem("CONDICIONIVA");
 
-$(document).ready(function () {
-
+$(document).ready(function (e) {
+   
     $('#PersonalesL').hide();
     $('#PersonalesR').hide();
     $('#EmpresaLU').hide();
