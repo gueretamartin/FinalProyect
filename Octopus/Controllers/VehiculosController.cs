@@ -15,9 +15,32 @@ namespace Octopus.Controllers
     {
         private OctopusEntities db = new OctopusEntities();
 
+        // GET: /Vehiculos/List?searchVehicle=[Parámetro]
+        // LEVANTA LA VISTA DE LISTADO DE VEHICULOS O LISTA DE VEHICULOS QUE CONTIENEN CON EL PARÁMETRO PASADO
+        public ActionResult List(string searchVehicle)
+        {
+            ViewBag.VW_MAR = new SelectList(db.VW_MARCAS, "VW_ID", "VW_DESCRIPCION");
+
+            var vehiculos = from v in db.VEHICULOS where v.ES_ID == 1 && v.VEH_VIGENTE == true select v;
+            
+            if (!String.IsNullOrEmpty(searchVehicle))
+            {
+                vehiculos = vehiculos.Where(v => v.MARCAS.MAR_DESCRIPCION.Contains(searchVehicle)
+                    || v.VEH_MODELO.Contains(searchVehicle)
+                    || v.VEH_PATENTE.Contains(searchVehicle)
+                    || v.TIPO_COMBUSTIBLES.TCOM_DESCRIPCION.Contains(searchVehicle)
+                    || v.SUCURSALES.SUC_DESCRIP.Contains(searchVehicle)
+                );
+            }
+
+
+            return View(vehiculos.ToList());
+        }
+
         // GET: /Vehiculos/
 
         // GET: /Vehiculos/Details/5
+        /*
         public ActionResult Details(int veh_id)
         {
             VEHICULOS vehiculo = db.VEHICULOS.Include(v => v.CLIENTES).
@@ -28,8 +51,10 @@ namespace Octopus.Controllers
                                             SingleOrDefault(x => x.VEH_ID == veh_id);
             return View(vehiculo);
         }
-
+        */
+          
         // GET: /Vehiculos/Create
+        /*
         public ActionResult Create()
         {
             //ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_ID");
@@ -123,6 +148,7 @@ namespace Octopus.Controllers
 
             return RedirectToAction("List");
         }
+        */
 
         public void LoadImage(HttpPostedFileBase imagen, VEHICULOS vehiculo)
         {
@@ -140,20 +166,6 @@ namespace Octopus.Controllers
             BinaryReader reader = new BinaryReader(imagen.InputStream);
             imageBytes = reader.ReadBytes((int)imagen.ContentLength);
             return imageBytes;
-        }
-
-        public ActionResult List(string searchVehicle)
-        {
-            var vehiculos = db.VEHICULOS.Include(v => v.CLIENTES).Include(v => v.EMPLEADOS).Include(v => v.FECHAS).Include(v => v.SUCURSALES);
-            if (!String.IsNullOrEmpty(searchVehicle))
-            {
-                vehiculos = vehiculos.Where(v => v.VEH_PATENTE.Contains(searchVehicle)
-                    || v.VEH_MARCA.Contains(searchVehicle)
-                    || v.VEH_MODELO.Contains(searchVehicle));
-            }
-  
-
-            return View(vehiculos.ToList());
         }
 
         //Trae la primer imagen
@@ -203,6 +215,7 @@ namespace Octopus.Controllers
 
 
         // GET: /Vehiculos/Edit/5
+        /*
         public ActionResult Edit(int veh_id)
         {
             try
@@ -258,10 +271,12 @@ namespace Octopus.Controllers
 
             return RedirectToAction("List");
         }
+        */
 
         // POST: /Vehiculos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        
         public ActionResult Delete(int veh_id)
         {
             VEHICULOS vehiculo = db.VEHICULOS.Find(veh_id);
@@ -269,7 +284,7 @@ namespace Octopus.Controllers
             db.SaveChanges();
             return RedirectToAction("List");
         }
-
+        
         [HttpPost]
         public ActionResult Acciones(int veh_id, string Action)
         {
@@ -280,6 +295,7 @@ namespace Octopus.Controllers
                 {
                     return RedirectToAction("Edit", new { veh_id = veh_id });
                 }
+                    
                 else if (Action == "Delete")
                 {
                     return Delete(veh_id);

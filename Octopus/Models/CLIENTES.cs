@@ -44,7 +44,10 @@ namespace Octopus.Models
         public Nullable<int> TD_ID { get; set; }
         public string CLI_RI_TELEFONO { get; set; }
         public string CLI_RI_EMAIL { get; set; }
+        public Nullable<int> ES_ID { get; set; }
+        public Nullable<System.DateTime> CLI_ALTA { get; set; }
     
+        public virtual ESTADOS ESTADOS { get; set; }
         public virtual TIPO_CLIENTE TIPO_CLIENTE { get; set; }
         public virtual TIPO_DOCUMENTO TIPO_DOCUMENTO { get; set; }
         public virtual ICollection<ENTREGAS> ENTREGAS { get; set; }

@@ -3,32 +3,38 @@
 
 $(document).ready(function (e) {
    
-    $('#PersonalesL').hide();
-    $('#PersonalesR').hide();
-    $('#EmpresaLU').hide();
-    $('#EmpresaLD').hide();
-    $('#EmpresaRU').hide();
-    $('#EmpresaRD').hide();
-    $('#Buttons').hide();
+    $('#RESPONSABLEINSCRIPTOL').hide();
+    $('#RESPONSABLEINSCRIPTOR').hide();
+    $('#CONSUMIDORFINALCUILLT').hide();
+    $('#CONSUMIDORFINALCUILRT').hide();
+    $('#CONSUMIDORFINALCUILL').hide();
+    $('#CONSUMIDORFINALCUILR').hide();
+    $('#CONSUMIDORFINALL').hide();
+    $('#CONSUMIDORFINALR').hide();
+    $('#BUTTONS').hide();
 
     function ShowCF() {
-        $('#PersonalesL').show();
-        $('#PersonalesR').show();
-        $('#EmpresaLU').hide();
-        $('#EmpresaLD').hide();
-        $('#EmpresaRU').hide();
-        $('#EmpresaRD').hide();
-        $('#Buttons').show();
+        $('#RESPONSABLEINSCRIPTOL').hide();
+        $('#RESPONSABLEINSCRIPTOR').hide();
+        $('#CONSUMIDORFINALCUILLT').show();
+        $('#CONSUMIDORFINALCUILRT').show();
+        $('#CONSUMIDORFINALCUILL').show();
+        $('#CONSUMIDORFINALCUILR').show();
+        $('#CONSUMIDORFINALL').show();
+        $('#CONSUMIDORFINALR').show();
+        $('#BUTTONS').show();
     }
 
     function ShowRI() {
-        $('#PersonalesL').hide();
-        $('#PersonalesR').hide();
-        $('#EmpresaLU').show();
-        $('#EmpresaLD').show();
-        $('#EmpresaRU').show();
-        $('#EmpresaRD').show();
-        $('#Buttons').show();
+        $('#RESPONSABLEINSCRIPTOL').show();
+        $('#RESPONSABLEINSCRIPTOR').show();
+        $('#CONSUMIDORFINALCUILLT').show();
+        $('#CONSUMIDORFINALCUILRT').show();
+        $('#CONSUMIDORFINALCIULL').hide();
+        $('#CONSUMIDORFINALCUILR').hide();
+        $('#CONSUMIDORFINALL').show();
+        $('#CONSUMIDORFINALR').show();
+        $('#BUTTONS').show();
     }
 
     $('#OptionIVA').change(function () {
@@ -36,32 +42,38 @@ $(document).ready(function (e) {
 
         if (ddlValue == 1) {
             // show time div, hide fromTo div
-            $('#PersonalesL').show();
-            $('#PersonalesR').show();
-            $('#EmpresaLU').hide();
-            $('#EmpresaLD').hide();
-            $('#EmpresaRU').hide();
-            $('#EmpresaRD').hide();
-            $('#Buttons').show();
+            $('#RESPONSABLEINSCRIPTOL').hide();
+            $('#RESPONSABLEINSCRIPTOR').hide();
+            $('#CONSUMIDORFINALCUILLT').show();
+            $('#CONSUMIDORFINALCUILRT').show();
+            $('#CONSUMIDORFINALCUILL').show();
+            $('#CONSUMIDORFINALCUILR').show();
+            $('#CONSUMIDORFINALL').show();
+            $('#CONSUMIDORFINALR').show();
+            $('#BUTTONS').show();
         }
         else if (ddlValue == 2) {
             // show fromTo div, hide time div
-            $('#PersonalesL').hide();
-            $('#PersonalesR').hide();
-            $('#EmpresaLU').show();
-            $('#EmpresaLD').show();
-            $('#EmpresaRU').show();
-            $('#EmpresaRD').show();
-            $('#Buttons').show();
+            $('#RESPONSABLEINSCRIPTOL').show();
+            $('#RESPONSABLEINSCRIPTOR').show();
+            $('#CONSUMIDORFINALCUILLT').show();
+            $('#CONSUMIDORFINALCUILRT').show();
+            $('#CONSUMIDORFINALCUILL').hide();
+            $('#CONSUMIDORFINALCUILR').hide();
+            $('#CONSUMIDORFINALL').show();
+            $('#CONSUMIDORFINALR').show();
+            $('#BUTTONS').show();
         }
         else {
-            $('#PersonalesL').hide();
-            $('#PersonalesR').hide();
-            $('#EmpresaLU').hide();
-            $('#EmpresaLD').hide();
-            $('#EmpresaRU').hide();
-            $('#EmpresaRD').hide();
-            $('#Buttons').hide();
+            $('#RESPONSABLEINSCRIPTOL').hide();
+            $('#RESPONSABLEINSCRIPTOR').hide();
+            $('#CONSUMIDORFINALCUILLT').hide();
+            $('#CONSUMIDORFINALCUILRT').hide();
+            $('#CONSUMIDORFINALCUILL').hide();
+            $('#CONSUMIDORFINALCUILR').hide();
+            $('#CONSUMIDORFINALL').hide();
+            $('#CONSUMIDORFINALR').hide();
+            $('#BUTTONS').hide();
         }
     });
 });
@@ -74,35 +86,40 @@ $(window).load(function () {
 
     if (condicion == 1)
     {
-        $('#PersonalesL').show();
-        $('#PersonalesR').show();
-        $('#EmpresaLU').hide();
-        $('#EmpresaLD').hide();
-        $('#EmpresaRU').hide();
-        $('#EmpresaRD').hide();
-        $('#Buttons').show();
+        $('#RESPONSABLEINSCRIPTOL').hide();
+        $('#RESPONSABLEINSCRIPTOR').hide();
+        $('#CONSUMIDORFINALCUILLT').show();
+        $('#CONSUMIDORFINALCUILRT').show();
+        $('#CONSUMIDORFINALCUILL').show();
+        $('#CONSUMIDORFINALCUILR').show();
+        $('#CONSUMIDORFINALL').show();
+        $('#CONSUMIDORFINALR').show();
+        $('#BUTTONS').show();
     }
     else if (condicion == 2)
     {
-        $('#PersonalesL').hide();
-        $('#PersonalesR').hide();
-        $('#EmpresaLU').show();
-        $('#EmpresaLD').show();
-        $('#EmpresaRU').show();
-        $('#EmpresaRD').show();
-        $('#Buttons').show();
+        $('#RESPONSABLEINSCRIPTOL').show();
+        $('#RESPONSABLEINSCRIPTOR').show();
+        $('#CONSUMIDORFINALCUILLT').show();
+        $('#CONSUMIDORFINALCUILRT').show();
+        $('#CONSUMIDORFINALCUILL').hide();
+        $('#CONSUMIDORFINALCUILR').hide();
+        $('#CONSUMIDORFINALL').show();
+        $('#CONSUMIDORFINALR').show();
+        $('#BUTTONS').show();
     }
     else 
     {
-        $('#PersonalesL').hide();
-        $('#PersonalesR').hide();
-        $('#EmpresaLU').hide();
-        $('#EmpresaLD').hide();
-        $('#EmpresaRU').hide();
-        $('#EmpresaRD').hide();
-        $('#Buttons').hide();
+        $('#RESPONSABLEINSCRIPTOL').hide();
+        $('#RESPONSABLEINSCRIPTOR').hide();
+        $('#CONSUMIDORFINALCUILLT').hide();
+        $('#CONSUMIDORFINALCUILRT').hide();
+        $('#CONSUMIDORFINALCUILL').hide();
+        $('#CONSUMIDORFINALCUILR').hide();
+        $('#CONSUMIDORFINALL').hide();
+        $('#CONSUMIDORFINALR').hide();
+        $('#BUTTONS').hide();
     }
-
 }
 );
 

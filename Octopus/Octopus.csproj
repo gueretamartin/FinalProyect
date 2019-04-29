@@ -179,10 +179,19 @@
     <Compile Include="Models\ENTREGAS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ESTADOS.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FECHAS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IMAGENES.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MARCAS.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MONEDAS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Octopus.Context.cs">
@@ -217,7 +226,13 @@
     <Compile Include="Models\TIPO_CLIENTE.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TIPO_COMBUSTIBLES.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TIPO_DOCUMENTO.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TIPO_VEHICULOS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USOS_INTERNOS.cs">
@@ -230,6 +245,9 @@
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VENTAS.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VW_MARCAS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -338,7 +356,6 @@
     <Content Include="Views\Vehiculos\Delete.cshtml" />
     <Content Include="Views\Vehiculos\Details.cshtml" />
     <Content Include="Views\Vehiculos\Edit.cshtml" />
-    <Content Include="Views\Vehiculos\Index.cshtml" />
     <Content Include="Views\Vehiculos\List.cshtml" />
     <Content Include="Views\Empleados\Create.cshtml" />
     <Content Include="Views\Empleados\Delete.cshtml" />

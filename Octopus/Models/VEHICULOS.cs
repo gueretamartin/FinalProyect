@@ -16,51 +16,54 @@ namespace Octopus.Models
     {
         public VEHICULOS()
         {
-            this.IMAGENES = new HashSet<IMAGENES>();
-            this.RESERVAS = new HashSet<RESERVAS>();
-            this.USOS_INTERNOS = new HashSet<USOS_INTERNOS>();
             this.VENTAS = new HashSet<VENTAS>();
         }
     
         public int VEH_ID { get; set; }
         public Nullable<int> SUC_ID { get; set; }
-        public string VEH_MARCA { get; set; }
         public string VEH_MODELO { get; set; }
         public string VEH_VERSION { get; set; }
-        public Nullable<int> VEH_CILINDRADAS { get; set; }
+        public string VEH_CILINDRADA { get; set; }
         public string VEH_COLOR { get; set; }
-        public Nullable<int> VEH_KILOMETROS { get; set; }
+        public string VEH_KILOMETROS { get; set; }
         public string VEH_DETALLES { get; set; }
         public string VEH_PUERTAS { get; set; }
-        public string VEH_TIPOCOMBUSTIBLE { get; set; }
-        public Nullable<int> VEH_AÑO { get; set; }
+        public Nullable<int> TCOM_ID { get; set; }
+        public string VEH_AÑO { get; set; }
         public string VEH_PATENTE { get; set; }
-        public string VEH_TIPOVEHICULO { get; set; }
+        public Nullable<int> TV_ID { get; set; }
         public Nullable<bool> VEH_VIGENTE { get; set; }
         public Nullable<int> VEH_PRECIO_INGRESO { get; set; }
-        public bool VEH_CIERRE { get; set; }
-        public bool VEH_LLANTAS { get; set; }
-        public bool VEH_AIRBAG { get; set; }
-        public bool VEH_AIRE { get; set; }
-        public bool VEH_LEVANTA_VIDRIOS { get; set; }
-        public bool VEH_FRENOS_ABS { get; set; }
-        public bool VEH_NEBLINEROS { get; set; }
-        public bool VEH_ESPEJOS_AUTOM { get; set; }
-        public bool VEH_ASIENTOS_CUERO { get; set; }
-        public bool VEH_RUEDA_AUXILIAR { get; set; }
+        public Nullable<bool> VEH_CIERRE { get; set; }
+        public Nullable<bool> VEH_LLANTAS { get; set; }
+        public Nullable<bool> VEH_AIRBAG { get; set; }
+        public Nullable<bool> VEH_AIRE { get; set; }
+        public Nullable<bool> VEH_LEVANTA_VIDRIOS { get; set; }
+        public Nullable<bool> VEH_FRENOS_ABS { get; set; }
+        public Nullable<bool> VEH_NEBLINEROS { get; set; }
+        public Nullable<bool> VEH_ESPEJOS_AUTOM { get; set; }
+        public Nullable<bool> VEH_ASIENTOS_CUERO { get; set; }
+        public Nullable<bool> VEH_RUEDA_AUXILIAR { get; set; }
         public string VEH_STEREO_MODELO { get; set; }
         public string VEH_STEREO_CODIGO { get; set; }
-        public int CLI_ID { get; set; }
-        public int EMP_ID { get; set; }
-        public int FEC_ID { get; set; }
+        public Nullable<int> CLI_ID { get; set; }
+        public Nullable<int> EMP_ID { get; set; }
+        public Nullable<int> FEC_ID { get; set; }
+        public Nullable<int> MAR_ID { get; set; }
+        public Nullable<int> IMG_ID { get; set; }
+        public Nullable<int> ES_ID { get; set; }
+        public Nullable<int> MON_ID { get; set; }
     
         public virtual CLIENTES CLIENTES { get; set; }
         public virtual EMPLEADOS EMPLEADOS { get; set; }
+        public virtual ESTADOS ESTADOS { get; set; }
         public virtual FECHAS FECHAS { get; set; }
-        public virtual ICollection<IMAGENES> IMAGENES { get; set; }
-        public virtual ICollection<RESERVAS> RESERVAS { get; set; }
+        public virtual IMAGENES IMAGENES { get; set; }
+        public virtual MARCAS MARCAS { get; set; }
+        public virtual MONEDAS MONEDAS { get; set; }
         public virtual SUCURSALES SUCURSALES { get; set; }
-        public virtual ICollection<USOS_INTERNOS> USOS_INTERNOS { get; set; }
+        public virtual TIPO_COMBUSTIBLES TIPO_COMBUSTIBLES { get; set; }
+        public virtual TIPO_VEHICULOS TIPO_VEHICULOS { get; set; }
         public virtual ICollection<VENTAS> VENTAS { get; set; }
     }
 }

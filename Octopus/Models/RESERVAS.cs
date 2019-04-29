@@ -29,6 +29,5 @@ namespace Octopus.Models
     
         public virtual EMPLEADOS EMPLEADOS { get; set; }
         public virtual FECHAS FECHAS { get; set; }
-        public virtual VEHICULOS VEHICULOS { get; set; }
     }
 }

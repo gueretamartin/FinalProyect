@@ -78,7 +78,6 @@ namespace Octopus.Models
         [StringLength(50, ErrorMessage = "PAÍS: Se aceptan hasta 50 letras.")]
         string CLI_RI_PAIS { get; set; }
 
-        [Required(ErrorMessage = "TIPO CLIENTE: Requerido.")]
         Nullable<int> TC_ID { get; set; }
 
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "CÓDIGO POSTAL: Sólo se permiten números.")]
@@ -93,18 +92,29 @@ namespace Octopus.Models
 
         Nullable<int> TD_ID { get; set; }
 
-        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "TELÉFONO CONTACTO: Sólo se permiten números.")]
-        [StringLength(15, ErrorMessage = "TELÉFONO CONTACTO: Se aceptan hasta 15 números.")]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "TELÉFONO: Sólo se permiten números.")]
+        [StringLength(15, ErrorMessage = "TELÉFONO: Se aceptan hasta 15 números.")]
         string CLI_RI_TELEFONO { get; set; }
 
-        [EmailAddress(ErrorMessage = "E - MAIL CONTACTO: Formato de correo electrónico incorrecto.")]
-        [StringLength(100, ErrorMessage = "E - MAIL CONTACTO: Se aceptan hasta 100 letras")]
+        [EmailAddress(ErrorMessage = "E - MAIL: Formato de correo electrónico incorrecto.")]
+        [StringLength(100, ErrorMessage = "E - MAIL: Se aceptan hasta 100 letras")]
         string CLI_RI_EMAIL { get; set; }
+
+        Nullable<int> ES_ID { get; set; }
+
+        Nullable<DateTime> CLI_ALTA { get; set; }
     }
     
     [MetadataType(typeof(IClientesMetadata))]
     public partial class CLIENTES : IClientesMetadata
     {
+        public string CLI_APELLIDO_NOMBRE
+        {
+            get
+            {
+                return String.Format(CLI_APELLIDO + " " + CLI_NOMBRE);
+            }
+        }
 
         public string CLI_LOCALIDAD_JERARQUIA
         {

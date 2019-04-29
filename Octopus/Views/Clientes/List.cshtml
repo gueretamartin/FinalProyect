@@ -14,6 +14,7 @@
             <a href="@Url.Action("List","Clientes")" class="mdl-tabs__tab" style="color: #2e6da4" id="btn-Listar">LISTA</a>
             <div class="mdl-tooltip" for="btn-Listar">Listar Clientes</div>
         </div>
+
         <div class="mdl-tabs__panel" id="tabListClient">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
@@ -28,7 +29,7 @@
                                     <label class="mdl-button mdl-js-button mdl-button--icon" for="searchClient" id="btn-searchClient">
                                         <i class="zmdi zmdi-search" onclick=""></i>
                                     </label>
-                                    <div class="mdl-tooltip" for="btn-searchClient">Buscar Clientes</div>
+                                    <div class="mdl-tooltip" for="btn-searchClient">Buscar</div>
                                     <div class="mdl-textfield__expandable-holder">
                                         @Html.TextBox("searchClient", null, new { @class = "mdl-textfield__input" })
                                     </div>
@@ -49,7 +50,21 @@
                                             }
                                             else
                                             {
-                                                <span><b>@Html.DisplayFor(modelItem => item.TIPO_CLIENTE.TC_DESCRIPCION): </b> @Html.DisplayFor(modelItem => item.CLI_RI_RAZONSOCIAL)</span>
+                                                <span><b>@Html.DisplayFor(modelItem => item.TIPO_CLIENTE.TC_DESCRIPCION): </b> 
+                                                        @if(!item.CLI_RI_RAZONSOCIAL.IsEmpty())
+                                                        {
+                                                            @Html.DisplayFor(modelItem => item.CLI_RI_RAZONSOCIAL)
+                                                            if (!item.CLI_NOMBRE.IsEmpty() && !item.CLI_APELLIDO.IsEmpty())
+                                                            {
+                                                                var NombreApellido = " - " + item.CLI_APELLIDO_NOMBRE;
+                                                                @Html.DisplayFor(modelItem => NombreApellido)
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.DisplayFor(modelItem => item.CLI_APELLIDO_NOMBRE)
+                                                        }                                                       
+                                                </span>
                                                 <span class="mdl-list__item-sub-title">CUIT: @Html.DisplayFor(modelItem => item.CLI_RI_CUIT)</span>
                                             }
                                         </span>

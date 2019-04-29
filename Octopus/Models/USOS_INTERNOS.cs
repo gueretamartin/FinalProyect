@@ -22,6 +22,5 @@ namespace Octopus.Models
         public Nullable<System.DateTime> USO_FECHA_FIN { get; set; }
     
         public virtual EMPLEADOS EMPLEADOS { get; set; }
-        public virtual VEHICULOS VEHICULOS { get; set; }
     }
 }
