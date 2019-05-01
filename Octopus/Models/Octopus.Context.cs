@@ -43,8 +43,10 @@ namespace Octopus.Models
         public virtual DbSet<TIPO_VEHICULOS> TIPO_VEHICULOS { get; set; }
         public virtual DbSet<USOS_INTERNOS> USOS_INTERNOS { get; set; }
         public virtual DbSet<USUARIOS> USUARIOS { get; set; }
+        public virtual DbSet<USUARIOS_TIPOS> USUARIOS_TIPOS { get; set; }
         public virtual DbSet<VEHICULOS> VEHICULOS { get; set; }
         public virtual DbSet<VENTAS> VENTAS { get; set; }
         public virtual DbSet<VW_MARCAS> VW_MARCAS { get; set; }
+        public virtual DbSet<VW_Statistics> VW_Statistics { get; set; }
     }
 }

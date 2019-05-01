@@ -9,7 +9,8 @@ namespace Octopus.Controllers
 {
     public class HomeController : Controller
     {
-        //
+        private OctopusEntities db = new OctopusEntities();
+
         // GET: /Home/
 
         public ActionResult Index()
@@ -19,7 +20,7 @@ namespace Octopus.Controllers
 
         public ActionResult Home()
         {
-            return View();
+           return View( db.VW_Statistics.ToList());
         }
 
     }
