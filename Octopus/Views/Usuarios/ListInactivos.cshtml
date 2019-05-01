@@ -23,10 +23,8 @@
                         <div class="full-width panel-tittle bg-primary text-center tittles">
                             LISTA DE USUARIOS
                         </div>
-                        
-                        
                         <div class="full-width panel-content">
-                            @using (Html.BeginForm("List", "Usuarios", FormMethod.Get))
+                            @using (Html.BeginForm("ListInactivos", "Usuarios", FormMethod.Get))
                             {
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
                                     <label class="mdl-button mdl-js-button mdl-button--icon" for="searchUser" id="btn-searchUser" data-toggle="tooltip" data-placement="bottom" title="Buscar Usuario">

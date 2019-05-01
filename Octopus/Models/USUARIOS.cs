@@ -14,10 +14,18 @@ namespace Octopus.Models
     
     public partial class USUARIOS
     {
+        public USUARIOS()
+        {
+            this.EMPLEADOS = new HashSet<EMPLEADOS>();
+        }
+    
         public string Usuario { get; set; }
         public string Contraseña { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public string Rol { get; set; }
+        public int Rol { get; set; }
+        public int Estado { get; set; }
+    
+        public virtual ICollection<EMPLEADOS> EMPLEADOS { get; set; }
+        public virtual ESTADOS ESTADOS { get; set; }
+        public virtual USUARIOS_TIPOS USUARIOS_TIPOS { get; set; }
     }
 }

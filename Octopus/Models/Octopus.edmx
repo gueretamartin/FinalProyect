@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OctopusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OctopusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CLIENTES">
           <Key>
             <PropertyRef Name="CLI_ID" />
@@ -43,13 +43,11 @@
           <Property Name="EMP_NOMBRE" Type="varchar" MaxLength="255" />
           <Property Name="EMP_APELLIDO" Type="varchar" MaxLength="255" />
           <Property Name="EMP_EMAIL" Type="varchar" MaxLength="255" />
-          <Property Name="EMP_USER" Type="varchar" MaxLength="255" />
-          <Property Name="EMP_PASSWORD" Type="varchar" MaxLength="255" />
           <Property Name="EMP_TIPO" Type="varchar" MaxLength="255" />
           <Property Name="EMP_DIRECCION" Type="varchar" MaxLength="255" />
           <Property Name="EMP_TELEFONO" Type="varchar" MaxLength="255" />
           <Property Name="EMP_DNI" Type="varchar" MaxLength="255" />
-          <Property Name="EMP_APELLIDO_NOMBRE" Type="varchar" MaxLength="250" />
+          <Property Name="EMP_USUARIO" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ENTREGAS">
           <Key>
@@ -60,6 +58,13 @@
           <Property Name="MONTO" Type="int" />
           <Property Name="VEN_ID" Type="int" />
           <Property Name="CLI_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="ESTADOS">
+          <Key>
+            <PropertyRef Name="ESTADO" />
+          </Key>
+          <Property Name="ESTADO" Type="int" Nullable="false" />
+          <Property Name="ESTADO_DESC" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="FECHAS">
           <Key>
@@ -150,26 +155,21 @@
           <Property Name="TD_ID" Type="int" Nullable="false" />
           <Property Name="TD_DESCRIPCION" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="USOS_INTERNOS">
-          <Key>
-            <PropertyRef Name="USO_ID" />
-          </Key>
-          <Property Name="USO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="VEH_ID" Type="int" />
-          <Property Name="EMP_ID" Type="int" />
-          <Property Name="USO_DESCRIP" Type="varchar" MaxLength="255" />
-          <Property Name="USO_FECHA_INI" Type="datetime" />
-          <Property Name="USO_FECHA_FIN" Type="datetime" />
-        </EntityType>
         <EntityType Name="USUARIOS">
           <Key>
             <PropertyRef Name="Usuario" />
           </Key>
           <Property Name="Usuario" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Contraseña" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Rol" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Rol" Type="int" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USUARIOS_TIPOS">
+          <Key>
+            <PropertyRef Name="ROL_ID" />
+          </Key>
+          <Property Name="ROL_ID" Type="int" Nullable="false" />
+          <Property Name="ROL_DESC" Type="nchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="VEHICULOS">
           <Key>
@@ -218,6 +218,15 @@
           <Property Name="EMP_ID" Type="int" />
           <Property Name="MONTO" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VW_Statistics">
+          <Key>
+            <PropertyRef Name="TIPO" />
+          </Key>
+          <Property Name="TIPO" Type="varchar" MaxLength="21" Nullable="false" />
+          <Property Name="CANTIDAD" Type="int" />
+        </EntityType>
         <Association Name="FK_CLIENTES_TIPO_CLIENTE">
           <End Role="TIPO_CLIENTE" Type="Self.TIPO_CLIENTE" Multiplicity="0..1" />
           <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="*" />
@@ -251,6 +260,18 @@
             </Principal>
             <Dependent Role="EMPLEADOS">
               <PropertyRef Name="SUC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLEADOS_USUARIOS">
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="0..1" />
+          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOS">
+              <PropertyRef Name="Usuario" />
+            </Principal>
+            <Dependent Role="EMPLEADOS">
+              <PropertyRef Name="EMP_USUARIO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -376,27 +397,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_USOS_INTERNOS_EMPLEADOS">
-          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
-          <End Role="USOS_INTERNOS" Type="Self.USOS_INTERNOS" Multiplicity="*" />
+        <Association Name="FK_USUARIOS_ESTADOS">
+          <End Role="ESTADOS" Type="Self.ESTADOS" Multiplicity="1" />
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="EMPLEADOS">
-              <PropertyRef Name="EMP_ID" />
+            <Principal Role="ESTADOS">
+              <PropertyRef Name="ESTADO" />
             </Principal>
-            <Dependent Role="USOS_INTERNOS">
-              <PropertyRef Name="EMP_ID" />
+            <Dependent Role="USUARIOS">
+              <PropertyRef Name="Estado" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_USOS_INTERNOS_VEHICULOS">
-          <End Role="VEHICULOS" Type="Self.VEHICULOS" Multiplicity="0..1" />
-          <End Role="USOS_INTERNOS" Type="Self.USOS_INTERNOS" Multiplicity="*" />
+        <Association Name="FK_USUARIOS_USUARIOS_TIPOS">
+          <End Role="USUARIOS_TIPOS" Type="Self.USUARIOS_TIPOS" Multiplicity="1" />
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="VEHICULOS">
-              <PropertyRef Name="VEH_ID" />
+            <Principal Role="USUARIOS_TIPOS">
+              <PropertyRef Name="ROL_ID" />
             </Principal>
-            <Dependent Role="USOS_INTERNOS">
-              <PropertyRef Name="VEH_ID" />
+            <Dependent Role="USUARIOS">
+              <PropertyRef Name="Rol" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -500,6 +521,7 @@
           <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLEADOS" EntityType="Self.EMPLEADOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ENTREGAS" EntityType="Self.ENTREGAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ESTADOS" EntityType="Self.ESTADOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FECHAS" EntityType="Self.FECHAS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IMAGENES" EntityType="Self.IMAGENES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRESUPUESTOS" EntityType="Self.PRESUPUESTOS" Schema="dbo" store:Type="Tables" />
@@ -508,10 +530,16 @@
           <EntitySet Name="SUCURSALES" EntityType="Self.SUCURSALES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_CLIENTE" EntityType="Self.TIPO_CLIENTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_DOCUMENTO" EntityType="Self.TIPO_DOCUMENTO" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="USOS_INTERNOS" EntityType="Self.USOS_INTERNOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIOS_TIPOS" EntityType="Self.USUARIOS_TIPOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VEHICULOS" EntityType="Self.VEHICULOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VENTAS" EntityType="Self.VENTAS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VW_Statistics" EntityType="Self.VW_Statistics" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VW_Statistics].[TIPO] AS [TIPO], 
+    [VW_Statistics].[CANTIDAD] AS [CANTIDAD]
+    FROM [dbo].[VW_Statistics] AS [VW_Statistics]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_CLIENTES_TIPO_CLIENTE" Association="Self.FK_CLIENTES_TIPO_CLIENTE">
             <End Role="TIPO_CLIENTE" EntitySet="TIPO_CLIENTE" />
             <End Role="CLIENTES" EntitySet="CLIENTES" />
@@ -522,6 +550,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_EMPLEADOS_SUCURSALES" Association="Self.FK_EMPLEADOS_SUCURSALES">
             <End Role="SUCURSALES" EntitySet="SUCURSALES" />
+            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADOS_USUARIOS" Association="Self.FK_EMPLEADOS_USUARIOS">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
           </AssociationSet>
           <AssociationSet Name="FK_ENTREGAS_CLIENTES" Association="Self.FK_ENTREGAS_CLIENTES">
@@ -564,13 +596,13 @@
             <End Role="SUCURSALES" EntitySet="SUCURSALES" />
             <End Role="SERVICIOS" EntitySet="SERVICIOS" />
           </AssociationSet>
-          <AssociationSet Name="FK_USOS_INTERNOS_EMPLEADOS" Association="Self.FK_USOS_INTERNOS_EMPLEADOS">
-            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
-            <End Role="USOS_INTERNOS" EntitySet="USOS_INTERNOS" />
+          <AssociationSet Name="FK_USUARIOS_ESTADOS" Association="Self.FK_USUARIOS_ESTADOS">
+            <End Role="ESTADOS" EntitySet="ESTADOS" />
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
           </AssociationSet>
-          <AssociationSet Name="FK_USOS_INTERNOS_VEHICULOS" Association="Self.FK_USOS_INTERNOS_VEHICULOS">
-            <End Role="VEHICULOS" EntitySet="VEHICULOS" />
-            <End Role="USOS_INTERNOS" EntitySet="USOS_INTERNOS" />
+          <AssociationSet Name="FK_USUARIOS_USUARIOS_TIPOS" Association="Self.FK_USUARIOS_USUARIOS_TIPOS">
+            <End Role="USUARIOS_TIPOS" EntitySet="USUARIOS_TIPOS" />
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
           </AssociationSet>
           <AssociationSet Name="FK_VEHICULOS_CLIENTES" Association="Self.FK_VEHICULOS_CLIENTES">
             <End Role="CLIENTES" EntitySet="CLIENTES" />
@@ -605,8 +637,7 @@
             <End Role="VENTAS" EntitySet="VENTAS" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OctopusModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -653,17 +684,15 @@
           <Property Name="EMP_NOMBRE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_APELLIDO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="EMP_USER" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="EMP_PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_TIPO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_DIRECCION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_TELEFONO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_DNI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="EMP_APELLIDO_NOMBRE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="EMP_USUARIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SUCURSALES" Relationship="Self.FK_EMPLEADOS_SUCURSALES" FromRole="EMPLEADOS" ToRole="SUCURSALES" />
+          <NavigationProperty Name="USUARIOS" Relationship="Self.FK_EMPLEADOS_USUARIOS" FromRole="EMPLEADOS" ToRole="USUARIOS" />
           <NavigationProperty Name="PRESUPUESTOS" Relationship="Self.FK_PRESUPUESTOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="PRESUPUESTOS" />
           <NavigationProperty Name="RESERVAS" Relationship="Self.FK_RESERVAS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="RESERVAS" />
-          <NavigationProperty Name="USOS_INTERNOS" Relationship="Self.FK_USOS_INTERNOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="USOS_INTERNOS" />
           <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_VEHICULOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="VEHICULOS" />
           <NavigationProperty Name="VENTAS" Relationship="Self.FK_VENTAS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="VENTAS" />
         </EntityType>
@@ -679,6 +708,14 @@
           <NavigationProperty Name="CLIENTES" Relationship="Self.FK_ENTREGAS_CLIENTES" FromRole="ENTREGAS" ToRole="CLIENTES" />
           <NavigationProperty Name="FECHAS" Relationship="Self.FK_ENTREGAS_FECHAS" FromRole="ENTREGAS" ToRole="FECHAS" />
           <NavigationProperty Name="VENTAS" Relationship="Self.FK_ENTREGAS_VENTAS" FromRole="ENTREGAS" ToRole="VENTAS" />
+        </EntityType>
+        <EntityType Name="ESTADOS">
+          <Key>
+            <PropertyRef Name="ESTADO" />
+          </Key>
+          <Property Name="ESTADO" Type="Int32" Nullable="false" />
+          <Property Name="ESTADO_DESC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="USUARIOS" Relationship="Self.FK_USUARIOS_ESTADOS" FromRole="ESTADOS" ToRole="USUARIOS" />
         </EntityType>
         <EntityType Name="FECHAS">
           <Key>
@@ -786,28 +823,25 @@
           <Property Name="TD_DESCRIPCION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CLIENTES" Relationship="Self.FK_CLIENTES_TIPO_DOCUMENTO" FromRole="TIPO_DOCUMENTO" ToRole="CLIENTES" />
         </EntityType>
-        <EntityType Name="USOS_INTERNOS">
-          <Key>
-            <PropertyRef Name="USO_ID" />
-          </Key>
-          <Property Name="USO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VEH_ID" Type="Int32" />
-          <Property Name="EMP_ID" Type="Int32" />
-          <Property Name="USO_DESCRIP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="USO_FECHA_INI" Type="DateTime" Precision="3" />
-          <Property Name="USO_FECHA_FIN" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_USOS_INTERNOS_EMPLEADOS" FromRole="USOS_INTERNOS" ToRole="EMPLEADOS" />
-          <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_USOS_INTERNOS_VEHICULOS" FromRole="USOS_INTERNOS" ToRole="VEHICULOS" />
-        </EntityType>
         <EntityType Name="USUARIOS">
           <Key>
             <PropertyRef Name="Usuario" />
           </Key>
           <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Contraseña" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Rol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rol" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_EMPLEADOS_USUARIOS" FromRole="USUARIOS" ToRole="EMPLEADOS" />
+          <NavigationProperty Name="ESTADOS" Relationship="Self.FK_USUARIOS_ESTADOS" FromRole="USUARIOS" ToRole="ESTADOS" />
+          <NavigationProperty Name="USUARIOS_TIPOS" Relationship="Self.FK_USUARIOS_USUARIOS_TIPOS" FromRole="USUARIOS" ToRole="USUARIOS_TIPOS" />
+        </EntityType>
+        <EntityType Name="USUARIOS_TIPOS">
+          <Key>
+            <PropertyRef Name="ROL_ID" />
+          </Key>
+          <Property Name="ROL_ID" Type="Int32" Nullable="false" />
+          <Property Name="ROL_DESC" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="USUARIOS" Relationship="Self.FK_USUARIOS_USUARIOS_TIPOS" FromRole="USUARIOS_TIPOS" ToRole="USUARIOS" />
         </EntityType>
         <EntityType Name="VEHICULOS">
           <Key>
@@ -850,7 +884,6 @@
           <NavigationProperty Name="IMAGENES" Relationship="Self.FK_IMAGENES_VEHICULOS" FromRole="VEHICULOS" ToRole="IMAGENES" />
           <NavigationProperty Name="RESERVAS" Relationship="Self.FK_RESERVAS_VEHICULOS" FromRole="VEHICULOS" ToRole="RESERVAS" />
           <NavigationProperty Name="SUCURSALES" Relationship="Self.FK_VEHICULOS_SUCURSALES" FromRole="VEHICULOS" ToRole="SUCURSALES" />
-          <NavigationProperty Name="USOS_INTERNOS" Relationship="Self.FK_USOS_INTERNOS_VEHICULOS" FromRole="VEHICULOS" ToRole="USOS_INTERNOS" />
           <NavigationProperty Name="VENTAS" Relationship="Self.FK_VENTAS_VEHICULOS" FromRole="VEHICULOS" ToRole="VENTAS" />
         </EntityType>
         <EntityType Name="VENTAS">
@@ -941,6 +974,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_EMPLEADOS_USUARIOS">
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="0..1" />
+          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIOS">
+              <PropertyRef Name="Usuario" />
+            </Principal>
+            <Dependent Role="EMPLEADOS">
+              <PropertyRef Name="EMP_USUARIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PRESUPUESTOS_EMPLEADOS">
           <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
           <End Role="PRESUPUESTOS" Type="Self.PRESUPUESTOS" Multiplicity="*" />
@@ -961,18 +1006,6 @@
               <PropertyRef Name="EMP_ID" />
             </Principal>
             <Dependent Role="RESERVAS">
-              <PropertyRef Name="EMP_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_USOS_INTERNOS_EMPLEADOS">
-          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
-          <End Role="USOS_INTERNOS" Type="Self.USOS_INTERNOS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLEADOS">
-              <PropertyRef Name="EMP_ID" />
-            </Principal>
-            <Dependent Role="USOS_INTERNOS">
               <PropertyRef Name="EMP_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1022,6 +1055,18 @@
             </Principal>
             <Dependent Role="ENTREGAS">
               <PropertyRef Name="VEN_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USUARIOS_ESTADOS">
+          <End Role="ESTADOS" Type="Self.ESTADOS" Multiplicity="1" />
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADOS">
+              <PropertyRef Name="ESTADO" />
+            </Principal>
+            <Dependent Role="USUARIOS">
+              <PropertyRef Name="Estado" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1123,15 +1168,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_USOS_INTERNOS_VEHICULOS">
-          <End Role="VEHICULOS" Type="Self.VEHICULOS" Multiplicity="0..1" />
-          <End Role="USOS_INTERNOS" Type="Self.USOS_INTERNOS" Multiplicity="*" />
+        <Association Name="FK_USUARIOS_USUARIOS_TIPOS">
+          <End Role="USUARIOS_TIPOS" Type="Self.USUARIOS_TIPOS" Multiplicity="1" />
+          <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="VEHICULOS">
-              <PropertyRef Name="VEH_ID" />
+            <Principal Role="USUARIOS_TIPOS">
+              <PropertyRef Name="ROL_ID" />
             </Principal>
-            <Dependent Role="USOS_INTERNOS">
-              <PropertyRef Name="VEH_ID" />
+            <Dependent Role="USUARIOS">
+              <PropertyRef Name="Rol" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1151,6 +1196,7 @@
           <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" />
           <EntitySet Name="EMPLEADOS" EntityType="Self.EMPLEADOS" />
           <EntitySet Name="ENTREGAS" EntityType="Self.ENTREGAS" />
+          <EntitySet Name="ESTADOS" EntityType="Self.ESTADOS" />
           <EntitySet Name="FECHAS" EntityType="Self.FECHAS" />
           <EntitySet Name="IMAGENES" EntityType="Self.IMAGENES" />
           <EntitySet Name="PRESUPUESTOS" EntityType="Self.PRESUPUESTOS" />
@@ -1159,8 +1205,8 @@
           <EntitySet Name="SUCURSALES" EntityType="Self.SUCURSALES" />
           <EntitySet Name="TIPO_CLIENTE" EntityType="Self.TIPO_CLIENTE" />
           <EntitySet Name="TIPO_DOCUMENTO" EntityType="Self.TIPO_DOCUMENTO" />
-          <EntitySet Name="USOS_INTERNOS" EntityType="Self.USOS_INTERNOS" />
           <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" />
+          <EntitySet Name="USUARIOS_TIPOS" EntityType="Self.USUARIOS_TIPOS" />
           <EntitySet Name="VEHICULOS" EntityType="Self.VEHICULOS" />
           <EntitySet Name="VENTAS" EntityType="Self.VENTAS" />
           <AssociationSet Name="FK_CLIENTES_TIPO_CLIENTE" Association="Self.FK_CLIENTES_TIPO_CLIENTE">
@@ -1187,6 +1233,10 @@
             <End Role="SUCURSALES" EntitySet="SUCURSALES" />
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
           </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADOS_USUARIOS" Association="Self.FK_EMPLEADOS_USUARIOS">
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
+            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+          </AssociationSet>
           <AssociationSet Name="FK_PRESUPUESTOS_EMPLEADOS" Association="Self.FK_PRESUPUESTOS_EMPLEADOS">
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
             <End Role="PRESUPUESTOS" EntitySet="PRESUPUESTOS" />
@@ -1194,10 +1244,6 @@
           <AssociationSet Name="FK_RESERVAS_EMPLEADOS" Association="Self.FK_RESERVAS_EMPLEADOS">
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
             <End Role="RESERVAS" EntitySet="RESERVAS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_USOS_INTERNOS_EMPLEADOS" Association="Self.FK_USOS_INTERNOS_EMPLEADOS">
-            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
-            <End Role="USOS_INTERNOS" EntitySet="USOS_INTERNOS" />
           </AssociationSet>
           <AssociationSet Name="FK_VEHICULOS_EMPLEADOS" Association="Self.FK_VEHICULOS_EMPLEADOS">
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
@@ -1214,6 +1260,10 @@
           <AssociationSet Name="FK_ENTREGAS_VENTAS" Association="Self.FK_ENTREGAS_VENTAS">
             <End Role="VENTAS" EntitySet="VENTAS" />
             <End Role="ENTREGAS" EntitySet="ENTREGAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USUARIOS_ESTADOS" Association="Self.FK_USUARIOS_ESTADOS">
+            <End Role="ESTADOS" EntitySet="ESTADOS" />
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
           </AssociationSet>
           <AssociationSet Name="FK_PRESUPUESTOS_FECHAS" Association="Self.FK_PRESUPUESTOS_FECHAS">
             <End Role="FECHAS" EntitySet="FECHAS" />
@@ -1247,15 +1297,23 @@
             <End Role="SUCURSALES" EntitySet="SUCURSALES" />
             <End Role="VEHICULOS" EntitySet="VEHICULOS" />
           </AssociationSet>
-          <AssociationSet Name="FK_USOS_INTERNOS_VEHICULOS" Association="Self.FK_USOS_INTERNOS_VEHICULOS">
-            <End Role="VEHICULOS" EntitySet="VEHICULOS" />
-            <End Role="USOS_INTERNOS" EntitySet="USOS_INTERNOS" />
+          <AssociationSet Name="FK_USUARIOS_USUARIOS_TIPOS" Association="Self.FK_USUARIOS_USUARIOS_TIPOS">
+            <End Role="USUARIOS_TIPOS" EntitySet="USUARIOS_TIPOS" />
+            <End Role="USUARIOS" EntitySet="USUARIOS" />
           </AssociationSet>
           <AssociationSet Name="FK_VENTAS_VEHICULOS" Association="Self.FK_VENTAS_VEHICULOS">
             <End Role="VEHICULOS" EntitySet="VEHICULOS" />
             <End Role="VENTAS" EntitySet="VENTAS" />
           </AssociationSet>
+          <EntitySet Name="VW_Statistics" EntityType="OctopusModel.VW_Statistics" />
         </EntityContainer>
+        <EntityType Name="VW_Statistics">
+          <Key>
+            <PropertyRef Name="TIPO" />
+          </Key>
+          <Property Name="TIPO" Type="String" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Name="CANTIDAD" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1300,13 +1358,11 @@
                 <ScalarProperty Name="EMP_NOMBRE" ColumnName="EMP_NOMBRE" />
                 <ScalarProperty Name="EMP_APELLIDO" ColumnName="EMP_APELLIDO" />
                 <ScalarProperty Name="EMP_EMAIL" ColumnName="EMP_EMAIL" />
-                <ScalarProperty Name="EMP_USER" ColumnName="EMP_USER" />
-                <ScalarProperty Name="EMP_PASSWORD" ColumnName="EMP_PASSWORD" />
                 <ScalarProperty Name="EMP_TIPO" ColumnName="EMP_TIPO" />
                 <ScalarProperty Name="EMP_DIRECCION" ColumnName="EMP_DIRECCION" />
                 <ScalarProperty Name="EMP_TELEFONO" ColumnName="EMP_TELEFONO" />
                 <ScalarProperty Name="EMP_DNI" ColumnName="EMP_DNI" />
-                <ScalarProperty Name="EMP_APELLIDO_NOMBRE" ColumnName="EMP_APELLIDO_NOMBRE" />
+                <ScalarProperty Name="EMP_USUARIO" ColumnName="EMP_USUARIO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1318,6 +1374,14 @@
                 <ScalarProperty Name="MONTO" ColumnName="MONTO" />
                 <ScalarProperty Name="VEN_ID" ColumnName="VEN_ID" />
                 <ScalarProperty Name="CLI_ID" ColumnName="CLI_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESTADOS">
+            <EntityTypeMapping TypeName="OctopusModel.ESTADOS">
+              <MappingFragment StoreEntitySet="ESTADOS">
+                <ScalarProperty Name="ESTADO" ColumnName="ESTADO" />
+                <ScalarProperty Name="ESTADO_DESC" ColumnName="ESTADO_DESC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1418,26 +1482,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="USOS_INTERNOS">
-            <EntityTypeMapping TypeName="OctopusModel.USOS_INTERNOS">
-              <MappingFragment StoreEntitySet="USOS_INTERNOS">
-                <ScalarProperty Name="USO_ID" ColumnName="USO_ID" />
-                <ScalarProperty Name="VEH_ID" ColumnName="VEH_ID" />
-                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
-                <ScalarProperty Name="USO_DESCRIP" ColumnName="USO_DESCRIP" />
-                <ScalarProperty Name="USO_FECHA_INI" ColumnName="USO_FECHA_INI" />
-                <ScalarProperty Name="USO_FECHA_FIN" ColumnName="USO_FECHA_FIN" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="USUARIOS">
             <EntityTypeMapping TypeName="OctopusModel.USUARIOS">
               <MappingFragment StoreEntitySet="USUARIOS">
                 <ScalarProperty Name="Usuario" ColumnName="Usuario" />
                 <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIOS_TIPOS">
+            <EntityTypeMapping TypeName="OctopusModel.USUARIOS_TIPOS">
+              <MappingFragment StoreEntitySet="USUARIOS_TIPOS">
+                <ScalarProperty Name="ROL_ID" ColumnName="ROL_ID" />
+                <ScalarProperty Name="ROL_DESC" ColumnName="ROL_DESC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1487,6 +1546,14 @@
                 <ScalarProperty Name="VEH_ID" ColumnName="VEH_ID" />
                 <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
                 <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VW_Statistics">
+            <EntityTypeMapping TypeName="OctopusModel.VW_Statistics">
+              <MappingFragment StoreEntitySet="VW_Statistics">
+                <ScalarProperty Name="CANTIDAD" ColumnName="CANTIDAD" />
+                <ScalarProperty Name="TIPO" ColumnName="TIPO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

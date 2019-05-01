@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Octopus.Models
+@model  IEnumerable<Octopus.Models.VW_Statistics>
+@using System.Web.UI.WebControls
+@{
     ViewBag.Title = "Inicio";
     Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
@@ -7,59 +10,22 @@
     <section class="full-width text-center" style="padding: 40px 0;">
         <h3 class="text-center tittles">INGRESOS ÚLTIMOS MES</h3>
         <!-- Tiles -->
-        <article class="full-width tile">
-            <div class="tile-text">
-                <span class="text-condensedLight">
-                    2<br>
-                    <small>Empleados</small>
-                </span>
-            </div>
-            <i class="zmdi zmdi-account tile-icon"></i>
-        </article>
-        <article class="full-width tile">
-            <div class="tile-text">
-                <span class="text-condensedLight">
-                    71<br>
-                    <small>Clientes</small>
-                </span>
-            </div>
-            <i class="zmdi zmdi-accounts tile-icon"></i>
-        </article>
-        <article class="full-width tile">
-            <div class="tile-text">
-                <span class="text-condensedLight">
-                    7<br>
-                    <small>Vehículos</small>
-                </span>
-            </div>
-            <i class="zmdi zmdi-truck tile-icon"></i>
-        </article>
-        <article class="full-width tile">
-            <div class="tile-text">
-                <span class="text-condensedLight">
-                    9<br>
-                    <small>Presupuestos</small>
-                </span>
-            </div>
-            <i class="zmdi zmdi-label tile-icon"></i>
-        </article>
-        <article class="full-width tile">
-            <div class="tile-text">
-                <span class="text-condensedLight">
-                    121<br>
-                    <small>Reservas</small>
-                </span>
-            </div>
-            <i class="zmdi zmdi-washing-machine tile-icon"></i>
-        </article>
-        <article class="full-width tile">
-            <div class="tile-text">
-                <span class="text-condensedLight">
-                    47<br>
-                    <small>Ventas</small>
-                </span>
-            </div>
-            <i class="zmdi zmdi-shopping-cart tile-icon"></i>
-        </article>
+        @foreach (var item in Model)
+        {
+           <a href="@Url.Action("List",@item.TIPO)" class="full-width">
+            <article class="full-width tile">
+                <div class="tile-text">
+                    <span class="text-condensedLight">
+                        @Html.DisplayFor(modelItem => item.CANTIDAD)
+                        <br>
+                        <small>
+                            @Html.DisplayFor(modelItem => item.TIPO)
+                        </small>
+                    </span>
+                </div>
+                <i class="zmdi zmdi-account tile-icon"></i>
+            </article>
+           </a>
+        }
     </section>
 </section>

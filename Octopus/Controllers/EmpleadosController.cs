@@ -77,7 +77,7 @@ namespace Octopus.Controllers
             if (ModelState.IsValid)
             {
              //   var empleado = db.EMPLEADOS.Single(u => u.EMP_ID == empleados.EMP_ID);
-                empleados.EMP_APELLIDO_NOMBRE = empleados.EMP_APELLIDO + " " + empleados.EMP_NOMBRE;
+              //  empleados.EMP_APELLIDO_NOMBRE = empleados.EMP_APELLIDO + " " + empleados.EMP_NOMBRE;
                 //CleanClient(clientes);
                 db.EMPLEADOS.Add(empleados);
                 db.SaveChanges();
@@ -131,7 +131,7 @@ namespace Octopus.Controllers
             {
                 db.Entry(empleados).State = EntityState.Modified;
                 var empleado = db.EMPLEADOS.Single(u => u.EMP_ID == empleados.EMP_ID);
-                empleado.EMP_APELLIDO_NOMBRE = empleados.EMP_APELLIDO + " " + empleados.EMP_NOMBRE;
+               // empleado.EMP_APELLIDO_NOMBRE = empleados.EMP_APELLIDO + " " + empleados.EMP_NOMBRE;
                 db.SaveChanges();
                 return RedirectToAction("List");
             }
@@ -144,7 +144,7 @@ namespace Octopus.Controllers
         
         public ActionResult Delete(int emp_id)
         {
-            EMPLEADOS empleado = db.EMPLEADOS.Find(emp_id);
+            EMPLEADOS empleado = db.EMPLEADOS.Find(Session["Usuario"]);
             db.EMPLEADOS.Remove(empleado);
             db.SaveChanges();
             return RedirectToAction("List");

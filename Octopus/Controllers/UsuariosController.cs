@@ -12,18 +12,13 @@ namespace Octopus.Controllers
 {
     public class UsuariosController : Controller
     {
-        private OctopusEntities db = new OctopusEntities();
 
-        //
-        // GET: /USUARIOS/
+        private OctopusEntities db = new OctopusEntities();
 
         public ActionResult Index()
         {
             return View(db.USUARIOS.ToList());
         }
-
-        //
-        // GET: /USUARIOS/Details/5
 
         public ActionResult Details(String user)
         {
@@ -32,83 +27,102 @@ namespace Octopus.Controllers
             {
                 return HttpNotFound();
             }
-           // Session["CONDICIONIVA"] = USUARIOS.TC_ID.ToString();
-            
+
             return View(USUARIOS);
         }
-
-        //
-        // GET: /USUARIOS/Create
 
         public ActionResult Create()
         {
-            //USUARIOS user = @ViewBag.Usuario;
-            //return RedirectToAction("Create");
+            ViewBag.Rol = new SelectList(db.USUARIOS_TIPOS, "ROL_ID", "ROL_DESC");
+            ViewBag.Estado = new SelectList(db.ESTADOS, "ESTADO", "ESTADO_DESC");
             return View();
-            //return View(user);
+
         }
-
-        //
-        // POST: /USUARIOS/Create
-
-        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(USUARIOS USUARIOS)
+        public ActionResult Create(USUARIOS var_usuario)
         {
-            //CHEQUEA SI EL DOCUMENTO YA FUE CARGADO
-          //  if ((db.USUARIOS.Any(c => c.CLI_DOC.Equals(USUARIOS.CLI_DOC)) && !String.IsNullOrEmpty(USUARIOS.CLI_DOC))
-            //    || (db.USUARIOS.Any(c => c.CLI_RI_CUIT.Equals(USUARIOS.CLI_RI_CUIT)) && !String.IsNullOrEmpty(USUARIOS.CLI_RI_CUIT)))
-            
-                //ModelState.AddModelError("CLI_DOC", "EL DNI/CUIT INGRESADO YA EXISTE");
-                //return View("Create");
-            
-
-            //CHEQUEA QUE HAYA COMPLETADO LO NECESARIO EN ALGUN TIPO DE CONDICIÓN IVA
-            //if((USUARIOS.TC_ID.Equals("CONSUMIDOR_FINAL") && (USUARIOS.TD_ID == null || USUARIOS.CLI_DOC == null))
-            //    ||
-            //   (USUARIOS.TC_ID.Equals("RESPONSABLE_INSCRIPTO") && USUARIOS.CLI_RI_CUIT == null))
-            //{
-            //    ModelState.AddModelError("CLI_DOC", "DEBE REGISTRAR ALGÚN DOCUMENTO/CUIT");
-            //    return View("Create");
-            //}
-
-            if (ModelState.IsValid)
+            try
             {
-                db.USUARIOS.Add(USUARIOS);
-                db.SaveChanges();
+                if (!String.IsNullOrEmpty(var_usuario.Usuario))
+                {
+                    var user = from c in db.USUARIOS select c;
+
+                    user = user.Where(c => c.Usuario.Contains(var_usuario.Usuario));
+
+                    if (user.Count() != 0)
+                    {
+                        ModelState.AddModelError("Usuario", "USUARIO: El Usuario ingresado ya existe.");
+                        return this.Create();
+                    }
+
+                }
+                else
+                {
+                    ModelState.AddModelError("Usuario", "Usuario: Por favor, ingrese un nombre de Usuario.");
+                    return this.Create();
+                }
+
+                if (ModelState.IsValid)
+                {
+
+                    db.USUARIOS.Add(var_usuario);
+                    db.SaveChanges();
+                    return RedirectToAction("List");
+                }
+
                 return RedirectToAction("List");
+
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Home", "Home");
+            }
+        }
+        public ActionResult List(string searchUser)
+        {
+
+            try
+            {
+                var usuarios = from c in db.USUARIOS where (c.Estado == 1) select c;
+
+                if (!String.IsNullOrEmpty(searchUser))
+                {
+                    usuarios = usuarios.Where(c => c.Usuario.Contains(searchUser));
+                }
+
+                return View(usuarios.ToList());
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Home", "Home");
             }
 
-            return View(USUARIOS);
         }
 
-       
-
-        /*
-        public ActionResult List()
+        public ActionResult ListInactivos(string searchUser)
         {
-            return View(db.USUARIOS.ToList());
+
+            try
+            {
+                var usuarios = from c in db.USUARIOS where (c.Estado == 0) select c;
+
+                if (!String.IsNullOrEmpty(searchUser))
+                {
+                    usuarios = usuarios.Where(c => c.Usuario.Contains(searchUser));
+
+                }
+
+                return View(usuarios.ToList());
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Home", "Home");
+            }
+
         }
-         * */
 
-
-        public ActionResult List(string searchClient)
-        {
-            var USUARIOS = from c in db.USUARIOS
-                           select c;
-
-            //var USUARIOS = db.USUARIOS;
-
-            //if (!String.IsNullOrEmpty(searchClient))
-            //{
-            //    USUARIOS = USUARIOS.Where(c => c.CLI_NOMBRE.Contains(searchClient)
-            //        || c.CLI_CF_APELLIDO.Contains(searchClient)
-            //        || c.CLI_DOC.Contains(searchClient));
-            //}
-            return View(USUARIOS.ToList());
-        }
 
 
         [HttpPost]
@@ -128,86 +142,64 @@ namespace Octopus.Controllers
             }
         }
 
-        //
-        // GET: /USUARIOS/Edit/5
-
         public ActionResult Edit(string user)
         {
-            try
-            {
-                USUARIOS cliente = db.USUARIOS.SingleOrDefault(c => c.Usuario == user);
-                return View(cliente);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
-        //
-        // POST: /USUARIOS/Edit/5
+                   var model = new USUARIOS();
+                    model = db.USUARIOS.SingleOrDefault(c => c.Usuario == user);
+                    model.Roles_List = new SelectList(db.USUARIOS_TIPOS, "ROL_ID", "ROL_DESC", model.Rol);
+                    model.Estados_List = new SelectList(db.ESTADOS, "ESTADO", "ESTADO_DESC", model.Estado);
+
+            return View(model);
+
+          }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(USUARIOS USUARIOS)
+        public ActionResult Edit(USUARIOS var_usuario)
         {
-           // USUARIOS.TC_ID = Session["CONDICIONIVA"].ToString();
+
             if (ModelState.IsValid)
             {
-                db.Entry(USUARIOS).State = EntityState.Modified;
+                db.Entry(var_usuario).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("List");
             }
-            return View(USUARIOS);
+            return RedirectToAction("List");
         }
 
-        //
-        // GET: /USUARIOS/Delete/5
-
+      
         public ActionResult Delete(String user)
         {
-            USUARIOS USUARIOS = db.USUARIOS.Find(user);
-            if (USUARIOS == null)
+            USUARIOS var_usuario = db.USUARIOS.Find(user);
+            if (var_usuario == null)
             {
                 return HttpNotFound();
             }
             if (ModelState.IsValid)
             {
-                db.USUARIOS.Remove(USUARIOS);
+                var_usuario.Estado = 0;
+                db.Entry(var_usuario).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("List");
+                return RedirectToAction("ListInactivos");
             }
             return RedirectToAction("List");
         }
 
-        //
-        // POST: /USUARIOS/Delete/5
-        /*
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            USUARIOS USUARIOS = db.USUARIOS.Find(id);
-            db.USUARIOS.Remove(USUARIOS);
-            db.SaveChanges();
-            return RedirectToAction("List");
-        }
-          */
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(USUARIOS USUARIOS)
-        {
-            if (ModelState.IsValid)
-            {
-                USUARIOS cliact = db.USUARIOS.Find(USUARIOS.Usuario);
-                db.USUARIOS.Remove(cliact);
-                db.SaveChanges();
-                return RedirectToAction("List");
-            }
-            return View(USUARIOS);
-        }
-
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(USUARIOS USUARIOS)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        USUARIOS cliact = db.USUARIOS.Find(USUARIOS.Usuario);
+        //        cliact.Estado = 0;
+        //        db.USUARIOS.Remove(cliact);
+        //        db.SaveChanges();
+        //        return RedirectToAction("List");
+        //    }
+        //    return View(USUARIOS);
+        //}
 
         protected override void Dispose(bool disposing)
         {
