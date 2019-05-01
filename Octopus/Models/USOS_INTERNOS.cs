@@ -12,12 +12,15 @@ namespace Octopus.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class USUARIOS
+    public partial class USOS_INTERNOS
     {
-        public string Usuario { get; set; }
-        public string Contraseña { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public string Rol { get; set; }
+        public int USO_ID { get; set; }
+        public Nullable<int> VEH_ID { get; set; }
+        public Nullable<int> EMP_ID { get; set; }
+        public string USO_DESCRIP { get; set; }
+        public Nullable<System.DateTime> USO_FECHA_INI { get; set; }
+        public Nullable<System.DateTime> USO_FECHA_FIN { get; set; }
+    
+        public virtual EMPLEADOS EMPLEADOS { get; set; }
     }
 }

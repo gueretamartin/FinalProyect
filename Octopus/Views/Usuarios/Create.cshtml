@@ -12,7 +12,7 @@
 <section class="full-width pageContent">
     <div>
         <div class="mdl-tabs__tab-bar">
-            <a href="@Url.Action("List","USUARIOS")" class="mdl-tabs__tab">LISTA</a>
+           <a href="@Url.Action("List","USUARIOS")" class="mdl-tabs__tab">LISTA</a>
         </div>
         <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
             <div class="mdl-grid">
@@ -29,35 +29,44 @@
 
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Usuario)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Contraseña)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Nombre)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Apellido)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Rol)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Estado)</div>
 
                                 <div class="mdl-grid">
+                                              <div class="mdl-textfield mdl-js-textfield">
 
-                                    <div class="mdl-textfield mdl-js-textfield">
-                                        @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1" })
-                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Usuario</label>
-                                    </div>
+                                                @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Usuario</label>
 
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        @Html.TextBoxFor(a => a.Contraseña, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2" })
-                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Contraseña</label>
-                                    </div>
+                                            </div>
+                                            
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                @Html.TextBoxFor(a => a.Contraseña, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Contraseña</label>
+                                            </div>
 
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                       @Html.DropDownListFor(a => a.Rol, (IEnumerable<SelectListItem>)ViewBag.Rol,"Seleccione el Rol", new { @class = "mdl-textfield__input", tabindex = "3"})
-                                    </div>
-
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        @Html.DropDownListFor(a => a.Estado,  (IEnumerable<SelectListItem>)ViewBag.Estado, "Seleccione un Estado", new { @class = "mdl-textfield__input", tabindex = "4" })                
-                                    </div>
-
-                                </div>
-
-                                <p class="text-center">
-                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin" data-toggle="tooltip" data-placement="top" title="Agregar Usuario">
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                @Html.TextBoxFor(a => a.Nombre, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                @Html.TextBoxFor(a => a.Apellido, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "4", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido</label>
+                                            </div>
+                                           
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                                @Html.TextBoxFor(a => a.Rol, new { @class = "mdl-textfield__input ", @typeof = "text", tabindex = "5", required = "required" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Rol</label>
+                                            </div>
+                                            
+                                        </div>
+                               
+                                <p  class="text-center">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin">
                                         <i class="zmdi zmdi-account-add"></i>
                                     </button>
+                                    <div class="mdl-tooltip" for="btn-addAdmin">Agregar Usuario</div>
                                 </p>
                             }
                         </div>
@@ -70,3 +79,4 @@
 </section>
 
 
+                               

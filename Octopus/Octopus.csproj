@@ -209,8 +209,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Octopus.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Partials\VW_Statistics.cs" />
-    <Compile Include="Models\Partials\USUARIOS.cs" />
     <Compile Include="Models\Partials\CLIENTES.cs" />
     <Compile Include="Models\Partials\VEHICULOS.cs" />
     <Compile Include="Models\PRESUPUESTOS.cs">
@@ -234,10 +232,13 @@
     <Compile Include="Models\TIPO_DOCUMENTO.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\USUARIOS.cs">
+    <Compile Include="Models\TIPO_VEHICULOS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\USUARIOS_TIPOS.cs">
+    <Compile Include="Models\USOS_INTERNOS.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USUARIOS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VEHICULOS.cs">
@@ -247,7 +248,6 @@
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VW_MARCAS.cs">
-    <Compile Include="Models\VW_Statistics.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -284,16 +284,6 @@
     <Content Include="Js\main.js" />
     <Content Include="Js\material.min.js" />
     <Content Include="Js\sweetalert2.min.js" />
-    <Content Include="Models\Octopus.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Octopus.edmx</DependentUpon>
-      <LastGenOutput>Octopus.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Octopus.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Octopus.edmx</DependentUpon>
-      <LastGenOutput>Octopus.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\Material-Design-Iconic-Font.eot" />
@@ -317,8 +307,18 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Octopus.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Models\Octopus.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Octopus.edmx</DependentUpon>
+      <LastGenOutput>Octopus.Context.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\Octopus.edmx.diagram">
       <DependentUpon>Octopus.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Octopus.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Octopus.edmx</DependentUpon>
+      <LastGenOutput>Octopus.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -375,11 +375,9 @@
     <Content Include="Views\Sucursales\Details.cshtml" />
     <Content Include="Views\Sucursales\Create.cshtml" />
     <Content Include="Views\Sucursales\Delete.cshtml" />
-    <Content Include="Views\Usuarios\ListInactivos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Statistics\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

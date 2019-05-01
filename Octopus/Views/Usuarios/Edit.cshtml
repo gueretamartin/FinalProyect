@@ -26,50 +26,52 @@
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary(true)
-
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Usuario)</div>
+                                
+                               <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Usuario)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Contraseña)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Nombre)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Apellido)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Rol)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Estado)</div>
-                                <div class="mdl-grid">
+    <div class="mdl-grid">
+      
 
+            <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                <h5 class="text-condensedLight" style="color: #2e6da4">DATOS PERSONALES</h5>
 
-                                    <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-                                        
-                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1" , @readonly= "true"})
-                                            <label class="mdl-textfield__label" style="color: #2e6da4">Usuario</label>
-                                        </div>
+                <div class="mdl-textfield mdl-js-textfield">
 
-                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.Contraseña, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2" })
-                                            <label class="mdl-textfield__label" style="color: #2e6da4">Contraseña</label>
-                                        </div>
+                    @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", required = "required" })
+                    <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Usuario</label>
 
-                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.DropDownListFor(a => a.Rol, Model.Roles_List, new { @class = "mdl-textfield__input", tabindex = "3" })
-                                            <label class="mdl-textfield__label" style="color: #2e6da4">Rol</label>
-                                        </div>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    @Html.TextBoxFor(a => a.Nombre, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", required = "required" })
+                    <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    @Html.TextBoxFor(a => a.Apellido, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "4", required = "required" })
+                    <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido</label>
+                </div>
 
-                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.DropDownListFor(a => a.Estado, Model.Estados_List, new { @class = "mdl-textfield__input", tabindex = "4" })
-                                            <label class="mdl-textfield__label" style="color: #2e6da4">Estado</label>
-                                        </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    @Html.TextBoxFor(a => a.Rol, new { @class = "mdl-textfield__input ", @typeof = "text", tabindex = "5", required = "required" })
+                    <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Rol</label>
+                </div>
 
-                                    
-                                    </div>
-                                </div>
-                                <p class="text-center">
-                                    <button name="Action" value="Edit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-editClient" data-toggle="tooltip" data-placement="top" title="Guardar Cambios">
-                                        <i class="zmdi zmdi-save"></i>
-                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;
-                                </p>
-                            }
-
-                        </div>
+                @Html.HiddenFor(a => a.Contraseña, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "11" })
+            </div>
+        </div>
+        <p class="text-center">
+            <button name="Action" value="Edit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-editClient">
+                <i class="zmdi zmdi-save"></i>
+            </button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <div class="mdl-tooltip" for="btn-editUsuario">Guardar Cambios</div>
+        </p>
+      }
+                        
                     </div>
                 </div>
             </div>
-       </div>
-   </div>
+        </div>
+    </div>
 </section>

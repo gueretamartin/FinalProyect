@@ -16,7 +16,6 @@ namespace Octopus.Models
     {
         public VEHICULOS()
         {
-
             this.VENTAS = new HashSet<VENTAS>();
         }
     
@@ -63,7 +62,8 @@ namespace Octopus.Models
         public virtual MARCAS MARCAS { get; set; }
         public virtual MONEDAS MONEDAS { get; set; }
         public virtual SUCURSALES SUCURSALES { get; set; }
-
+        public virtual TIPO_COMBUSTIBLES TIPO_COMBUSTIBLES { get; set; }
+        public virtual TIPO_VEHICULOS TIPO_VEHICULOS { get; set; }
         public virtual ICollection<VENTAS> VENTAS { get; set; }
     }
 }

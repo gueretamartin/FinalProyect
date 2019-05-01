@@ -1,9 +1,18 @@
 ﻿@model IEnumerable<Octopus.Models.USUARIOS>
 
-@{
-    ViewBag.Title = "Usuarios";
-    Layout = "~/Views/Shared/_HomePanel.cshtml";
+@{ //if(Session["Empleado"] != null)
+    //{
+     // USUARIOS user = Session["Empleado"] as USUARIOS;
+      ViewBag.Title = "Usuarios";
+      Layout = "~/Views/Shared/_HomePanel.cshtml";
+   // }
+   //else
+   //{
+     //  @Url.Action("Login","Login")
+  // }
 }
+
+
 
 <!DOCTYPE html>
 
@@ -12,8 +21,7 @@
     <div>
         <div class="mdl-tabs__tab-bar">
             <a href="@Url.Action("Create","Usuarios")" class="mdl-tabs__tab">NUEVO</a>
-            <a href="@Url.Action("List","Usuarios")" class="mdl-tabs__tab" style="color: #2e6da4">LISTA DE USUARIOS ACTIVOS</a>
-            <a href="@Url.Action("ListInactivos","Usuarios")" class="mdl-tabs__tab" style="color: #2e6da4">LISTA DE USUARIOS INACTIVOS</a>
+            <a href="@Url.Action("List","Usuarios")" class="mdl-tabs__tab" style="color: #2e6da4">LISTA</a>
         </div>
 
         <div class="mdl-tabs__panel" id="tabListUsuarios">
@@ -23,39 +31,33 @@
                         <div class="full-width panel-tittle bg-primary text-center tittles">
                             LISTA DE USUARIOS
                         </div>
-                        
-                        
                         <div class="full-width panel-content">
                             @using (Html.BeginForm("List", "Usuarios", FormMethod.Get))
                             {
                                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchUser" id="btn-searchUser" data-toggle="tooltip" data-placement="bottom" title="Buscar Usuario">
-                                        <i class="zmdi zmdi-search" onclick=""></i>
+                                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchUsuario">
+                                        <i class="zmdi zmdi-search" onclick="Ocultar()"></i>
                                     </label>
                                     <div class="mdl-textfield__expandable-holder">
-                                        @Html.TextBox("searchUser", null, new { @class = "mdl-textfield__input" })
+                                        @Html.TextBox("searchUsuario", null, new { @class = "mdl-textfield__input" })
                                     </div>
-                                    <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color:none; visibility:hidden" />
+                                    <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color: none; visibility: hidden" />
                                 </div>
                             }
                             <div class="mdl-list">
                                 @foreach (var item in Model)
                                 {
-                                    <div class="mdl-list__item mdl-list__item--two-line" style="padding: 4px;">
+                                    <div class="mdl-list__item mdl-list__item--two-line">
                                         <span class="mdl-list__item-primary-content">
                                             <i class="zmdi zmdi-account mdl-list__item-avatar"></i>
-                                            <span>Usuario: @Html.DisplayFor(modelItem => item.Usuario)</span><br />
-                                            @if (item.getEmpleado(item.Usuario) == null || item.getEmpleado(item.Usuario) == null)
-                                            {    <span class="mdl-list__item-sub-title" style="color:#CF2412;">No tiene un empelado asignado</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="mdl-list__item-sub-title">Nombre y Apellido: @Html.DisplayFor(modelItem => item.getEmpleado(item.Usuario).EMP_NOMBRE), @Html.DisplayFor(modelItem => item.getEmpleado(item.Usuario).EMP_APELLIDO)</span>
-                                            }
+                                                <span>Usuario: @Html.DisplayFor(modelItem => item.Usuario)</span><br />    
+                                             
+                                                <span class="mdl-list__item-sub-title">Nombre y Apellido: @Html.DisplayFor(modelItem => item.Nombre), @Html.DisplayFor(modelItem => item.Apellido)</span>
                                         </span>
-                                        <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Usuarios", new { user = item.Usuario })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                      <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Usuarios", new { user = item.Usuario })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
                                     </div>
-                                    <hr />
+                                    <li class="full-width divider-menu-h"></li>
+
                                 }
                             </div>
                         </div>
@@ -64,5 +66,8 @@
                 </div>
             </div>
         </div>
+
     </div>
 </section>
+
+

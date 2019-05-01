@@ -1,6 +1,0 @@
-Usuarios 
-
-- Que el usuario ingresado no exista.
-- Que el usuario no sea = null . 
-
-Ver que hacer cuando edita, si ppone un usuario que ya existe.
