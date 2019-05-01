@@ -27,51 +27,47 @@
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary(true)
-                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Usuario)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Usuario)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Contraseña)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Nombre)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Apellido)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Rol)</div>
-                                 <div class="mdl-grid">
-                                   
-                                     <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Estado)</div>
 
-                                         <h5 class="text-condensedLight" style="color: #2e6da4">DATOS PERSONALES</h5>
+                                <div class="mdl-grid">
 
-                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                             @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", required = "required", disabled = "disabled", @Style = "color:dimgrey" })
-                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Usuario</label>
+                                    <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
 
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled" })
+                                            <label class="mdl-textfield__label" style="color: #2e6da4">Usuario</label>
+                                        </div>
+
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.Contraseña, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", disabled = "disabled" })
+                                            <label class="mdl-textfield__label"  style="color: #2e6da4">Contraseña</label>
+                                        </div>
+
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.USUARIOS_TIPOS.ROL_DESC, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", disabled = "disabled" })
+                                            <label class="mdl-textfield__label" style="color: #2e6da4">Rol</label>
                                          </div>
-                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                         @Html.TextBoxFor(a => a.Nombre, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", required = "required", disabled = "disabled", @Style = "color:dimgrey" })
-                                         <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre</label>
-                                     </div>
-                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                         @Html.TextBoxFor(a => a.Apellido, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", required = "required", disabled = "disabled", @Style = "color:dimgrey" })
-                                         <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido</label>
-                                     </div>
 
-                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                         @Html.TextBoxFor(a => a.Rol, new { @class = "mdl-textfield__input ", @typeof = "text", tabindex = "4", required = "required", disabled = "disabled", @Style = "color:dimgrey" })
-                                         <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Rol</label>
-                                     </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.ESTADOS.ESTADO_DESC, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "4", disabled = "disabled" })
+                                            <label class="mdl-textfield__label"  style="color: #2e6da4">Estado</label>
+                                        </div>
 
-                                     @Html.HiddenFor(a => a.Contraseña, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
-
-                                       
                                     </div>
                                 </div>
 
                                 <p class="text-center">
-                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Edit" id="btn-EditEmpleado">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Edit" id="btn-EditUsuarios">
                                         <i class="zmdi zmdi-edit" style="display: inline-block; font: normal normal normal 14px/1"></i>
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Delete" id="btn-EliminarEmpleado" onclick="return confirm('¿Está seguro que quiere eliminar al Usuario @Model.Usuario?');">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Delete" id="btn-EliminarUsuarios" onclick="return confirm('¿Está seguro que quiere colocar como INACTIVO al Usuario @Model.Usuario?');">
                                         <i class="zmdi zmdi-delete"></i>
                                     </button>
-                                    <div class="mdl-tooltip" >Editar Usuario</div>
-                                    <div class="mdl-tooltip" >Eliminar Usuario</div>
+                                    <div class="mdl-tooltip">Editar Usuario</div>
+                                    <div class="mdl-tooltip">Eliminar Usuario</div>
                                 </p>
                             }
                         </div>

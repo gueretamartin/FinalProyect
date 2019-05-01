@@ -1,6 +1,7 @@
 ﻿@using Octopus.Models
 @{
        USUARIOS user = Session["Usuario"] as USUARIOS;
+       
    }
 
 
@@ -43,15 +44,13 @@
     <!-- navBar -->
     <div class="full-width navBar" style="background-color: #2e6da4">
         <div class="full-width navBar-options">
-            <i class="zmdi zmdi-more-vert btn-menu" id="btn-menu"></i>
-            <div class="mdl-tooltip" for="btn-menu">Menu</div>
+            <i class="zmdi zmdi-more-vert btn-menu" id="btn-menu" data-toggle="tooltip" data-placement="bottom" title="Menu"></i>
             <nav class="navBar-options-list">
                 <ul class="list-unstyle">
-                    <li class="btn-exit" id="btn-exit">
+                    <li class="btn-exit" id="btn-exit" data-toggle="tooltip" data-placement="bottom" title="Salir del Sistema">
                         <i class="zmdi zmdi-power"></i>
-                        <div class="mdl-tooltip" for="btn-exit">LogOut</div>
                     </li>
-                    <li class="text-condensedLight noLink"><small>@user.Usuario</small></li>
+                    <li class="text-condensedLight noLink"><small></small></li>
                     <li class="noLink">
                         <figure>
                             <img src="~/Assets/img/avatar-male.png" alt="Avatar" class="img-responsive">
@@ -74,7 +73,7 @@
                 </div>
                 <figcaption class="navLateral-body-cr hide-on-tablet">
                     <span>
-                        @user.Nombre @user.Apellido<br>
+                     <br>
                         <small>@user.Rol</small>
                     </span>
                 </figcaption>
