@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<Octopus.Models.VEHICULOS>
+@using System.Web.UI.WebControls
 
 @{
     ViewBag.Title = "Vehículos";
@@ -36,8 +37,16 @@
                             </div>
                         }
                         <nav class="full-width menu-categories">
+                            @foreach (var tv in ViewBag.TV_ID)
+                            {
+                                @tv.Text
+                            }
+
+                            @foreach (var m in ViewBag.VW_MAR)
+                            {
+                                @m.Text
+                            }
                             <ul class="list-unstyle text-center">
-                                }
                                         <li><a href="@Url.Action("List", "Vehiculos")" style="color: #2e6da4">TODOS</a></li>
                                         <li><a href="#!" style="color: #2e6da4"> | </a></li>
                                         <li><a href="@Url.Action("List", "Vehiculos", new { searchVehicle = "Ford" })" style="color: #2e6da4">Ford</a></li>

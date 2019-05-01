@@ -19,7 +19,9 @@ namespace Octopus.Controllers
         // LEVANTA LA VISTA DE LISTADO DE VEHICULOS O LISTA DE VEHICULOS QUE CONTIENEN CON EL PARÁMETRO PASADO
         public ActionResult List(string searchVehicle)
         {
-            ViewBag.VW_MAR = new SelectList(db.VW_MARCAS, "VW_ID", "VW_DESCRIPCION");
+            ViewBag.TV_ID = new SelectList(db.TIPO_VEHICULOS, "TV_ID", "TV_DESCRIPCION");
+
+            ViewBag.VW_MAR = new SelectList(db.VW_MARCAS, "VW_MAR_ID", "VW_MAR_DESCRIPCION");
 
             var vehiculos = from v in db.VEHICULOS where v.ES_ID == 1 && v.VEH_VIGENTE == true select v;
             

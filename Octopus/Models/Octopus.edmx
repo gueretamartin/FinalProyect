@@ -67,8 +67,8 @@
           <Key>
             <PropertyRef Name="ES_ID" />
           </Key>
-          <Property Name="ES_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ES_DESCRIPCION" Type="nvarchar" MaxLength="50" />
+          <Property Name="ES_ID" Type="int" Nullable="false" />
+          <Property Name="ES_DESCRIPCION" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="FECHAS">
           <Key>
@@ -811,8 +811,8 @@ warning 6002: The table/view 'Octopus.dbo.VW_MARCAS' does not have a primary key
           <Key>
             <PropertyRef Name="ES_ID" />
           </Key>
-          <Property Name="ES_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ES_DESCRIPCION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ES_ID" Type="Int32" Nullable="false" />
+          <Property Name="ES_DESCRIPCION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="CLIENTES" Relationship="Self.FK_CLIENTES_ESTADOS" FromRole="ESTADOS" ToRole="CLIENTES" />
           <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_VEHICULOS_ESTADOS" FromRole="ESTADOS" ToRole="VEHICULOS" />
         </EntityType>
