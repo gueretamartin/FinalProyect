@@ -12,14 +12,14 @@
         <!-- Tiles -->
         @foreach (var item in Model)
         {
-           <a href="@Url.Action("List",@item.TIPO)" class="full-width">
+           <a href="@Url.Action("List", @item.Tipo)" class="full-width">
             <article class="full-width tile">
                 <div class="tile-text">
                     <span class="text-condensedLight">
                         @Html.DisplayFor(modelItem => item.CANTIDAD)
                         <br>
                         <small>
-                            @Html.DisplayFor(modelItem => item.TIPO)
+                            @Html.DisplayFor(modelItem => item.Tipo)
                         </small>
                     </span>
                 </div>

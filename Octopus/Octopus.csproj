@@ -234,6 +234,9 @@
     <Compile Include="Models\TIPO_DOCUMENTO.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TIPO_VEHICULOS.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\USUARIOS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
@@ -247,6 +250,8 @@
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VW_MARCAS.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VW_Statistics.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>

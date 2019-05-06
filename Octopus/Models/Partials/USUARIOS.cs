@@ -17,7 +17,6 @@ namespace Octopus.Models
         [RegularExpression(@"^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$", ErrorMessage = "USUARIO: Sólo se permiten letras.")]
         [StringLength(50, ErrorMessage = "USUARIO: Se aceptan hasta 50 letras.")]
         string Usuario { get; set; }
-
     }
     
     [MetadataType(typeof(IUsuariosMetadata))]
@@ -31,8 +30,12 @@ namespace Octopus.Models
             return emp;
         }
 
+     
+
         public SelectList Roles_List { get; set; }
         public SelectList Estados_List { get; set; }
+
+        public  int? emp_id { get; set; }
 
     }
 }

@@ -642,7 +642,7 @@ namespace Octopus.Controllers
 
                 return RedirectToAction("List");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Home", "Home");
             }

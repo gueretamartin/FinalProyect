@@ -33,8 +33,11 @@ namespace Octopus.Controllers
 
         public ActionResult Create()
         {
+            var empleados = db.EMPLEADOS.Where(c => c.EMP_USUARIO == null);
+            var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
             ViewBag.Rol = new SelectList(db.USUARIOS_TIPOS, "ROL_ID", "ROL_DESC");
-            ViewBag.Estado = new SelectList(db.ESTADOS, "ESTADO", "ESTADO_DESC");
+            ViewBag.Estado = new SelectList(states, "ES_ID", "ES_DESCRIPCION");
+            ViewBag.Empleados = new SelectList(empleados, "EMP_ID", "EMP_NOMBRE");
             return View();
 
         }
@@ -43,6 +46,13 @@ namespace Octopus.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(USUARIOS var_usuario)
         {
+            int? emp = var_usuario.emp_id;
+            EMPLEADOS empleado = db.EMPLEADOS.FirstOrDefault(e => e.EMP_ID == emp);
+            if (empleado != null)
+            {
+                empleado.EMP_USUARIO = var_usuario.Usuario;
+                ModelState.Remove("EMPLEADOS");
+            }
             try
             {
                 if (!String.IsNullOrEmpty(var_usuario.Usuario))
@@ -64,11 +74,17 @@ namespace Octopus.Controllers
                     return this.Create();
                 }
 
+
                 if (ModelState.IsValid)
                 {
 
                     db.USUARIOS.Add(var_usuario);
                     db.SaveChanges();
+                    if (empleado != null)
+                    {
+                        db.Entry(var_usuario).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                     return RedirectToAction("List");
                 }
 
@@ -106,7 +122,7 @@ namespace Octopus.Controllers
 
             try
             {
-                var usuarios = from c in db.USUARIOS where (c.Estado == 0) select c;
+                var usuarios = from c in db.USUARIOS where (c.Estado == 2) select c;
 
                 if (!String.IsNullOrEmpty(searchUser))
                 {
@@ -122,8 +138,6 @@ namespace Octopus.Controllers
             }
 
         }
-
-
 
         [HttpPost]
         public ActionResult Acciones(String user, string Action)
@@ -145,14 +159,15 @@ namespace Octopus.Controllers
         public ActionResult Edit(string user)
         {
 
-                   var model = new USUARIOS();
-                    model = db.USUARIOS.SingleOrDefault(c => c.Usuario == user);
-                    model.Roles_List = new SelectList(db.USUARIOS_TIPOS, "ROL_ID", "ROL_DESC", model.Rol);
-                    model.Estados_List = new SelectList(db.ESTADOS, "ESTADO", "ESTADO_DESC", model.Estado);
+            var model = new USUARIOS();
+            model = db.USUARIOS.SingleOrDefault(c => c.Usuario == user);
+            var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
+            model.Roles_List = new SelectList(db.USUARIOS_TIPOS, "ROL_ID", "ROL_DESC", model.Rol);
+            model.Estados_List = new SelectList(states, "ES_ID", "ES_DESCRIPCION", model.Estado);
 
             return View(model);
 
-          }
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -168,7 +183,7 @@ namespace Octopus.Controllers
             return RedirectToAction("List");
         }
 
-      
+
         public ActionResult Delete(String user)
         {
             USUARIOS var_usuario = db.USUARIOS.Find(user);
@@ -185,21 +200,6 @@ namespace Octopus.Controllers
             }
             return RedirectToAction("List");
         }
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Delete(USUARIOS USUARIOS)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        USUARIOS cliact = db.USUARIOS.Find(USUARIOS.Usuario);
-        //        cliact.Estado = 0;
-        //        db.USUARIOS.Remove(cliact);
-        //        db.SaveChanges();
-        //        return RedirectToAction("List");
-        //    }
-        //    return View(USUARIOS);
-        //}
 
         protected override void Dispose(bool disposing)
         {

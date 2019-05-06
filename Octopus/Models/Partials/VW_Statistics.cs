@@ -22,7 +22,7 @@ namespace Octopus.Models
 
         public int getCantidad(string tipo)
         {
-            int cantidad = (int)db.VW_Statistics.FirstOrDefault(e => e.TIPO == tipo).CANTIDAD;
+            int cantidad = (int)db.VW_Statistics.FirstOrDefault(e => e.Tipo == tipo).CANTIDAD;
             return cantidad;
 
         }

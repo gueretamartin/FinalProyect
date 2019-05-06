@@ -14,7 +14,7 @@ namespace Octopus.Models
     
     public partial class VW_Statistics
     {
-        public string TIPO { get; set; }
+        public string Tipo { get; set; }
         public Nullable<int> CANTIDAD { get; set; }
     }
 }

@@ -31,6 +31,7 @@
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Contraseña)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Rol)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Estado)</div>
+                            
 
                                 <div class="mdl-grid">
 
@@ -51,6 +52,11 @@
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                         @Html.DropDownListFor(a => a.Estado,  (IEnumerable<SelectListItem>)ViewBag.Estado, "Seleccione un Estado", new { @class = "mdl-textfield__input", tabindex = "4" })                
                                     </div>
+
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        @Html.DropDownListFor(a => a.emp_id, (IEnumerable<SelectListItem>)ViewBag.EMPLEADOS, "Seleccione un Empleado", new { @class = "mdl-textfield__input", tabindex = "5" })
+                                    </div>
+
 
                                 </div>
 
