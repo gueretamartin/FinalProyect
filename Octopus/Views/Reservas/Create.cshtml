@@ -1,0 +1,89 @@
+﻿@model Octopus.Models.RESERVAS
+@using Octopus.Models
+@using System.Web.UI.WebControls
+
+@{
+    ViewBag.Title = "Reservas - Nueva";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+}
+
+<!-- pageContent -->
+<section class="full-width pageContent">
+
+    <div>
+        <div class="mdl-tabs__tab-bar">
+            <a href="@Url.Action("Create","Reservas")" class="mdl-tabs__tab" style="color: #2e6da4">NUEVO</a>
+            <a href="@Url.Action("List", "Reservas")" class="mdl-tabs__tab">LISTA</a>
+        </div>
+        <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            NUEVA RESERVA
+                        </div>
+                        <div class="full-width panel-content">
+
+                            @using (Html.BeginForm("Create", "Reservas", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_ID)</div>
+                                <div class="mdl-grid">
+                                    <div id="ReservaL" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">RESERVA</h5>
+                                        <div class="mdl-textfield mdl-js-textfield">
+                                            @Html.DropDownList("VEH_ID", null, "Vehículo", new { @class = "mdl-textfield__input", tabindex = "1"})
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <input type="date" class="mdl-textfield__input" name="fecha">
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4"></label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield" >
+                                            @Html.DropDownList("TC_ID", null, "Tipo de IVA", new { @class = "mdl-textfield__input", tabindex = "1", id = "ResOptionIVA" })
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.RES_SENIA, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Valor de Seña</label>
+                                        </div>
+                                    </div>
+
+                                    <div id="ReservaR" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight">  &nbsp;</h5>
+                                        <div class="mdl-textfield mdl-js-textfield">
+                                            @Html.DropDownListFor(r => r.EMP_ID, null, "Empleado", new { @class = "mdl-textfield__input", tabindex = "3", id = "Empleado" })
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <input type="date" class="mdl-textfield__input" name="fechaResFin">
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4"></label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="RES_CLI_CF_ID">
+                                            @Html.DropDownList("CLI_RI_ID", null, "Cliente", new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15", id = "RES_CLI_CF_ID" })
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="RES_CLI_RI_ID">
+                                            @Html.DropDownList("CLI_CF_ID", null, "Cliente", new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15", id = "RES_CLI_RI_ID" })
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.RES_VALOR_PACTADO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Valor Pactado</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield">
+                                            @Html.DropDownList("SUC_ID", null, "Sucursal", new { @class = "mdl-textfield__input", tabindex = "2" })
+                                        </div>
+                                    </div>    
+                                </div>
+
+                                <p class="text-center">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin">
+                                        <i class="zmdi zmdi-badge-check" ></i>
+                                    </button>
+                                    <div class="mdl-tooltip" for="btn-addAdmin">Reservar Vehículo</div>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

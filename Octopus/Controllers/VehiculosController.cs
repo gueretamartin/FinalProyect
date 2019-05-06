@@ -270,6 +270,25 @@ namespace Octopus.Controllers
             return RedirectToAction("List");
         }
 
+        // Reserva de vehículo
+        public ActionResult Reserve(int veh_id)
+        {
+            VEHICULOS vehSelec = db.VEHICULOS.Find(veh_id);
+            
+            //Para que sólo tome el vehículo y no sus dependencias
+            //vehSelec.EMPLEADOS = null;
+            vehSelec.EMP_ID = 0;
+            vehSelec.CLI_ID = 0;
+            vehSelec.SUC_ID = 0;
+
+
+            //return RedirectToAction("Create", "Reservas", vehSelec);
+            return RedirectToAction("Create", "Reservas", vehSelec);
+
+            //Controller cont = new ReservasController();
+            //cont.create
+        }
+
         [HttpPost]
         public ActionResult Acciones(int veh_id, string Action)
         {
@@ -287,6 +306,10 @@ namespace Octopus.Controllers
                 else if (Action == "Details")
                 {
                     return RedirectToAction("Details", new { veh_id = veh_id });
+                }
+                else if (Action == "Reserve")
+                {
+                    return RedirectToAction("Reserve", new { veh_id = veh_id });
                 }
                 else
                 {

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OctopusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OctopusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CLIENTES">
           <Key>
             <PropertyRef Name="CLI_ID" />
@@ -112,13 +112,11 @@
           <Property Name="EMP_ID" Type="int" />
           <Property Name="RES_SENIA" Type="int" />
           <Property Name="RES_VALOR_PACTADO" Type="int" />
-          <Property Name="RES_INICIO" Type="date" />
-          <Property Name="RES_FIN" Type="date" />
+          <Property Name="FEC_ID_FIN" Type="int" />
           <Property Name="RES_ESTADO" Type="bit" />
-          <Property Name="FEC_ID" Type="int" />
-          <Property Name="CLIENTE_NOMBRE" Type="varchar" MaxLength="250" />
-          <Property Name="CLIENTE_APELLIDO" Type="varchar" MaxLength="250" />
-          <Property Name="CLIENTE_DOC" Type="int" />
+          <Property Name="FEC_ID_INICIO" Type="int" />
+          <Property Name="CLI_ID" Type="int" />
+          <Property Name="SUC_ID" Type="int" />
         </EntityType>
         <EntityType Name="SERVICIOS">
           <Key>
@@ -328,6 +326,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RESERVAS_CLIENTES">
+          <End Role="CLIENTES" Type="Self.CLIENTES" Multiplicity="0..1" />
+          <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTES">
+              <PropertyRef Name="CLI_ID" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="CLI_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RESERVAS_EMPLEADOS">
           <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
           <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
@@ -348,7 +358,31 @@
               <PropertyRef Name="FEC_ID" />
             </Principal>
             <Dependent Role="RESERVAS">
+              <PropertyRef Name="FEC_ID_INICIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVAS_FECHAS1">
+          <End Role="FECHAS" Type="Self.FECHAS" Multiplicity="0..1" />
+          <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FECHAS">
               <PropertyRef Name="FEC_ID" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="FEC_ID_FIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVAS_SUCURSALES">
+          <End Role="SUCURSALES" Type="Self.SUCURSALES" Multiplicity="0..1" />
+          <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUCURSALES">
+              <PropertyRef Name="SUC_ID" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="SUC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -548,12 +582,24 @@
             <End Role="FECHAS" EntitySet="FECHAS" />
             <End Role="PRESUPUESTOS" EntitySet="PRESUPUESTOS" />
           </AssociationSet>
+          <AssociationSet Name="FK_RESERVAS_CLIENTES" Association="Self.FK_RESERVAS_CLIENTES">
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
+          </AssociationSet>
           <AssociationSet Name="FK_RESERVAS_EMPLEADOS" Association="Self.FK_RESERVAS_EMPLEADOS">
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
             <End Role="RESERVAS" EntitySet="RESERVAS" />
           </AssociationSet>
           <AssociationSet Name="FK_RESERVAS_FECHAS" Association="Self.FK_RESERVAS_FECHAS">
             <End Role="FECHAS" EntitySet="FECHAS" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVAS_FECHAS1" Association="Self.FK_RESERVAS_FECHAS1">
+            <End Role="FECHAS" EntitySet="FECHAS" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVAS_SUCURSALES" Association="Self.FK_RESERVAS_SUCURSALES">
+            <End Role="SUCURSALES" EntitySet="SUCURSALES" />
             <End Role="RESERVAS" EntitySet="RESERVAS" />
           </AssociationSet>
           <AssociationSet Name="FK_RESERVAS_VEHICULOS" Association="Self.FK_RESERVAS_VEHICULOS">
@@ -605,8 +651,7 @@
             <End Role="VENTAS" EntitySet="VENTAS" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OctopusModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -642,6 +687,7 @@
           <NavigationProperty Name="ENTREGAS" Relationship="Self.FK_ENTREGAS_CLIENTES" FromRole="CLIENTES" ToRole="ENTREGAS" />
           <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_VEHICULOS_CLIENTES" FromRole="CLIENTES" ToRole="VEHICULOS" />
           <NavigationProperty Name="VENTAS" Relationship="Self.FK_VENTAS_CLIENTES" FromRole="CLIENTES" ToRole="VENTAS" />
+          <NavigationProperty Name="RESERVAS" Relationship="OctopusModel.FK_RESERVAS_CLIENTES" FromRole="CLIENTES" ToRole="RESERVAS" />
         </EntityType>
         <EntityType Name="EMPLEADOS">
           <Key>
@@ -662,10 +708,10 @@
           <Property Name="EMP_APELLIDO_NOMBRE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="SUCURSALES" Relationship="Self.FK_EMPLEADOS_SUCURSALES" FromRole="EMPLEADOS" ToRole="SUCURSALES" />
           <NavigationProperty Name="PRESUPUESTOS" Relationship="Self.FK_PRESUPUESTOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="PRESUPUESTOS" />
-          <NavigationProperty Name="RESERVAS" Relationship="Self.FK_RESERVAS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="RESERVAS" />
           <NavigationProperty Name="USOS_INTERNOS" Relationship="Self.FK_USOS_INTERNOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="USOS_INTERNOS" />
           <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_VEHICULOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="VEHICULOS" />
           <NavigationProperty Name="VENTAS" Relationship="Self.FK_VENTAS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="VENTAS" />
+          <NavigationProperty Name="RESERVAS" Relationship="OctopusModel.FK_RESERVAS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="RESERVAS" />
         </EntityType>
         <EntityType Name="ENTREGAS">
           <Key>
@@ -694,10 +740,11 @@
           <Property Name="FEC_ANIOMES" Type="Int32" />
           <NavigationProperty Name="ENTREGAS" Relationship="Self.FK_ENTREGAS_FECHAS" FromRole="FECHAS" ToRole="ENTREGAS" />
           <NavigationProperty Name="PRESUPUESTOS" Relationship="Self.FK_PRESUPUESTOS_FECHAS" FromRole="FECHAS" ToRole="PRESUPUESTOS" />
-          <NavigationProperty Name="RESERVAS" Relationship="Self.FK_RESERVAS_FECHAS" FromRole="FECHAS" ToRole="RESERVAS" />
           <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_VEHICULOS_FECHAS" FromRole="FECHAS" ToRole="VEHICULOS" />
           <NavigationProperty Name="VENTAS" Relationship="Self.FK_VENTAS_FECHAS" FromRole="FECHAS" ToRole="VENTAS" />
-        </EntityType>
+          <NavigationProperty Name="RESERVAS" Relationship="OctopusModel.FK_RESERVAS_FECHAS" FromRole="FECHAS" ToRole="RESERVAS" />
+          <NavigationProperty Name="RESERVAS1" Relationship="OctopusModel.FK_RESERVAS_FECHAS1" FromRole="FECHAS" ToRole="RESERVAS" />
+          </EntityType>
         <EntityType Name="IMAGENES">
           <Key>
             <PropertyRef Name="IMG_ID" />
@@ -730,26 +777,6 @@
           <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_PRESUPUESTOS_EMPLEADOS" FromRole="PRESUPUESTOS" ToRole="EMPLEADOS" />
           <NavigationProperty Name="FECHAS" Relationship="Self.FK_PRESUPUESTOS_FECHAS" FromRole="PRESUPUESTOS" ToRole="FECHAS" />
         </EntityType>
-        <EntityType Name="RESERVAS">
-          <Key>
-            <PropertyRef Name="RES_ID" />
-          </Key>
-          <Property Name="RES_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VEH_ID" Type="Int32" />
-          <Property Name="EMP_ID" Type="Int32" />
-          <Property Name="RES_SENIA" Type="Int32" />
-          <Property Name="RES_VALOR_PACTADO" Type="Int32" />
-          <Property Name="RES_INICIO" Type="DateTime" Precision="0" />
-          <Property Name="RES_FIN" Type="DateTime" Precision="0" />
-          <Property Name="RES_ESTADO" Type="Boolean" />
-          <Property Name="FEC_ID" Type="Int32" />
-          <Property Name="CLIENTE_NOMBRE" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="CLIENTE_APELLIDO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="CLIENTE_DOC" Type="Int32" />
-          <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_RESERVAS_EMPLEADOS" FromRole="RESERVAS" ToRole="EMPLEADOS" />
-          <NavigationProperty Name="FECHAS" Relationship="Self.FK_RESERVAS_FECHAS" FromRole="RESERVAS" ToRole="FECHAS" />
-          <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_RESERVAS_VEHICULOS" FromRole="RESERVAS" ToRole="VEHICULOS" />
-        </EntityType>
         <EntityType Name="SERVICIOS">
           <Key>
             <PropertyRef Name="SER_ID" />
@@ -769,6 +796,7 @@
           <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_EMPLEADOS_SUCURSALES" FromRole="SUCURSALES" ToRole="EMPLEADOS" />
           <NavigationProperty Name="SERVICIOS" Relationship="Self.FK_SERVICIOS_SUCURSALES" FromRole="SUCURSALES" ToRole="SERVICIOS" />
           <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_VEHICULOS_SUCURSALES" FromRole="SUCURSALES" ToRole="VEHICULOS" />
+          <NavigationProperty Name="RESERVAS" Relationship="OctopusModel.FK_RESERVAS_SUCURSALES" FromRole="SUCURSALES" ToRole="RESERVAS" />
         </EntityType>
         <EntityType Name="TIPO_CLIENTE">
           <Key>
@@ -848,10 +876,10 @@
           <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_VEHICULOS_EMPLEADOS" FromRole="VEHICULOS" ToRole="EMPLEADOS" />
           <NavigationProperty Name="FECHAS" Relationship="Self.FK_VEHICULOS_FECHAS" FromRole="VEHICULOS" ToRole="FECHAS" />
           <NavigationProperty Name="IMAGENES" Relationship="Self.FK_IMAGENES_VEHICULOS" FromRole="VEHICULOS" ToRole="IMAGENES" />
-          <NavigationProperty Name="RESERVAS" Relationship="Self.FK_RESERVAS_VEHICULOS" FromRole="VEHICULOS" ToRole="RESERVAS" />
           <NavigationProperty Name="SUCURSALES" Relationship="Self.FK_VEHICULOS_SUCURSALES" FromRole="VEHICULOS" ToRole="SUCURSALES" />
           <NavigationProperty Name="USOS_INTERNOS" Relationship="Self.FK_USOS_INTERNOS_VEHICULOS" FromRole="VEHICULOS" ToRole="USOS_INTERNOS" />
           <NavigationProperty Name="VENTAS" Relationship="Self.FK_VENTAS_VEHICULOS" FromRole="VEHICULOS" ToRole="VENTAS" />
+          <NavigationProperty Name="RESERVAS" Relationship="OctopusModel.FK_RESERVAS_VEHICULOS" FromRole="VEHICULOS" ToRole="RESERVAS" />
         </EntityType>
         <EntityType Name="VENTAS">
           <Key>
@@ -953,18 +981,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RESERVAS_EMPLEADOS">
-          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
-          <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLEADOS">
-              <PropertyRef Name="EMP_ID" />
-            </Principal>
-            <Dependent Role="RESERVAS">
-              <PropertyRef Name="EMP_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_USOS_INTERNOS_EMPLEADOS">
           <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
           <End Role="USOS_INTERNOS" Type="Self.USOS_INTERNOS" Multiplicity="*" />
@@ -1037,18 +1053,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RESERVAS_FECHAS">
-          <End Role="FECHAS" Type="Self.FECHAS" Multiplicity="0..1" />
-          <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FECHAS">
-              <PropertyRef Name="FEC_ID" />
-            </Principal>
-            <Dependent Role="RESERVAS">
-              <PropertyRef Name="FEC_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_VEHICULOS_FECHAS">
           <End Role="FECHAS" Type="Self.FECHAS" Multiplicity="1" />
           <End Role="VEHICULOS" Type="Self.VEHICULOS" Multiplicity="*" />
@@ -1083,18 +1087,6 @@
               <PropertyRef Name="VEH_ID" />
             </Principal>
             <Dependent Role="IMAGENES">
-              <PropertyRef Name="VEH_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RESERVAS_VEHICULOS">
-          <End Role="VEHICULOS" Type="Self.VEHICULOS" Multiplicity="0..1" />
-          <End Role="RESERVAS" Type="Self.RESERVAS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VEHICULOS">
-              <PropertyRef Name="VEH_ID" />
-            </Principal>
-            <Dependent Role="RESERVAS">
               <PropertyRef Name="VEH_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1154,7 +1146,6 @@
           <EntitySet Name="FECHAS" EntityType="Self.FECHAS" />
           <EntitySet Name="IMAGENES" EntityType="Self.IMAGENES" />
           <EntitySet Name="PRESUPUESTOS" EntityType="Self.PRESUPUESTOS" />
-          <EntitySet Name="RESERVAS" EntityType="Self.RESERVAS" />
           <EntitySet Name="SERVICIOS" EntityType="Self.SERVICIOS" />
           <EntitySet Name="SUCURSALES" EntityType="Self.SUCURSALES" />
           <EntitySet Name="TIPO_CLIENTE" EntityType="Self.TIPO_CLIENTE" />
@@ -1191,10 +1182,6 @@
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
             <End Role="PRESUPUESTOS" EntitySet="PRESUPUESTOS" />
           </AssociationSet>
-          <AssociationSet Name="FK_RESERVAS_EMPLEADOS" Association="Self.FK_RESERVAS_EMPLEADOS">
-            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
-            <End Role="RESERVAS" EntitySet="RESERVAS" />
-          </AssociationSet>
           <AssociationSet Name="FK_USOS_INTERNOS_EMPLEADOS" Association="Self.FK_USOS_INTERNOS_EMPLEADOS">
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
             <End Role="USOS_INTERNOS" EntitySet="USOS_INTERNOS" />
@@ -1219,10 +1206,6 @@
             <End Role="FECHAS" EntitySet="FECHAS" />
             <End Role="PRESUPUESTOS" EntitySet="PRESUPUESTOS" />
           </AssociationSet>
-          <AssociationSet Name="FK_RESERVAS_FECHAS" Association="Self.FK_RESERVAS_FECHAS">
-            <End Role="FECHAS" EntitySet="FECHAS" />
-            <End Role="RESERVAS" EntitySet="RESERVAS" />
-          </AssociationSet>
           <AssociationSet Name="FK_VEHICULOS_FECHAS" Association="Self.FK_VEHICULOS_FECHAS">
             <End Role="FECHAS" EntitySet="FECHAS" />
             <End Role="VEHICULOS" EntitySet="VEHICULOS" />
@@ -1234,10 +1217,6 @@
           <AssociationSet Name="FK_IMAGENES_VEHICULOS" Association="Self.FK_IMAGENES_VEHICULOS">
             <End Role="VEHICULOS" EntitySet="VEHICULOS" />
             <End Role="IMAGENES" EntitySet="IMAGENES" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RESERVAS_VEHICULOS" Association="Self.FK_RESERVAS_VEHICULOS">
-            <End Role="VEHICULOS" EntitySet="VEHICULOS" />
-            <End Role="RESERVAS" EntitySet="RESERVAS" />
           </AssociationSet>
           <AssociationSet Name="FK_SERVICIOS_SUCURSALES" Association="Self.FK_SERVICIOS_SUCURSALES">
             <End Role="SUCURSALES" EntitySet="SUCURSALES" />
@@ -1255,8 +1234,126 @@
             <End Role="VEHICULOS" EntitySet="VEHICULOS" />
             <End Role="VENTAS" EntitySet="VENTAS" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          <EntitySet Name="RESERVAS" EntityType="OctopusModel.RESERVAS" />
+          <AssociationSet Name="FK_RESERVAS_CLIENTES" Association="OctopusModel.FK_RESERVAS_CLIENTES">
+            <End Role="CLIENTES" EntitySet="CLIENTES" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVAS_EMPLEADOS" Association="OctopusModel.FK_RESERVAS_EMPLEADOS">
+            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVAS_FECHAS" Association="OctopusModel.FK_RESERVAS_FECHAS">
+            <End Role="FECHAS" EntitySet="FECHAS" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVAS_FECHAS1" Association="OctopusModel.FK_RESERVAS_FECHAS1">
+            <End Role="FECHAS" EntitySet="FECHAS" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVAS_SUCURSALES" Association="OctopusModel.FK_RESERVAS_SUCURSALES">
+            <End Role="SUCURSALES" EntitySet="SUCURSALES" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVAS_VEHICULOS" Association="OctopusModel.FK_RESERVAS_VEHICULOS">
+            <End Role="VEHICULOS" EntitySet="VEHICULOS" />
+            <End Role="RESERVAS" EntitySet="RESERVAS" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="RESERVAS">
+          <Key>
+            <PropertyRef Name="RES_ID" />
+          </Key>
+          <Property Name="RES_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VEH_ID" Type="Int32" />
+          <Property Name="EMP_ID" Type="Int32" />
+          <Property Name="RES_SENIA" Type="Int32" />
+          <Property Name="RES_VALOR_PACTADO" Type="Int32" />
+          <Property Name="FEC_ID_FIN" Type="Int32" />
+          <Property Name="RES_ESTADO" Type="Boolean" />
+          <Property Name="FEC_ID_INICIO" Type="Int32" />
+          <Property Name="CLI_ID" Type="Int32" />
+          <Property Name="SUC_ID" Type="Int32" />
+          <NavigationProperty Name="CLIENTES" Relationship="OctopusModel.FK_RESERVAS_CLIENTES" FromRole="RESERVAS" ToRole="CLIENTES" />
+          <NavigationProperty Name="EMPLEADOS" Relationship="OctopusModel.FK_RESERVAS_EMPLEADOS" FromRole="RESERVAS" ToRole="EMPLEADOS" />
+          <NavigationProperty Name="FECHAS" Relationship="OctopusModel.FK_RESERVAS_FECHAS" FromRole="RESERVAS" ToRole="FECHAS" />
+          <NavigationProperty Name="FECHAS1" Relationship="OctopusModel.FK_RESERVAS_FECHAS1" FromRole="RESERVAS" ToRole="FECHAS" />
+          <NavigationProperty Name="SUCURSALES" Relationship="OctopusModel.FK_RESERVAS_SUCURSALES" FromRole="RESERVAS" ToRole="SUCURSALES" />
+          <NavigationProperty Name="VEHICULOS" Relationship="OctopusModel.FK_RESERVAS_VEHICULOS" FromRole="RESERVAS" ToRole="VEHICULOS" />
+        </EntityType>
+        <Association Name="FK_RESERVAS_CLIENTES">
+          <End Type="OctopusModel.CLIENTES" Role="CLIENTES" Multiplicity="0..1" />
+          <End Type="OctopusModel.RESERVAS" Role="RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CLIENTES">
+              <PropertyRef Name="CLI_ID" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="CLI_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVAS_EMPLEADOS">
+          <End Type="OctopusModel.EMPLEADOS" Role="EMPLEADOS" Multiplicity="0..1" />
+          <End Type="OctopusModel.RESERVAS" Role="RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADOS">
+              <PropertyRef Name="EMP_ID" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="EMP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVAS_FECHAS">
+          <End Type="OctopusModel.FECHAS" Role="FECHAS" Multiplicity="0..1" />
+          <End Type="OctopusModel.RESERVAS" Role="RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FECHAS">
+              <PropertyRef Name="FEC_ID" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="FEC_ID_INICIO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVAS_FECHAS1">
+          <End Type="OctopusModel.FECHAS" Role="FECHAS" Multiplicity="0..1" />
+          <End Type="OctopusModel.RESERVAS" Role="RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FECHAS">
+              <PropertyRef Name="FEC_ID" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="FEC_ID_FIN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVAS_SUCURSALES">
+          <End Type="OctopusModel.SUCURSALES" Role="SUCURSALES" Multiplicity="0..1" />
+          <End Type="OctopusModel.RESERVAS" Role="RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUCURSALES">
+              <PropertyRef Name="SUC_ID" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="SUC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVAS_VEHICULOS">
+          <End Type="OctopusModel.VEHICULOS" Role="VEHICULOS" Multiplicity="0..1" />
+          <End Type="OctopusModel.RESERVAS" Role="RESERVAS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VEHICULOS">
+              <PropertyRef Name="VEH_ID" />
+            </Principal>
+            <Dependent Role="RESERVAS">
+              <PropertyRef Name="VEH_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1366,24 +1463,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RESERVAS">
-            <EntityTypeMapping TypeName="OctopusModel.RESERVAS">
-              <MappingFragment StoreEntitySet="RESERVAS">
-                <ScalarProperty Name="RES_ID" ColumnName="RES_ID" />
-                <ScalarProperty Name="VEH_ID" ColumnName="VEH_ID" />
-                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
-                <ScalarProperty Name="RES_SENIA" ColumnName="RES_SENIA" />
-                <ScalarProperty Name="RES_VALOR_PACTADO" ColumnName="RES_VALOR_PACTADO" />
-                <ScalarProperty Name="RES_INICIO" ColumnName="RES_INICIO" />
-                <ScalarProperty Name="RES_FIN" ColumnName="RES_FIN" />
-                <ScalarProperty Name="RES_ESTADO" ColumnName="RES_ESTADO" />
-                <ScalarProperty Name="FEC_ID" ColumnName="FEC_ID" />
-                <ScalarProperty Name="CLIENTE_NOMBRE" ColumnName="CLIENTE_NOMBRE" />
-                <ScalarProperty Name="CLIENTE_APELLIDO" ColumnName="CLIENTE_APELLIDO" />
-                <ScalarProperty Name="CLIENTE_DOC" ColumnName="CLIENTE_DOC" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SERVICIOS">
             <EntityTypeMapping TypeName="OctopusModel.SERVICIOS">
               <MappingFragment StoreEntitySet="SERVICIOS">
@@ -1487,6 +1566,22 @@
                 <ScalarProperty Name="VEH_ID" ColumnName="VEH_ID" />
                 <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
                 <ScalarProperty Name="MONTO" ColumnName="MONTO" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESERVAS">
+            <EntityTypeMapping TypeName="OctopusModel.RESERVAS">
+              <MappingFragment StoreEntitySet="RESERVAS">
+                <ScalarProperty Name="SUC_ID" ColumnName="SUC_ID" />
+                <ScalarProperty Name="CLI_ID" ColumnName="CLI_ID" />
+                <ScalarProperty Name="FEC_ID_INICIO" ColumnName="FEC_ID_INICIO" />
+                <ScalarProperty Name="RES_ESTADO" ColumnName="RES_ESTADO" />
+                <ScalarProperty Name="FEC_ID_FIN" ColumnName="FEC_ID_FIN" />
+                <ScalarProperty Name="RES_VALOR_PACTADO" ColumnName="RES_VALOR_PACTADO" />
+                <ScalarProperty Name="RES_SENIA" ColumnName="RES_SENIA" />
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="VEH_ID" ColumnName="VEH_ID" />
+                <ScalarProperty Name="RES_ID" ColumnName="RES_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

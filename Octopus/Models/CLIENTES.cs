@@ -19,6 +19,7 @@ namespace Octopus.Models
             this.ENTREGAS = new HashSet<ENTREGAS>();
             this.VEHICULOS = new HashSet<VEHICULOS>();
             this.VENTAS = new HashSet<VENTAS>();
+            this.RESERVAS = new HashSet<RESERVAS>();
         }
     
         public int CLI_ID { get; set; }
@@ -50,5 +51,6 @@ namespace Octopus.Models
         public virtual ICollection<ENTREGAS> ENTREGAS { get; set; }
         public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
         public virtual ICollection<VENTAS> VENTAS { get; set; }
+        public virtual ICollection<RESERVAS> RESERVAS { get; set; }
     }
 }

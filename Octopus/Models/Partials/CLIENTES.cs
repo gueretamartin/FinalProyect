@@ -122,5 +122,13 @@ namespace Octopus.Models
             }
         }
 
+        public string CLI_DESCRIPCIONES
+        {
+            get
+            {
+                return String.Format(CLI_RI_CUIT + " " + CLI_NOMBRE + " " + CLI_APELLIDO + " " + CLI_RI_RAZONSOCIAL);
+            }
+        }
+
     }
 }

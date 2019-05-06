@@ -19,6 +19,7 @@ namespace Octopus.Models
             this.EMPLEADOS = new HashSet<EMPLEADOS>();
             this.SERVICIOS = new HashSet<SERVICIOS>();
             this.VEHICULOS = new HashSet<VEHICULOS>();
+            this.RESERVAS = new HashSet<RESERVAS>();
         }
     
         public int SUC_ID { get; set; }
@@ -27,5 +28,6 @@ namespace Octopus.Models
         public virtual ICollection<EMPLEADOS> EMPLEADOS { get; set; }
         public virtual ICollection<SERVICIOS> SERVICIOS { get; set; }
         public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
+        public virtual ICollection<RESERVAS> RESERVAS { get; set; }
     }
 }
