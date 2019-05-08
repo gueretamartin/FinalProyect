@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Octopus.Models.USUARIOS>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<Octopus.Models.USUARIOS>
 
 @{
     ViewBag.Title = "Usuarios";
@@ -44,13 +46,13 @@
                                     <div class="mdl-list__item mdl-list__item--two-line" style="padding: 4px;">
                                         <span class="mdl-list__item-primary-content">
                                             <i class="zmdi zmdi-account mdl-list__item-avatar"></i>
-                                            <span>Usuario: @Html.DisplayFor(modelItem => item.Usuario)</span><br />
+                                            <span>Usuario: <b>@Html.DisplayFor(modelItem => item.Usuario)</b></span><br />
                                             @if (item.getEmpleado(item.Usuario) == null || item.getEmpleado(item.Usuario) == null)
                                             {    <span class="mdl-list__item-sub-title" style="color:#CF2412;">No tiene un empelado asignado</span>
                                             }
                                             else
                                             {
-                                                <span class="mdl-list__item-sub-title">Nombre y Apellido: @Html.DisplayFor(modelItem => item.getEmpleado(item.Usuario).EMP_NOMBRE), @Html.DisplayFor(modelItem => item.getEmpleado(item.Usuario).EMP_APELLIDO)</span>
+                                                <span class="mdl-list__item-sub-title">Empleado: @Html.DisplayFor(modelItem => item.getEmpleado(item.Usuario).NombreParaMostrar)</span>
                                             }
                                         </span>
                                         <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Usuarios", new { user = item.Usuario })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
@@ -59,6 +61,9 @@
                                 }
                             </div>
                         </div>
+                        <div style="text-align:center;">
+                            @Html.PagedListPager(Model, page => Url.Action("List", "Usuarios", new { page, search = Request.QueryString["search"], @class = "list-unstyle text-center" }))
+                        </div>
                     </div>
 
                 </div>
@@ -66,3 +71,5 @@
         </div>
     </div>
 </section>
+
+<link rel="stylesheet" href="~/Css/bootstrap_pag.css" />

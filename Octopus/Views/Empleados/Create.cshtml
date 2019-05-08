@@ -12,7 +12,7 @@
 <section class="full-width pageContent">
     <div>
         <div class="mdl-tabs__tab-bar">
-           <a href="@Url.Action("List","Empleados")" class="mdl-tabs__tab">LISTA</a>
+            <a href="@Url.Action("List","Empleados")" class="mdl-tabs__tab">LISTA</a>
         </div>
         <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
             <div class="mdl-grid">
@@ -36,56 +36,54 @@
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TELEFONO)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_EMAIL)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TIPO)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_USER)</div>
 
                                 <div class="mdl-grid">
-                                              <div class="mdl-textfield mdl-js-textfield">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        @Html.TextBoxFor(a => a.EMP_DNI, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DNI*</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        @Html.TextBoxFor(a => a.EMP_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre*</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        @Html.TextBoxFor(a => a.EMP_APELLIDO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido*</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        @Html.DropDownListFor(a => a.SUC_ID, (IEnumerable<SelectListItem>)ViewBag.Sucursal, "Seleccione una Sucursal*", new { @class = "mdl-textfield__input", tabindex = "4" })
+                                        @Html.ValidationMessageFor(a => a.SUC_ID)
+                                    </div>
+                                  <!--El Tipo de Empleado debería ser otra tabla.-->
+                                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        @Html.TextBoxFor(a => a.EMP_TIPO, new { @class = "mdl-textfield__input ", @typeof = "text", tabindex = "5" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Cargo*</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        @Html.TextBoxFor(a => a.EMP_EMAIL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">E-Mail*</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        @Html.TextBoxFor(a => a.EMP_DIRECCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "8" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Direccion</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                                        @Html.TextBoxFor(a => a.EMP_CODPOSTAL, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "9" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Código Postal</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                                        @Html.TextBoxFor(a => a.EMP_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "10" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Teléfono</label>
+                                    </div>
+                                    @*<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        @Html.DropDownListFor(a => a.EMP_ESTADO, (IEnumerable<SelectListItem>)ViewBag.Estado, "Seleccione un Estado*", new { @class = "mdl-textfield__input", tabindex = "4" })
+                                    </div>*@
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <p style="color:red">Los campos * son obligatorios</p>
+                                    </div>
+                                </div>
 
-                                                @Html.TextBoxFor(a => a.EMP_DNI, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", required = "required" })
-                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DNI</label>
-
-                                            </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                @Html.TextBoxFor(a => a.EMP_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", required = "required" })
-                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre</label>
-                                            </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                @Html.TextBoxFor(a => a.EMP_APELLIDO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", required = "required" })
-                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido</label>
-                                            </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                    @Html.LabelFor(a => a.SUC_ID, "Sucursal", new { @class = "mdl-textfield__input", required = "required" })
-                                                    @Html.DropDownList("SUC_ID")
-                                                    @Html.ValidationMessageFor(a => a.SUC_ID)
-                                            </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                @Html.TextBoxFor(a => a.EMP_TIPO, new { @class = "mdl-textfield__input ", @typeof = "text", tabindex = "5", required = "required" })
-                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Cargo</label>
-                                            </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                @Html.TextBoxFor(a => a.EMP_EMAIL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6", required = "required" })
-                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">E - Mail</label>
-                                            </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                @Html.TextBoxFor(a => a.EMP_USER, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "7", required = "required" })
-                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Usuario</label>
-                                            </div>
-
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                                @Html.TextBoxFor(a => a.EMP_DIRECCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "8", required = "required" })
-                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Direccion</label>
-                                            </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
-                                                @Html.TextBoxFor(a => a.EMP_CODPOSTAL, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "9", required = "required" })
-                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Código Postal</label>
-                                            </div>
-                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
-                                                @Html.TextBoxFor(a => a.EMP_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "10" })
-                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Teléfono</label>
-                                            </div>
-                                        </div>
-                               
-                                <p  class="text-center">
+                                <p class="text-center">
                                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin">
                                         <i class="zmdi zmdi-account-add"></i>
                                     </button>
@@ -102,4 +100,3 @@
 </section>
 
 
-                               

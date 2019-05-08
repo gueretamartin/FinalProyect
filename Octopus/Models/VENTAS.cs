@@ -14,11 +14,6 @@ namespace Octopus.Models
     
     public partial class VENTAS
     {
-        public VENTAS()
-        {
-            this.ENTREGAS = new HashSet<ENTREGAS>();
-        }
-    
         public int VEN_ID { get; set; }
         public Nullable<int> FEC_ID { get; set; }
         public Nullable<int> CLI_ID { get; set; }
@@ -28,7 +23,6 @@ namespace Octopus.Models
     
         public virtual CLIENTES CLIENTES { get; set; }
         public virtual EMPLEADOS EMPLEADOS { get; set; }
-        public virtual ICollection<ENTREGAS> ENTREGAS { get; set; }
         public virtual FECHAS FECHAS { get; set; }
         public virtual VEHICULOS VEHICULOS { get; set; }
     }

@@ -35,7 +35,6 @@
 
 
                                     <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-                                        
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1" , @readonly= "true"})
                                             <label class="mdl-textfield__label" style="color: #2e6da4">Usuario</label>
@@ -43,19 +42,26 @@
 
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.TextBoxFor(a => a.Contraseña, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2" })
-                                            <label class="mdl-textfield__label" style="color: #2e6da4">Contraseña</label>
+                                            <label class="mdl-textfield__label" style="color: #2e6da4">Contraseña*</label>
                                         </div>
 
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.DropDownListFor(a => a.Rol, Model.Roles_List, new { @class = "mdl-textfield__input", tabindex = "3" })
-                                            <label class="mdl-textfield__label" style="color: #2e6da4">Rol</label>
+                                            <label class="mdl-textfield__label" style="color: #2e6da4">Rol*</label>
                                         </div>
 
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.DropDownListFor(a => a.Estado, Model.Estados_List, new { @class = "mdl-textfield__input", tabindex = "4" })
-                                            <label class="mdl-textfield__label" style="color: #2e6da4">Estado</label>
+                                            <label class="mdl-textfield__label" style="color: #2e6da4">Estado*</label>
                                         </div>
-
+                                        
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.DropDownListFor(a => a.emp_id, Model.Empleados_List, new { @class = "mdl-textfield__input", tabindex = "5" })
+                                            <label class="mdl-textfield__label" style="color: #2e6da4">Empleado</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            <p style="color:red">Los campos * son obligatorios</p>
+                                        </div>
                                     
                                     </div>
                                 </div>

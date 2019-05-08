@@ -16,7 +16,6 @@ namespace Octopus.Models
     {
         public CLIENTES()
         {
-            this.ENTREGAS = new HashSet<ENTREGAS>();
             this.VEHICULOS = new HashSet<VEHICULOS>();
             this.VENTAS = new HashSet<VENTAS>();
         }
@@ -50,7 +49,6 @@ namespace Octopus.Models
         public virtual ESTADOS ESTADOS { get; set; }
         public virtual TIPO_CLIENTE TIPO_CLIENTE { get; set; }
         public virtual TIPO_DOCUMENTO TIPO_DOCUMENTO { get; set; }
-        public virtual ICollection<ENTREGAS> ENTREGAS { get; set; }
         public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
         public virtual ICollection<VENTAS> VENTAS { get; set; }
     }

@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Octopus.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace Octopus.Controllers
 {
@@ -17,14 +19,9 @@ namespace Octopus.Controllers
 
 
         // GET: /Empleados/
-        public ActionResult Index()
-        {
-            var empleados = db.EMPLEADOS.Include(e => e.SUCURSALES);
-            return View(db.EMPLEADOS.ToList());
-        }
-
+     
         #region DesarrolloMartin
-        public ActionResult List(string searchEmpleado)
+        public ActionResult List(string searchEmpleado, int? page)
         {
              var empleados = from c in db.EMPLEADOS
                            select c;
@@ -36,7 +33,7 @@ namespace Octopus.Controllers
                     || c.EMP_APELLIDO.Contains(searchEmpleado)
                     || c.EMP_DNI.Contains(searchEmpleado));
             }
-            return View(empleados.ToList());
+            return View(empleados.ToList().ToPagedList(page ?? 1, 4));
         }
 
         // GET: /Empleados/Details/5
@@ -62,7 +59,10 @@ namespace Octopus.Controllers
         // GET: /Empleados/Create
         public ActionResult Create()
         {
-            ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP");
+            
+            //var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
+            //ViewBag.Estado = new SelectList(states, "ES_ID", "ES_DESCRIPCION");
+            ViewBag.Sucursal = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP");
             return View();
         }
 
@@ -79,6 +79,7 @@ namespace Octopus.Controllers
              //   var empleado = db.EMPLEADOS.Single(u => u.EMP_ID == empleados.EMP_ID);
               //  empleados.EMP_APELLIDO_NOMBRE = empleados.EMP_APELLIDO + " " + empleados.EMP_NOMBRE;
                 //CleanClient(clientes);
+                empleados.EMP_ESTADO = 1;
                 db.EMPLEADOS.Add(empleados);
                 db.SaveChanges();
                 return RedirectToAction("List");

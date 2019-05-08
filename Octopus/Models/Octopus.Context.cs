@@ -27,11 +27,10 @@ namespace Octopus.Models
     
         public virtual DbSet<CLIENTES> CLIENTES { get; set; }
         public virtual DbSet<EMPLEADOS> EMPLEADOS { get; set; }
-        public virtual DbSet<ENTREGAS> ENTREGAS { get; set; }
         public virtual DbSet<ESTADOS> ESTADOS { get; set; }
         public virtual DbSet<FECHAS> FECHAS { get; set; }
+        public virtual DbSet<IMAGENES> IMAGENES { get; set; }
         public virtual DbSet<MARCAS> MARCAS { get; set; }
-        public virtual DbSet<MONEDAS> MONEDAS { get; set; }
         public virtual DbSet<PRESUPUESTOS> PRESUPUESTOS { get; set; }
         public virtual DbSet<RESERVAS> RESERVAS { get; set; }
         public virtual DbSet<SERVICIOS> SERVICIOS { get; set; }
@@ -46,6 +45,5 @@ namespace Octopus.Models
         public virtual DbSet<VENTAS> VENTAS { get; set; }
         public virtual DbSet<VW_MARCAS> VW_MARCAS { get; set; }
         public virtual DbSet<VW_Statistics> VW_Statistics { get; set; }
-        public virtual DbSet<IMAGENES> IMAGENES { get; set; }
     }
 }

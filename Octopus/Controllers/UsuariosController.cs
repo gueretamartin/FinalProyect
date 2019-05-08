@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using Octopus.Models;
 using System.Web.SessionState;
+using PagedList;
+using PagedList.Mvc;
 
 namespace Octopus.Controllers
 {
@@ -15,10 +17,6 @@ namespace Octopus.Controllers
 
         private OctopusEntities db = new OctopusEntities();
 
-        public ActionResult Index()
-        {
-            return View(db.USUARIOS.ToList());
-        }
 
         public ActionResult Details(String user)
         {
@@ -27,16 +25,21 @@ namespace Octopus.Controllers
             {
                 return HttpNotFound();
             }
+            EMPLEADOS e = db.EMPLEADOS.SingleOrDefault(c => c.EMP_USUARIO == USUARIOS.Usuario);
+            if (e != null)
+            {
+                USUARIOS.emp_id = e.EMP_ID;
 
+            }
             return View(USUARIOS);
         }
 
         public ActionResult Create()
         {
             var empleados = db.EMPLEADOS.Where(c => c.EMP_USUARIO == null);
-            var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
+            // var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
             ViewBag.Rol = new SelectList(db.USUARIOS_TIPOS, "ROL_ID", "ROL_DESC");
-            ViewBag.Estado = new SelectList(states, "ES_ID", "ES_DESCRIPCION");
+            //ViewBag.Estado = new SelectList(states, "ES_ID", "ES_DESCRIPCION");
             ViewBag.Empleados = new SelectList(empleados, "EMP_ID", "EMP_NOMBRE");
             return View();
 
@@ -77,7 +80,7 @@ namespace Octopus.Controllers
 
                 if (ModelState.IsValid)
                 {
-
+                    var_usuario.Estado = 1;
                     db.USUARIOS.Add(var_usuario);
                     db.SaveChanges();
                     if (empleado != null)
@@ -96,7 +99,10 @@ namespace Octopus.Controllers
                 return RedirectToAction("Home", "Home");
             }
         }
-        public ActionResult List(string searchUser)
+
+
+        // GET: /Usuarios/
+        public ActionResult List(string searchUser, int? page)
         {
 
             try
@@ -108,7 +114,7 @@ namespace Octopus.Controllers
                     usuarios = usuarios.Where(c => c.Usuario.Contains(searchUser));
                 }
 
-                return View(usuarios.ToList());
+                return View(usuarios.ToList().ToPagedList(page ?? 1, 4));
             }
             catch (Exception)
             {
@@ -116,8 +122,9 @@ namespace Octopus.Controllers
             }
 
         }
-
-        public ActionResult ListInactivos(string searchUser)
+      
+        // GET: /Usuarios/
+        public ActionResult ListInactivos(string searchUser, int? page)
         {
 
             try
@@ -130,7 +137,7 @@ namespace Octopus.Controllers
 
                 }
 
-                return View(usuarios.ToList());
+                return View(usuarios.ToList().ToPagedList(page ?? 1, 4));
             }
             catch (Exception)
             {
@@ -161,10 +168,19 @@ namespace Octopus.Controllers
 
             var model = new USUARIOS();
             model = db.USUARIOS.SingleOrDefault(c => c.Usuario == user);
+            var modelemp = db.EMPLEADOS.SingleOrDefault(c => c.EMP_USUARIO == model.Usuario);
+            var empleados = db.EMPLEADOS.Where(c => c.EMP_USUARIO == null || c.EMP_USUARIO == model.Usuario);
             var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
             model.Roles_List = new SelectList(db.USUARIOS_TIPOS, "ROL_ID", "ROL_DESC", model.Rol);
             model.Estados_List = new SelectList(states, "ES_ID", "ES_DESCRIPCION", model.Estado);
-
+            if (modelemp != null)
+            {
+                model.Empleados_List = new SelectList(empleados, "EMP_ID", "EMP_NOMBRE", modelemp.EMP_ID);
+            }
+            else
+            {
+                model.Empleados_List = new SelectList(empleados, "EMP_ID", "EMP_NOMBRE");
+            }
             return View(model);
 
         }
@@ -174,10 +190,31 @@ namespace Octopus.Controllers
         public ActionResult Edit(USUARIOS var_usuario)
         {
 
+
+            EMPLEADOS empleado_old = db.EMPLEADOS.FirstOrDefault(a => a.EMP_USUARIO == var_usuario.Usuario);
+            int? emp = var_usuario.emp_id;
+            EMPLEADOS empleado = db.EMPLEADOS.FirstOrDefault(e => e.EMP_ID == emp);
+            if (empleado != null)
+            {
+                empleado.EMP_USUARIO = var_usuario.Usuario;
+                empleado.EMP_ESTADO = var_usuario.Estado;
+                ModelState.Remove("EMPLEADOS");
+                if (empleado_old != null && empleado_old.EMP_DNI != empleado.EMP_DNI)
+                {
+
+                    empleado_old.EMP_USUARIO = null;
+                }
+
+
+            }
+
             if (ModelState.IsValid)
             {
+                //if (empleado != null)
+                //{
                 db.Entry(var_usuario).State = EntityState.Modified;
                 db.SaveChanges();
+                //}
                 return RedirectToAction("List");
             }
             return RedirectToAction("List");

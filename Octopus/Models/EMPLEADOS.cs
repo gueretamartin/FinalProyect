@@ -23,7 +23,7 @@ namespace Octopus.Models
         }
     
         public int EMP_ID { get; set; }
-        public Nullable<int> SUC_ID { get; set; }
+        public int SUC_ID { get; set; }
         public Nullable<int> EMP_CODPOSTAL { get; set; }
         public string EMP_NOMBRE { get; set; }
         public string EMP_APELLIDO { get; set; }
@@ -33,7 +33,9 @@ namespace Octopus.Models
         public string EMP_TELEFONO { get; set; }
         public string EMP_DNI { get; set; }
         public string EMP_USUARIO { get; set; }
+        public Nullable<int> EMP_ESTADO { get; set; }
     
+        public virtual ESTADOS ESTADOS { get; set; }
         public virtual SUCURSALES SUCURSALES { get; set; }
         public virtual USUARIOS USUARIOS { get; set; }
         public virtual ICollection<PRESUPUESTOS> PRESUPUESTOS { get; set; }

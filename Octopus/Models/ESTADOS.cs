@@ -17,6 +17,7 @@ namespace Octopus.Models
         public ESTADOS()
         {
             this.CLIENTES = new HashSet<CLIENTES>();
+            this.EMPLEADOS = new HashSet<EMPLEADOS>();
             this.USUARIOS = new HashSet<USUARIOS>();
             this.VEHICULOS = new HashSet<VEHICULOS>();
         }
@@ -25,6 +26,7 @@ namespace Octopus.Models
         public string ES_DESCRIPCION { get; set; }
     
         public virtual ICollection<CLIENTES> CLIENTES { get; set; }
+        public virtual ICollection<EMPLEADOS> EMPLEADOS { get; set; }
         public virtual ICollection<USUARIOS> USUARIOS { get; set; }
         public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
     }

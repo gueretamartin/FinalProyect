@@ -1,4 +1,6 @@
-﻿@model IEnumerable<Octopus.Models.USUARIOS>
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<Octopus.Models.USUARIOS>
 
 @{
     ViewBag.Title = "Usuarios";
@@ -57,6 +59,9 @@
                                 }
                             </div>
                         </div>
+                        <div style="text-align:center;">
+                            @Html.PagedListPager(Model, page => Url.Action("ListInactivos", "Usuarios", new { page, search = Request.QueryString["search"], @class = "list-unstyle text-center" }))
+                        </div>
                     </div>
 
                 </div>
@@ -64,3 +69,5 @@
         </div>
     </div>
 </section>
+
+<link rel="stylesheet" href="~/Css/bootstrap_pag.css" />

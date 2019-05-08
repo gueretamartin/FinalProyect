@@ -56,6 +56,13 @@
                                             <label class="mdl-textfield__label"  style="color: #2e6da4">Estado</label>
                                         </div>
 
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.Emp.EMP_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "4", disabled = "disabled" })
+                                            <label class="mdl-textfield__label" style="color: #2e6da4">Empleado</label>
+                                        </div>
+
+                                          @Html.HiddenFor(a => a.emp_id)
+
                                     </div>
                                 </div>
 

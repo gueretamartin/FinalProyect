@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Octopus.Models.EMPLEADOS>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Octopus.Models.EMPLEADOS>
 
 @{ //if(Session["Usuario"] != null)
     //{
@@ -45,23 +48,30 @@
                                 </div>
                             }
                             <div class="mdl-list">
-                                @foreach (var item in Model)
-                                {
-                                    <div class="mdl-list__item mdl-list__item--two-line">
-                                        <span class="mdl-list__item-primary-content">
-                                            <i class="zmdi zmdi-account mdl-list__item-avatar"></i>
-                                                <span>Nombre y Apellido: @Html.DisplayFor(modelItem => item.EMP_NOMBRE), @Html.DisplayFor(modelItem => item.EMP_APELLIDO)</span><br />    
-                                             
-                                                <span class="mdl-list__item-sub-title">DNI: @Html.DisplayFor(modelItem => item.EMP_DNI)</span>
-                                        </span>
-                                      <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Empleados", new { id = item.EMP_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
-                                    </div>
-                                   
+                                 @foreach (var item in Model)
+                                                {
+                                                    
+                                                        <div class="mdl-list__item mdl-list__item--two-line">
+                                                            <span class="mdl-list__item-primary-content">
+                                                                <i class="zmdi zmdi-account mdl-list__item-avatar"></i>
+                                                                <span><b>@Html.DisplayFor(modelItem => item.NombreParaMostrar)</b></span><br />
 
-                                }
-                            </div>
+                                                                <span class="mdl-list__item-sub-title">Sucursal: @Html.DisplayFor(modelItem => item.SUC_DESC)</span>
+                                                            </span>
+                                                            <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Empleados", new { id = item.EMP_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                                        </div>
+                                                  
+
+                                                }
+                                  </div>
+
+
                         </div>
-                    </div>
+                        <div style="text-align:center;">
+                            @Html.PagedListPager(Model, page => Url.Action("List", "Empleados", new { page, search = Request.QueryString["search"], @class = "list-unstyle text-center" }))
+                        
+                        </div>
+                         </div>
 
                 </div>
             </div>
@@ -70,4 +80,4 @@
     </div>
 </section>
 
-
+<link rel="stylesheet" href="~/Css/bootstrap_pag.css" />
