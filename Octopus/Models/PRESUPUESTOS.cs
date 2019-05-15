@@ -28,9 +28,12 @@ namespace Octopus.Models
         public Nullable<int> PRE_ESTADO_NEUMATICOS { get; set; }
         public Nullable<int> PRE_ESTADO_INTERIOR { get; set; }
         public string PRE_DETALLES { get; set; }
-        public Nullable<int> PRE_VERPRESUP { get; set; }
+        public Nullable<int> CLI_ID { get; set; }
+        public Nullable<int> ES_ID { get; set; }
     
         public virtual EMPLEADOS EMPLEADOS { get; set; }
         public virtual FECHAS FECHAS { get; set; }
+        public virtual CLIENTES CLIENTES { get; set; }
+        public virtual ESTADOS ESTADOS { get; set; }
     }
 }

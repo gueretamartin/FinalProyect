@@ -28,10 +28,8 @@
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary(true)
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_DNI)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_APELLIDO_NOMBRE)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_EMAIL)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_USER)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TIPO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_CARGO)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_DIRECCION)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TELEFONO)</div>
                                
@@ -41,13 +39,9 @@
                                        
                                          <h5 class="text-condensedLight" style="color: #2e6da4">DATOS PERSONALES</h5>
                                         
+                                    
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.EMP_APELLIDO_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", disabled = "disabled", @Style = "color:dimgrey" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido y Nombre</label>
-                                        </div>
-
-                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.EMP_TIPO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            @Html.TextBoxFor(a => a.CARGOS.CARGO_DESC, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Cargo</label>
                                         </div>
 
@@ -67,11 +61,7 @@
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">E-mail</label>
                                         </div>
 
-                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.EMP_USER, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Usuario</label>
-                                        </div>
-
+                                       
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.TextBoxFor(a => a.EMP_DIRECCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Dirección</label>
@@ -87,8 +77,7 @@
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Teléfono</label>
                                         </div>
 
-                                         @Html.HiddenFor(a => a.EMP_PASSWORD, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
-                  
+                                             
                                     </div>
                                 </div>
 
@@ -96,7 +85,8 @@
                                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Edit" id="btn-EditEmpleado">
                                         <i class="zmdi zmdi-edit" style="display: inline-block; font: normal normal normal 14px/1"></i>
                                     </button>
-                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Delete" id="btn-EliminarEmpleado" onclick="return confirm('¿Está seguro que quiere eliminar al Empleado @Model.EMP_APELLIDO_NOMBRE?');">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Delete" id="btn-EliminarEmpleado" onclick="return confirm('¿Está seguro que quiere eliminar al Empleado @Model.NombreParaMostrar?');">
+
                                         <i class="zmdi zmdi-delete"></i>
                                     </button>
                                     <div class="mdl-tooltip" >Editar Empleado</div>

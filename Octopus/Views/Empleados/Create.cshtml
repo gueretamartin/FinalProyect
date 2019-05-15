@@ -35,7 +35,6 @@
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_DIRECCION)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TELEFONO)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_EMAIL)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TIPO)</div>
 
                                 <div class="mdl-grid">
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -54,10 +53,10 @@
                                         @Html.DropDownListFor(a => a.SUC_ID, (IEnumerable<SelectListItem>)ViewBag.Sucursal, "Seleccione una Sucursal*", new { @class = "mdl-textfield__input", tabindex = "4" })
                                         @Html.ValidationMessageFor(a => a.SUC_ID)
                                     </div>
-                                  <!--El Tipo de Empleado debería ser otra tabla.-->
-                                      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        @Html.TextBoxFor(a => a.EMP_TIPO, new { @class = "mdl-textfield__input ", @typeof = "text", tabindex = "5" })
-                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Cargo*</label>
+                                    <!--El Tipo de Empleado debería ser otra tabla.-->
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        @Html.DropDownListFor(a => a.EMP_CARGO, (IEnumerable<SelectListItem>)ViewBag.Cargos, "Seleccione un Cargo*", new { @class = "mdl-textfield__input", tabindex = "4" })
+                                        @Html.ValidationMessageFor(a => a.EMP_CARGO)
                                     </div>
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                         @Html.TextBoxFor(a => a.EMP_EMAIL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6" })
@@ -75,14 +74,10 @@
                                         @Html.TextBoxFor(a => a.EMP_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "10" })
                                         <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Teléfono</label>
                                     </div>
-                                    @*<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        @Html.DropDownListFor(a => a.EMP_ESTADO, (IEnumerable<SelectListItem>)ViewBag.Estado, "Seleccione un Estado*", new { @class = "mdl-textfield__input", tabindex = "4" })
-                                    </div>*@
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                         <p style="color:red">Los campos * son obligatorios</p>
                                     </div>
-                                </div>
-
+                                  </div>
                                 <p class="text-center">
                                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin">
                                         <i class="zmdi zmdi-account-add"></i>

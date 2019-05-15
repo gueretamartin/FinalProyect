@@ -58,11 +58,11 @@ namespace Octopus.Models
         public virtual EMPLEADOS EMPLEADOS { get; set; }
         public virtual ESTADOS ESTADOS { get; set; }
         public virtual FECHAS FECHAS { get; set; }
-        public virtual IMAGENES IMAGENES { get; set; }
         public virtual MARCAS MARCAS { get; set; }
         public virtual SUCURSALES SUCURSALES { get; set; }
         public virtual TIPO_COMBUSTIBLES TIPO_COMBUSTIBLES { get; set; }
         public virtual TIPO_VEHICULOS TIPO_VEHICULOS { get; set; }
         public virtual ICollection<VENTAS> VENTAS { get; set; }
+        public virtual IMAGENES IMAGENES { get; set; }
     }
 }

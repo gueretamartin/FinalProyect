@@ -176,6 +176,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CARGOS.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CLIENTES.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
@@ -220,9 +223,6 @@
     <Compile Include="Models\RESERVAS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SERVICIOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\SUCURSALES.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
@@ -236,6 +236,9 @@
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_VEHICULOS.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USOS_INTERNOS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USUARIOS.cs">

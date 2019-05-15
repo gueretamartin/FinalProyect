@@ -16,17 +16,14 @@ namespace Octopus.Controllers
     {
         private OctopusEntities db = new OctopusEntities();
 
-
-
         // GET: /Empleados/
-     
-        #region DesarrolloMartin
         public ActionResult List(string searchEmpleado, int? page)
         {
-             var empleados = from c in db.EMPLEADOS
-                           select c;
+            var empleados = from c in db.EMPLEADOS
+                            select c;
 
-           
+            empleados = empleados.Where(a => a.EMP_ESTADO == 1);
+
             if (!String.IsNullOrEmpty(searchEmpleado))
             {
                 empleados = empleados.Where(c => c.EMP_NOMBRE.Contains(searchEmpleado)
@@ -51,34 +48,42 @@ namespace Octopus.Controllers
             return View(empleados);
         }
 
-       
-
-        #endregion
-
-
         // GET: /Empleados/Create
         public ActionResult Create()
         {
-            
-            //var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
-            //ViewBag.Estado = new SelectList(states, "ES_ID", "ES_DESCRIPCION");
             ViewBag.Sucursal = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP");
+            ViewBag.Cargos = new SelectList(db.CARGOS, "CARGO_ID", "CARGO_DESC");
+            
             return View();
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(EMPLEADOS empleados)
         {
             //CHEQUEA SI EL DOCUMENTO YA FUE CARGADO
-           
+
 
             if (ModelState.IsValid)
             {
-             //   var empleado = db.EMPLEADOS.Single(u => u.EMP_ID == empleados.EMP_ID);
-              //  empleados.EMP_APELLIDO_NOMBRE = empleados.EMP_APELLIDO + " " + empleados.EMP_NOMBRE;
-                //CleanClient(clientes);
+                if (!String.IsNullOrEmpty(empleados.EMP_DNI))
+                {
+                    var empleado = db.EMPLEADOS.SingleOrDefault(a => a.EMP_DNI == empleados.EMP_DNI);
+
+                    if (empleado != null)
+                    {
+                        ModelState.AddModelError("EMP_DNI", "EMPLEADO (DNI): El Empleado ingresado ya existe.");
+                        return this.Create();
+                    }
+
+                }
+                else
+                {
+                    ModelState.AddModelError("EMP_DNI", "EMPLEADO (DNI): Por favor, ingrese el DNI del Empleado.");
+                    return this.Create();
+                }
+
+
                 empleados.EMP_ESTADO = 1;
                 db.EMPLEADOS.Add(empleados);
                 db.SaveChanges();
@@ -88,31 +93,13 @@ namespace Octopus.Controllers
             return View(empleados);
         }
 
-
-
-        // POST: /Empleados/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include="EMP_ID,SUC_ID,EMP_CODPOSTAL,EMP_NOMBRE,EMP_APELLIDO,EMP_EMAIL,EMP_USER,EMP_PASSWORD,EMP_TIPO,EMP_DIRECCION,EMP_TELEFONO,EMP_DNI,EMP_APELLIDO_NOMBRE")] EMPLEADOS empleados)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.EMPLEADOS.Add(empleados);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP", empleados.SUC_ID);
-        //    return View(empleados);
-        //}
-
         public ActionResult Edit(int EMP_ID)
         {
             try
             {
                 ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP", db.EMPLEADOS.SingleOrDefault(e => e.EMP_ID == EMP_ID).SUC_ID);
+                ViewBag.CARGO_ID = new SelectList(db.CARGOS, "CARGO_ID", "CARGO_DESC", db.EMPLEADOS.SingleOrDefault(e => e.EMP_ID == EMP_ID).EMP_CARGO);
+                
                 EMPLEADOS empleado = db.EMPLEADOS.SingleOrDefault(e => e.EMP_ID == EMP_ID);
                 return View(empleado);
             }
@@ -123,7 +110,6 @@ namespace Octopus.Controllers
         }
 
         //Edit an Employee 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(EMPLEADOS empleados)
@@ -132,40 +118,55 @@ namespace Octopus.Controllers
             {
                 db.Entry(empleados).State = EntityState.Modified;
                 var empleado = db.EMPLEADOS.Single(u => u.EMP_ID == empleados.EMP_ID);
-               // empleado.EMP_APELLIDO_NOMBRE = empleados.EMP_APELLIDO + " " + empleados.EMP_NOMBRE;
                 db.SaveChanges();
                 return RedirectToAction("List");
             }
             ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP", empleados.SUC_ID);
+            ViewBag.Cargos = new SelectList(db.CARGOS, "CARGO_ID", "CARGO_DESC", empleados.EMP_CARGO);
+           
             return View(empleados);
         }
 
 
-        // POST: /Vehiculos/Delete/5
-        
-        public ActionResult Delete(int emp_id)
-        {
-            EMPLEADOS empleado = db.EMPLEADOS.Find(Session["Usuario"]);
-            db.EMPLEADOS.Remove(empleado);
-            db.SaveChanges();
-            return RedirectToAction("List");
-        }
-
- 
-        //// GET: /Empleados/Delete/5
-        //public ActionResult Delete(int? id)
+        //public ActionResult Delete(String user)
         //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    EMPLEADOS empleados = db.EMPLEADOS.Find(id);
-        //    if (empleados == null)
+        //    USUARIOS var_usuario = db.USUARIOS.Find(user);
+        //    if (var_usuario == null)
         //    {
         //        return HttpNotFound();
         //    }
-        //    return View(empleados);
+        //    if (ModelState.IsValid)
+        //    {
+        //        var_usuario.Estado = 0;
+        //        db.Entry(var_usuario).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("ListInactivos");
+        //    }
+        //    return RedirectToAction("List");
         //}
+
+        // POST: /Vehiculos/Delete/5
+        public ActionResult Delete(int emp_id)
+        {
+          
+            EMPLEADOS var_empleado = db.EMPLEADOS.Find(emp_id);
+            if (var_empleado == null)
+            {
+                return HttpNotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                var_empleado.EMP_ESTADO = 2;
+                if (var_empleado.USUARIOS!=null)
+                {
+                    var_empleado.USUARIOS.Estado = 2;
+                }
+                db.Entry(var_empleado).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("List");
+            }
+            return RedirectToAction("List");
+        }
 
         // POST: /Empleados/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -205,11 +206,6 @@ namespace Octopus.Controllers
                 return View("List");
             }
         }
-    
-    
-    
-    
-    
-    
+
     }
 }

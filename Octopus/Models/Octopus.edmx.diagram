@@ -4,27 +4,29 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e9da61c8d9d14d35ad170822aed46d02" Name="Diagram1">
-        <EntityTypeShape EntityType="OctopusModel.CLIENTES" Width="1.5" PointX="6" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.EMPLEADOS" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.ESTADOS" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.FECHAS" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.IMAGENES" Width="1.5" PointX="6" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.MARCAS" Width="1.5" PointX="6" PointY="20.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.PRESUPUESTOS" Width="1.5" PointX="11.25" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.RESERVAS" Width="1.5" PointX="5.25" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.SERVICIOS" Width="1.5" PointX="3" PointY="22.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.SUCURSALES" Width="1.5" PointX="0.75" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.TIPO_CLIENTE" Width="1.5" PointX="3.75" PointY="17.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.TIPO_COMBUSTIBLES" Width="1.5" PointX="6" PointY="22.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.TIPO_DOCUMENTO" Width="1.5" PointX="3.75" PointY="20" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.TIPO_VEHICULOS" Width="1.5" PointX="6" PointY="25.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.USUARIOS" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.USUARIOS_TIPOS" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.VEHICULOS" Width="1.5" PointX="8.25" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.VENTAS" Width="1.5" PointX="13.5" PointY="12.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.VW_MARCAS" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OctopusModel.VW_Statistics" Width="1.5" PointX="2.75" PointY="1.375" IsExpanded="true" />
+      <Diagram DiagramId="a6e137fcde1146ef8d587240865d1687" Name="Diagram1">
+        <EntityTypeShape EntityType="OctopusModel.CARGOS" Width="1.5" PointX="3.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.CLIENTES" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.EMPLEADOS" Width="1.5" PointX="6" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.ESTADOS" Width="1.5" PointX="0.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.FECHAS" Width="1.5" PointX="6" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.MARCAS" Width="1.5" PointX="6" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.PRESUPUESTOS" Width="1.5" PointX="11.25" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.RESERVAS" Width="1.5" PointX="11.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.SUCURSALES" Width="1.5" PointX="3.75" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.TIPO_CLIENTE" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.TIPO_COMBUSTIBLES" Width="1.5" PointX="6" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.TIPO_DOCUMENTO" Width="1.5" PointX="0.75" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.TIPO_VEHICULOS" Width="1.5" PointX="6" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.USOS_INTERNOS" Width="1.5" PointX="8.25" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.USUARIOS" Width="1.5" PointX="6" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.USUARIOS_TIPOS" Width="1.5" PointX="3.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.VEHICULOS" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.VENTAS" Width="1.5" PointX="13.5" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.VW_MARCAS" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OctopusModel.VW_Statistics" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="OctopusModel.FK_CARGOS_CARGOS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_EMPLEADOS_CARGOS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_CLIENTES_ESTADOS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_CLIENTES_TIPO_CLIENTE" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_CLIENTES_TIPO_DOCUMENTO" ManuallyRouted="false" />
@@ -35,6 +37,7 @@
         <AssociationConnector Association="OctopusModel.FK_EMPLEADOS_USUARIOS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_PRESUPUESTOS_EMPLEADOS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_RESERVAS_EMPLEADOS" ManuallyRouted="false" />
+        <AssociationConnector Association="OctopusModel.FK_USOS_INTERNOS_EMPLEADOS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_VEHICULOS_EMPLEADOS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_VENTAS_EMPLEADOS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_USUARIOS_ESTADOS" ManuallyRouted="false" />
@@ -43,14 +46,16 @@
         <AssociationConnector Association="OctopusModel.FK_RESERVAS_FECHAS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_VEHICULOS_FECHAS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_VENTAS_FECHAS" ManuallyRouted="false" />
-        <AssociationConnector Association="OctopusModel.FK_VEHICULOS_IMAGENES" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_VEHICULOS_MARCAS" ManuallyRouted="false" />
-        <AssociationConnector Association="OctopusModel.FK_SERVICIOS_SUCURSALES" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_VEHICULOS_SUCURSALES" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_VEHICULOS_TIPO_COMBUSTIBLES" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_VEHICULOS_TIPO_VEHICULOS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_USUARIOS_USUARIOS_TIPOS" ManuallyRouted="false" />
         <AssociationConnector Association="OctopusModel.FK_VENTAS_VEHICULOS" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OctopusModel.IMAGENES" Width="1.5" PointX="0.75" PointY="3.875" />
+        <AssociationConnector Association="OctopusModel.FK_VEHICULOS_IMAGENES" />
+        <AssociationConnector Association="OctopusModel.FK_PRESUPUESTOS_CLIENTES" />
+        <AssociationConnector Association="OctopusModel.FK_PRESUPUESTOS_ESTADOS" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
