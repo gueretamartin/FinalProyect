@@ -16,12 +16,14 @@ namespace Octopus.Models
     {
         public MARCAS()
         {
+            this.PRESUPUESTOS = new HashSet<PRESUPUESTOS>();
             this.VEHICULOS = new HashSet<VEHICULOS>();
         }
     
         public int MAR_ID { get; set; }
         public string MAR_DESCRIPCION { get; set; }
     
+        public virtual ICollection<PRESUPUESTOS> PRESUPUESTOS { get; set; }
         public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
     }
 }

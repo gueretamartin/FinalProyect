@@ -19,15 +19,18 @@ namespace Octopus.Models
         public Nullable<int> EMP_ID { get; set; }
         public Nullable<int> RES_SENIA { get; set; }
         public Nullable<int> RES_VALOR_PACTADO { get; set; }
-        public Nullable<System.DateTime> RES_INICIO { get; set; }
-        public Nullable<System.DateTime> RES_FIN { get; set; }
-        public Nullable<bool> RES_ESTADO { get; set; }
-        public Nullable<int> FEC_ID { get; set; }
-        public string CLIENTE_NOMBRE { get; set; }
-        public string CLIENTE_APELLIDO { get; set; }
-        public Nullable<int> CLIENTE_DOC { get; set; }
+        public Nullable<int> FEC_ID_FIN { get; set; }
+        public int RES_ESTADO { get; set; }
+        public Nullable<int> FEC_ID_INICIO { get; set; }
+        public Nullable<int> CLI_ID { get; set; }
+        public Nullable<int> SUC_ID { get; set; }
     
+        public virtual CLIENTES CLIENTES { get; set; }
         public virtual EMPLEADOS EMPLEADOS { get; set; }
+        public virtual ESTADOS ESTADOS { get; set; }
         public virtual FECHAS FECHAS { get; set; }
+        public virtual FECHAS FECHAS1 { get; set; }
+        public virtual SUCURSALES SUCURSALES { get; set; }
+        public virtual VEHICULOS VEHICULOS { get; set; }
     }
 }

@@ -15,25 +15,29 @@ namespace Octopus.Models
     public partial class PRESUPUESTOS
     {
         public int PRE_ID { get; set; }
-        public Nullable<int> FEC_ID { get; set; }
-        public Nullable<int> EMP_ID { get; set; }
-        public string PRE_MARCA { get; set; }
+        public int FEC_ID { get; set; }
+        public int EMP_ID { get; set; }
+        public int PRE_MARCA { get; set; }
         public string PRE_MODELO { get; set; }
         public string PRE_VERSION { get; set; }
         public string PRE_ANIO { get; set; }
         public string PRE_PATENTE { get; set; }
-        public Nullable<int> PRE_ESTADO_CHASIS { get; set; }
-        public Nullable<int> PRE_ESTADO_PINTURA { get; set; }
-        public Nullable<int> PRE_ESTADO_PARABRISAS { get; set; }
-        public Nullable<int> PRE_ESTADO_NEUMATICOS { get; set; }
-        public Nullable<int> PRE_ESTADO_INTERIOR { get; set; }
+        public string PRE_ESTADO_CHASIS { get; set; }
+        public string PRE_ESTADO_PINTURA { get; set; }
+        public string PRE_ESTADO_PARABRISAS { get; set; }
+        public string PRE_ESTADO_NEUMATICOS { get; set; }
+        public string PRE_ESTADO_INTERIOR { get; set; }
         public string PRE_DETALLES { get; set; }
-        public Nullable<int> CLI_ID { get; set; }
-        public Nullable<int> ES_ID { get; set; }
+        public int CLI_ID { get; set; }
+        public int ES_ID { get; set; }
+        public Nullable<int> PRE_FECHA_FIN { get; set; }
+        public decimal PRE_PRECIO { get; set; }
     
-        public virtual EMPLEADOS EMPLEADOS { get; set; }
-        public virtual FECHAS FECHAS { get; set; }
         public virtual CLIENTES CLIENTES { get; set; }
+        public virtual EMPLEADOS EMPLEADOS { get; set; }
         public virtual ESTADOS ESTADOS { get; set; }
+        public virtual FECHAS FECHAS { get; set; }
+        public virtual MARCAS MARCAS { get; set; }
+        public virtual FECHAS FECHAS1 { get; set; }
     }
 }

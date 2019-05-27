@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -13,13 +14,15 @@ namespace Octopus.Controllers
 {
     public class VehiculosController : Controller
     {
-        private OctopusEntities db = new OctopusEntities();
+        private OctopusEntities1 db = new OctopusEntities1();
 
         // GET: /Vehiculos/List?searchVehicle=[Parámetro]
         // LEVANTA LA VISTA DE LISTADO DE VEHICULOS O LISTA DE VEHICULOS QUE CONTIENEN CON EL PARÁMETRO PASADO
         public ActionResult List(string searchVehicle)
         {
-            ViewBag.VW_MAR = new SelectList(db.VW_MARCAS, "VW_ID", "VW_DESCRIPCION");
+            ViewBag.TV_ID = new SelectList(db.TIPO_VEHICULOS, "TV_ID", "TV_DESCRIPCION");
+
+            ViewBag.VW_MAR = new SelectList(db.VW_MARCAS, "VW_MAR_ID", "VW_MAR_DESCRIPCION");
 
             var vehiculos = from v in db.VEHICULOS where v.ES_ID == 1 && v.VEH_VIGENTE == true select v;
             
@@ -54,35 +57,29 @@ namespace Octopus.Controllers
         */
           
         // GET: /Vehiculos/Create
-        /*
+        
         public ActionResult Create()
         {
             //ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_ID");
             ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_APELLIDO_NOMBRE");
             ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_FECHA");
             ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP");
-
             //CONDICION IVA
             var condiciones = (from c in db.CLIENTES
                                select c.TC_ID).Distinct();
             ViewBag.TC_ID = new SelectList(condiciones);
-
             //CLIENTES EMPRESAS
             var empresas = (from c in db.CLIENTES
                             where c.TC_ID == 2
                                 select c.CLI_RI_CUIT).Distinct();
             ViewBag.CLI_RI_ID = new SelectList(empresas);
-
             //CLIENTES FINALES
             var consumidores = (from c in db.CLIENTES
                             where c.TC_ID == 1
                             select c.CLI_DOC).Distinct();
             ViewBag.CLI_CF_ID = new SelectList(consumidores);
-
             return View();
-
         }
-
         // POST: /Vehiculos/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -103,19 +100,16 @@ namespace Octopus.Controllers
                 ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_APELLIDO_NOMBRE");
                 ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_FECHA");
                 ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP");
-
                 //CONDICION IVA
                 var condiciones = (from c in db.CLIENTES
                                    select c.TC_ID
                                        ).Distinct();
                 ViewBag.TC_ID = new SelectList(condiciones);
-
                 //CLIENTES EMPRESAS
                 var empresas = (from c in db.CLIENTES
                                 where c.TC_ID == 2
                                 select c.CLI_RI_CUIT).Distinct();
                 ViewBag.CLI_RI_ID = new SelectList(empresas);
-
                 //CLIENTES FINALES
                 var consumidores = (from c in db.CLIENTES
                                     where c.TC_ID == 1
@@ -124,7 +118,6 @@ namespace Octopus.Controllers
                 ModelState.AddModelError("CLI_ID", "LOS CAMPOS 'CONDICION IVA' Y 'DNI/CUIT' SON OBLIGATORIOS");
                 return View("Create");
             }
-
             var FechaSel = from f in db.FECHAS
                            where f.FEC_FECHA == fecha
                             select f.FEC_ID;
@@ -135,20 +128,17 @@ namespace Octopus.Controllers
                 db.VEHICULOS.Add(vehiculos);
                 db.SaveChanges();
             }
-
             //ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DNI");
             //ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_APELLIDO_NOMBRE");
             //ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_FECHA");
             //ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP");
-
             if (image1 != null && image1.ContentLength > 0) { LoadImage(image1, vehiculos); }
             if (image2 != null && image1.ContentLength > 0) { LoadImage(image2, vehiculos); }
             if (image3 != null && image1.ContentLength > 0) { LoadImage(image3, vehiculos); }
             if (image4 != null && image1.ContentLength > 0) { LoadImage(image4, vehiculos); }
-
             return RedirectToAction("List");
         }
-        */
+        
 
         public void LoadImage(HttpPostedFileBase imagen, VEHICULOS vehiculo)
         {
@@ -226,7 +216,6 @@ namespace Octopus.Controllers
                                                 Include(v => v.SUCURSALES).
                                                 Include(v => v.IMAGENES).
                                                 SingleOrDefault(x => x.VEH_ID == veh_id);
-
                 ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DNI_APELLIDO_NOMBRE", vehiculo.CLI_ID);
                 ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_APELLIDO_NOMBRE", vehiculo.EMP_ID);
                 ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_FECHA", vehiculo.FEC_ID);
@@ -238,7 +227,6 @@ namespace Octopus.Controllers
                 throw ex;
             }
         }
-
         // POST: /Vehiculos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -252,23 +240,18 @@ namespace Octopus.Controllers
             vehiculos.FEC_ID = FechaSel.FirstOrDefault();
             FECHAS FecActual = db.FECHAS.Find(vehiculos.FEC_ID);
             vehiculos.FECHAS = FecActual;
-
             SUCURSALES SucActual = db.SUCURSALES.Find(vehiculos.SUC_ID);
             vehiculos.SUCURSALES = SucActual;
-
             CLIENTES CliActual = db.CLIENTES.Find(vehiculos.CLI_ID);
             vehiculos.CLIENTES = CliActual;
-
             EMPLEADOS EmpActual = db.EMPLEADOS.Find(vehiculos.EMP_ID);
             vehiculos.EMPLEADOS = EmpActual;
-
             if (ModelState.IsValid)
             {
                 db.Entry(vehiculos).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("List");
             }
-
             return RedirectToAction("List");
         }
         */
@@ -329,3 +312,4 @@ namespace Octopus.Controllers
         }
     }
 }
+

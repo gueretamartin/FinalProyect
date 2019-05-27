@@ -12,7 +12,7 @@ namespace Octopus.Controllers
 {
     public class SucursalesController : Controller
     {
-        private OctopusEntities db = new OctopusEntities();
+        private OctopusEntities1 db = new OctopusEntities1();
 
         //
         // GET: /Sucursales/

@@ -1,0 +1,130 @@
+﻿@using Octopus.Models
+@model Octopus.Models.PRESUPUESTOS
+@using System.Web.UI.WebControls
+
+@{
+    ViewBag.Title = "Presupuestos - Nuevo";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+}
+
+
+<!-- pageContent -->
+<section class="full-width pageContent">
+    <div>
+        <div class="mdl-tabs__tab-bar">
+            <a href="@Url.Action("List","Presupuestos")" class="mdl-tabs__tab">LISTA</a>
+        </div>
+        <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            NUEVO PRESUPUESTO
+                        </div>
+                        <div class="full-width panel-content">
+                            @using (Html.BeginForm("Create", "Presupuestos", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+
+
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.FEC_ID)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_ID)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_MARCA)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_MODELO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_VERSION)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_ANIO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_PATENTE)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_ESTADO_CHASIS)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_ESTADO_PINTURA)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_ESTADO_PARABRISAS)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_ESTADO_NEUMATICOS)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_ESTADO_INTERIOR)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_DETALLES)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_FECHA_FIN)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.PRE_PRECIO)</div>
+                                
+                                 <div class="mdl-grid">
+
+
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <label class="" for="NameAdmin" style="color: #2e6da4;margin-bottom:3px;">Fecha Hasta* (Validez del Presupuesto)</label>
+                                        <input type="date" class="mdl-textfield__input" name="fechaPresFin" required>
+                                    </div>
+                                    <div class=" mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.DropDownListFor(a => a.EMP_ID, (IEnumerable<SelectListItem>)ViewBag.Empleados, "Seleccione el Empleado*", new { @class = "mdl-textfield__input ", tabindex = "2" })
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.DropDownListFor(a => a.CLI_ID, (IEnumerable<SelectListItem>)ViewBag.Clientes, "Seleccione el Cliente*", new { @class = "mdl-textfield__input", tabindex = "3" })
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.DropDownListFor(a => a.PRE_MARCA, (IEnumerable<SelectListItem>)ViewBag.Marcas, "Seleccione la Marca*", new { @class = "mdl-textfield__input", tabindex = "4" })
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Modelo*</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_ANIO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Año*</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_VERSION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "7" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Versión*</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_PATENTE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "8" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Patente*</label>
+                                    </div>
+
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_ESTADO_CHASIS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "9" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Detalle Chasis</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_ESTADO_PINTURA, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "10" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Detalle Pintura</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_ESTADO_INTERIOR, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "11" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Detalle Interior</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_ESTADO_NEUMATICOS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "12" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Detalle Neumaticos</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_ESTADO_PARABRISAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "13" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Detalle Parabrisas</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_DETALLES, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Detalles / Otros</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                                        @Html.TextBoxFor(a => a.PRE_PRECIO,"{0:0.00}", new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Precio*</label>
+                                    </div>
+
+
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                        <p style="color:red">Los campos * son obligatorios</p>
+                                    </div>
+                                </div>
+                                <p class="text-center">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin">
+                                        <i class="zmdi zmdi-account-add"></i>
+                                    </button>
+                                    <div class="mdl-tooltip" for="btn-addAdmin">Agregar Presupuesto</div>
+                                </p>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

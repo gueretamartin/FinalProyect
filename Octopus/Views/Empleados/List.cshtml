@@ -60,12 +60,8 @@
                                                             </span>
                                                             <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Empleados", new { id = item.EMP_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
                                                         </div>
-                                                  
-
                                                 }
                                   </div>
-
-
                         </div>
                         <div style="text-align:center;">
                             @Html.PagedListPager(Model, page => Url.Action("List", "Empleados", new { page, search = Request.QueryString["search"], @class = "list-unstyle text-center" }))

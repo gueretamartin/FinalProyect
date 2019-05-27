@@ -1,0 +1,83 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Octopus.Models.PRESUPUESTOS>
+
+@{ //if(Session["Usuario"] != null)
+    //{
+     // USUARIOS user = Session["Usuario"] as USUARIOS;
+      ViewBag.Title = "Presupuestos";
+      Layout = "~/Views/Shared/_HomePanel.cshtml";
+   // }
+   //else
+   //{
+     //  @Url.Action("Login","Login")
+  // }
+}
+
+
+
+<!DOCTYPE html>
+
+<!-- Page Content-->-->
+<section class="full-width pageContent">
+    <div>
+        <div class="mdl-tabs__tab-bar">
+            <a href="@Url.Action("Create","Presupuestos")" class="mdl-tabs__tab">NUEVO</a>
+            <a href="@Url.Action("List","Presupuestos")" class="mdl-tabs__tab" style="color: #2e6da4">LISTA</a>
+        </div>
+
+        <div class="mdl-tabs__panel" id="tabListEmpleados">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            PRESUPUESTOS
+                        </div>
+                        <div class="full-width panel-content">
+                            @using (Html.BeginForm("List", "Presupuestos", FormMethod.Get))
+                            {
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchPresupuesto">
+                                        <i class="zmdi zmdi-search" onclick=""></i>
+                                    </label>
+                                    <div class="mdl-textfield__expandable-holder">
+                                        @Html.TextBox("searchPresupuesto", null, new { @class = "mdl-textfield__input" })
+                                    </div>
+                                    <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color: none; visibility: hidden" />
+                                </div>
+                            }
+                            <div class="mdl-list">
+                                 @foreach (var item in Model)
+                                                {
+                                                    
+                                                        <div class="mdl-list__item mdl-list__item--two-line">
+                                                            <span class="mdl-list__item-primary-content">
+                                                                <i class="zmdi zmdi-account mdl-list__item-avatar"></i>
+                                                                <span><b>Cliente: @Html.DisplayFor(modelItem => item.CLIENTES.CLI_APELLIDO_NOMBRE)</b></span><br />
+
+                                                                <span class="mdl-list__item-sub-title">Vehículo: @Html.DisplayFor(modelItem => item.MARCAS.MAR_DESCRIPCION) - @Html.DisplayFor(modelItem => item.PRE_MODELO) - @Html.DisplayFor(modelItem => item.PRE_ANIO)</span>
+                                                            </span>
+                                                            <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Presupuestos", new { id = item.PRE_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                                        </div>
+                                                  
+
+                                                }
+                                  </div>
+
+
+                        </div>
+                        <div style="text-align:center;">
+                            @Html.PagedListPager(Model, page => Url.Action("List", "Presupuestos", new { page, search = Request.QueryString["search"], @class = "list-unstyle text-center" }))
+                        
+                        </div>
+                         </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<link rel="stylesheet" href="~/Css/bootstrap_pag.css" />

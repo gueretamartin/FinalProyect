@@ -40,6 +40,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -166,7 +178,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\ReservasController.cs" />
     <Compile Include="Controllers\SucursalesController.cs" />
+    <Compile Include="Controllers\PresupuestosController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EmpleadosController.cs" />
@@ -177,89 +191,118 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CARGOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CLIENTES.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EMPLEADOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ENTREGAS.cs">
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ESTADOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FECHAS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IMAGENES.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MARCAS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Octopus.Context.cs">
+    <Compile Include="Models\MONEDAS.cs">
+      <DependentUpon>Octupus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Octupus.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Octopus.Context.tt</DependentUpon>
+      <DependentUpon>Octupus.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Octopus.cs">
+    <Compile Include="Models\Octupus.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Octopus.Designer.cs">
+    <Compile Include="Models\Octupus.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Octopus.edmx</DependentUpon>
+      <DependentUpon>Octupus.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Partials\PRESUPUESTOS.cs" />
     <Compile Include="Models\Partials\EMPLEADOS.cs" />
     <Compile Include="Models\Partials\VW_Statistics.cs" />
     <Compile Include="Models\Partials\USUARIOS.cs" />
     <Compile Include="Models\Partials\CLIENTES.cs" />
     <Compile Include="Models\Partials\VEHICULOS.cs" />
     <Compile Include="Models\PRESUPUESTOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RESERVAS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SERVICIOS.cs">
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SUCURSALES.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_CLIENTE.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_COMBUSTIBLES.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_DOCUMENTO.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_VEHICULOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\USOS_INTERNOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USUARIOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USUARIOS_TIPOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VEHICULOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VENTAS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VW_MARCAS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VW_Statistics.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
+      <DependentUpon>Octupus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OctopusDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OctopusDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Presupuesto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Presupuesto.xsd</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Presupuestos.aspx.cs">
+      <DependentUpon>Presupuestos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\Presupuestos.aspx.designer.cs">
+      <DependentUpon>Presupuestos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\Presupuestos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Presupuestos.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -294,16 +337,17 @@
     <Content Include="Js\main.js" />
     <Content Include="Js\material.min.js" />
     <Content Include="Js\sweetalert2.min.js" />
-    <Content Include="Models\Octopus.Context.tt">
+    <Content Include="Models\Octupus.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Octopus.edmx</DependentUpon>
-      <LastGenOutput>Octopus.Context.cs</LastGenOutput>
+      <DependentUpon>Octupus.edmx</DependentUpon>
+      <LastGenOutput>Octupus.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Octopus.tt">
+    <Content Include="Models\Octupus.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Octopus.edmx</DependentUpon>
-      <LastGenOutput>Octopus.cs</LastGenOutput>
+      <DependentUpon>Octupus.edmx</DependentUpon>
+      <LastGenOutput>Octupus.cs</LastGenOutput>
     </Content>
+    <Content Include="Reports\Presupuestos.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\Material-Design-Iconic-Font.eot" />
@@ -323,12 +367,45 @@
     <Content Include="fonts\robotocondensed-light.woff" />
     <Content Include="fonts\robotocondensed-light.woff2" />
     <Content Include="ClassDiagram1.cd" />
-    <EntityDeploy Include="Models\Octopus.edmx">
+    <Content Include="OctopusDataSet.xsc">
+      <DependentUpon>OctopusDataSet.xsd</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\Octupus.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Octopus.Designer.cs</LastGenOutput>
+      <LastGenOutput>Octupus.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Octopus.edmx.diagram">
-      <DependentUpon>Octopus.edmx</DependentUpon>
+    <Content Include="Models\Octupus.edmx.diagram">
+      <DependentUpon>Octupus.edmx</DependentUpon>
+    </Content>
+    <None Include="OctopusDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>OctopusDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="OctopusDataSet.xss">
+      <DependentUpon>OctopusDataSet.xsd</DependentUpon>
+    </Content>
+    <Content Include="Reports\Presupuestos.xsc">
+      <DependentUpon>Presupuestos.xsd</DependentUpon>
+    </Content>
+    <Content Include="Presupuesto.xsc">
+      <DependentUpon>Presupuesto.xsd</DependentUpon>
+    </Content>
+    <None Include="Presupuesto.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Presupuesto.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Presupuesto.xss">
+      <DependentUpon>Presupuesto.xsd</DependentUpon>
+    </Content>
+    <None Include="Reports\Presupuestos.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Presupuestos.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="Reports\Presupuestos.xss">
+      <DependentUpon>Presupuestos.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -362,11 +439,6 @@
     <Content Include="Views\Clientes\List.cshtml" />
     <Content Include="Views\Clientes\Edit.cshtml" />
     <Content Include="Views\Shared\_HomeBlack.cshtml" />
-    <Content Include="Views\Vehiculos\Create.cshtml" />
-    <Content Include="Views\Vehiculos\Delete.cshtml" />
-    <Content Include="Views\Vehiculos\Details.cshtml" />
-    <Content Include="Views\Vehiculos\Edit.cshtml" />
-    <Content Include="Views\Vehiculos\List.cshtml" />
     <Content Include="Views\Empleados\Create.cshtml" />
     <Content Include="Views\Empleados\Delete.cshtml" />
     <Content Include="Views\Empleados\Details.cshtml" />
@@ -384,6 +456,12 @@
     <Content Include="Views\Sucursales\Create.cshtml" />
     <Content Include="Views\Sucursales\Delete.cshtml" />
     <Content Include="Views\Usuarios\ListInactivos.cshtml" />
+    <Content Include="Views\Presupuestos\Create.cshtml" />
+    <Content Include="Views\Presupuestos\Delete.cshtml" />
+    <Content Include="Views\Presupuestos\Details.cshtml" />
+    <Content Include="Views\Presupuestos\Edit.cshtml" />
+    <Content Include="Views\Presupuestos\List.cshtml" />
+    <Content Include="Views\Reports\Report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -398,6 +476,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Reports\Presupuestos.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

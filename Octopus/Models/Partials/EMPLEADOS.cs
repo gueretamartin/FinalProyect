@@ -37,7 +37,7 @@ namespace Octopus.Models
     [MetadataType(typeof(IEmpleadosMetadata))]
     public partial class EMPLEADOS : IEmpleadosMetadata
     {
-        private OctopusEntities db = new OctopusEntities();
+        private OctopusEntities1 db = new OctopusEntities1();
 
         public string NombreParaMostrar
         {

@@ -18,7 +18,7 @@ namespace Octopus.Models
     [MetadataType(typeof(IVW_StatisticsMetadata))]
     public partial class VW_Statistics : IVW_StatisticsMetadata
     {
-        private OctopusEntities db = new OctopusEntities();
+        private OctopusEntities1 db = new OctopusEntities1();
 
         public int getCantidad(string tipo)
         {

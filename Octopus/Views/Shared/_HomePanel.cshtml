@@ -10,7 +10,7 @@
 <html>
 <head>
    
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>OC - @ViewBag.Title</title>
     <link rel="stylesheet" href="~/Css/normalize.css">
@@ -75,7 +75,7 @@
                 <figcaption class="navLateral-body-cr hide-on-tablet">
                     <span>
                      <br>
-                        <small>@user.Rol</small>
+                        <small></small>
                     </span>
                 </figcaption>
             </figure>
@@ -173,15 +173,16 @@
                     </li>
                     <li class="full-width divider-menu-h"></li>
                     <li class="full-width">
-                        <a href="inventory.html" class="full-width">
-                            <div class="navLateral-body-cl">
-                                <i class="zmdi zmdi-store"></i>
-                            </div>
-                            <div class="navLateral-body-cr hide-on-tablet">
-                                PRESUPUESTOS
-                            </div>
-                        </a>
-                    </li>
+                        <a href="@Url.Action("List","Presupuestos")" class="full-width">
+
+                                 <div class="navLateral-body-cl">
+                                    <i class="zmdi zmdi-store"></i>
+                                </div>
+                                <div class="navLateral-body-cr hide-on-tablet">
+                                    PRESUPUESTOS
+                                </div>
+                            </a>
+</li>
                     <li class="full-width divider-menu-h"></li>
                     <li class="full-width">
                         <a href="inventory.html" class="full-width">

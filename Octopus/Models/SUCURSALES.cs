@@ -17,6 +17,8 @@ namespace Octopus.Models
         public SUCURSALES()
         {
             this.EMPLEADOS = new HashSet<EMPLEADOS>();
+            this.RESERVAS = new HashSet<RESERVAS>();
+            this.SERVICIOS = new HashSet<SERVICIOS>();
             this.VEHICULOS = new HashSet<VEHICULOS>();
         }
     
@@ -24,6 +26,8 @@ namespace Octopus.Models
         public string SUC_DESCRIP { get; set; }
     
         public virtual ICollection<EMPLEADOS> EMPLEADOS { get; set; }
+        public virtual ICollection<RESERVAS> RESERVAS { get; set; }
+        public virtual ICollection<SERVICIOS> SERVICIOS { get; set; }
         public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
     }
 }

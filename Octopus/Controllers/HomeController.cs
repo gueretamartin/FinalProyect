@@ -9,7 +9,7 @@ namespace Octopus.Controllers
 {
     public class HomeController : Controller
     {
-        private OctopusEntities db = new OctopusEntities();
+        private OctopusEntities1 db = new OctopusEntities1();
 
         // GET: /Home/
 
