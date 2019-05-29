@@ -24,7 +24,7 @@ namespace Octopus.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (OctopusEntities1 db = new OctopusEntities1())
+                using (OctopusEntities db = new OctopusEntities())
                 {
                     USUARIOS obj = db.USUARIOS.Where(a => a.Usuario.Equals(objUser.Usuario) && a.Contraseña.Equals(objUser.Contraseña)).FirstOrDefault();
                     if (obj != null)

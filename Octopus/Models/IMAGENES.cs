@@ -14,16 +14,11 @@ namespace Octopus.Models
     
     public partial class IMAGENES
     {
-        public IMAGENES()
-        {
-            this.VEHICULOS = new HashSet<VEHICULOS>();
-        }
-    
         public int IMG_ID { get; set; }
         public string IMG_NAME { get; set; }
         public byte[] IMG_IMAGE { get; set; }
         public Nullable<int> VEH_ID { get; set; }
     
-        public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
+        public virtual VEHICULOS VEHICULOS { get; set; }
     }
 }

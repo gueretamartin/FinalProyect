@@ -14,7 +14,7 @@ namespace Octopus.Controllers
 {
     public class EmpleadosController : Controller
     {
-        private OctopusEntities1 db = new OctopusEntities1();
+        private OctopusEntities db = new OctopusEntities();
 
         // GET: /Empleados/
         public ActionResult List(string searchEmpleado, int? page)

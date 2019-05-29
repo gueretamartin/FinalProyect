@@ -9,12 +9,12 @@ $(document).ready(function () {
     $('#OptionIVA').change(function () {
         var ddlValue = $(this).val();
 
-        if (ddlValue == "CONSUMIDOR_FINAL") {
+        if (ddlValue == "1") {
             // show time div, hide fromTo div
             $('#VEH_CLI_CF_ID').show();
             $('#VEH_CLI_RI_ID').hide();
         }
-        else if (ddlValue == "RESPONSABLE_INSCRIPTO") {
+        else if (ddlValue == "2") {
             // show fromTo div, hide time div
             $('#VEH_CLI_CF_ID').hide();
             $('#VEH_CLI_RI_ID').show();

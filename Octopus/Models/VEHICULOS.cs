@@ -16,6 +16,7 @@ namespace Octopus.Models
     {
         public VEHICULOS()
         {
+            this.IMAGENES = new HashSet<IMAGENES>();
             this.RESERVAS = new HashSet<RESERVAS>();
             this.VENTAS = new HashSet<VENTAS>();
         }
@@ -33,18 +34,18 @@ namespace Octopus.Models
         public string VEH_AÑO { get; set; }
         public string VEH_PATENTE { get; set; }
         public Nullable<int> TV_ID { get; set; }
-        public Nullable<bool> VEH_VIGENTE { get; set; }
+        public bool VEH_VIGENTE { get; set; }
         public Nullable<int> VEH_PRECIO_INGRESO { get; set; }
-        public Nullable<bool> VEH_CIERRE { get; set; }
-        public Nullable<bool> VEH_LLANTAS { get; set; }
-        public Nullable<bool> VEH_AIRBAG { get; set; }
-        public Nullable<bool> VEH_AIRE { get; set; }
-        public Nullable<bool> VEH_LEVANTA_VIDRIOS { get; set; }
-        public Nullable<bool> VEH_FRENOS_ABS { get; set; }
-        public Nullable<bool> VEH_NEBLINEROS { get; set; }
-        public Nullable<bool> VEH_ESPEJOS_AUTOM { get; set; }
-        public Nullable<bool> VEH_ASIENTOS_CUERO { get; set; }
-        public Nullable<bool> VEH_RUEDA_AUXILIAR { get; set; }
+        public bool VEH_CIERRE { get; set; }
+        public bool VEH_LLANTAS { get; set; }
+        public bool VEH_AIRBAG { get; set; }
+        public bool VEH_AIRE { get; set; }
+        public bool VEH_LEVANTA_VIDRIOS { get; set; }
+        public bool VEH_FRENOS_ABS { get; set; }
+        public bool VEH_NEBLINEROS { get; set; }
+        public bool VEH_ESPEJOS_AUTOM { get; set; }
+        public bool VEH_ASIENTOS_CUERO { get; set; }
+        public bool VEH_RUEDA_AUXILIAR { get; set; }
         public string VEH_STEREO_MODELO { get; set; }
         public string VEH_STEREO_CODIGO { get; set; }
         public Nullable<int> CLI_ID { get; set; }
@@ -59,7 +60,7 @@ namespace Octopus.Models
         public virtual EMPLEADOS EMPLEADOS { get; set; }
         public virtual ESTADOS ESTADOS { get; set; }
         public virtual FECHAS FECHAS { get; set; }
-        public virtual IMAGENES IMAGENES { get; set; }
+        public virtual ICollection<IMAGENES> IMAGENES { get; set; }
         public virtual MARCAS MARCAS { get; set; }
         public virtual MONEDAS MONEDAS { get; set; }
         public virtual ICollection<RESERVAS> RESERVAS { get; set; }

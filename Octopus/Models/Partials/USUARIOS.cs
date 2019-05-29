@@ -27,7 +27,7 @@ namespace Octopus.Models
     [MetadataType(typeof(IUsuariosMetadata))]
     public partial class USUARIOS : IUsuariosMetadata
     {
-        private OctopusEntities1 db = new OctopusEntities1();
+        private OctopusEntities db = new OctopusEntities();
 
         public EMPLEADOS getEmpleado(String username)
         {   

@@ -12,7 +12,7 @@ namespace Octopus.Controllers
 {
     public class ReservasController : Controller
     {
-        private OctopusEntities1 db = new OctopusEntities1();
+        private OctopusEntities db = new OctopusEntities();
 
         // GET: /Reservas/
         public ActionResult Index()

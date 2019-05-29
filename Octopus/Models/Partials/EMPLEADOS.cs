@@ -37,7 +37,7 @@ namespace Octopus.Models
     [MetadataType(typeof(IEmpleadosMetadata))]
     public partial class EMPLEADOS : IEmpleadosMetadata
     {
-        private OctopusEntities1 db = new OctopusEntities1();
+        private OctopusEntities db = new OctopusEntities();
 
         public string NombreParaMostrar
         {
@@ -53,7 +53,15 @@ namespace Octopus.Models
                 return db.SUCURSALES.FirstOrDefault(c => c.SUC_ID == SUC_ID).SUC_DESCRIP;
             }
         }
-      
+
+        public string EMP_APELLIDO_NOMBRE
+        {
+            get
+            {
+                return EMP_APELLIDO + " " + EMP_NOMBRE;
+            }
+
+        }      
       
     }
 

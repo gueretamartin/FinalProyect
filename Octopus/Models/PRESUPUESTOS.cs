@@ -37,7 +37,7 @@ namespace Octopus.Models
         public virtual EMPLEADOS EMPLEADOS { get; set; }
         public virtual ESTADOS ESTADOS { get; set; }
         public virtual FECHAS FECHAS { get; set; }
-        public virtual MARCAS MARCAS { get; set; }
         public virtual FECHAS FECHAS1 { get; set; }
+        public virtual MARCAS MARCAS { get; set; }
     }
 }

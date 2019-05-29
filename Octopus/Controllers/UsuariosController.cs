@@ -15,7 +15,7 @@ namespace Octopus.Controllers
     public class UsuariosController : Controller
     {
 
-        private OctopusEntities1 db = new OctopusEntities1();
+        private OctopusEntities db = new OctopusEntities();
 
 
         public ActionResult Details(String user)

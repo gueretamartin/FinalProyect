@@ -108,6 +108,22 @@ namespace Octopus.Models
     [MetadataType(typeof(IClientesMetadata))]
     public partial class CLIENTES : IClientesMetadata
     {
+        public string CLI_APELLIDO_NOMBRE_CUIL
+        {
+            get
+            {
+                return String.Format(CLI_APELLIDO + " " + CLI_NOMBRE + " - " + CLI_CUIL);
+            }
+        }
+
+        public string CLI_RAZONSOCIAL_CUIT
+        {
+            get
+            {
+                return String.Format(CLI_RI_RAZONSOCIAL + " - " + CLI_RI_CUIT);
+            }
+        }
+
         public string CLI_APELLIDO_NOMBRE
         {
             get
@@ -132,5 +148,28 @@ namespace Octopus.Models
             }
         }
 
+        public string CLI_APELLIDO_CUIL
+        {
+            get
+            {
+                return String.Format(CLI_APELLIDO + " " + CLI_NOMBRE + " -- " + CLI_CUIL);
+            }
+        }
+
+        public string CLI_RZ_CUIT
+        {
+            get
+            {
+                return String.Format(CLI_RI_RAZONSOCIAL + " -- " + CLI_RI_CUIT);
+            }
+        }
+
+        public string CLI_DESCRIPCIONES
+        {
+            get
+            {
+                return String.Format(CLI_RI_CUIT + " " + CLI_NOMBRE + " " + CLI_APELLIDO + " " + CLI_RI_RAZONSOCIAL);
+            }
+        }
     }
 }

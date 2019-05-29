@@ -12,7 +12,7 @@ namespace Octopus.Controllers
 {
     public class ClientesController : Controller
     {
-        private OctopusEntities1 db = new OctopusEntities1();
+        private OctopusEntities db = new OctopusEntities();
 
         // GET: /Clientes/List?searchClient=[Parámetro]
         // LEVANTA LA VISTA DE LISTADO DE CLIENTES O LISTA DE CLIENTES QUE CONTIENEN CON EL PARÁMETRO PASADO

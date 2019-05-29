@@ -15,7 +15,7 @@ namespace Octopus.Controllers
     public class PresupuestosController : Controller
     {
 
-        private OctopusEntities1 db = new OctopusEntities1();
+        private OctopusEntities db = new OctopusEntities();
 
 
         // GET: /Presupuestos/Details/5
