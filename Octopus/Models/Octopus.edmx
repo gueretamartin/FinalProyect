@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="OctopusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="OctopusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CARGOS">
           <Key>
             <PropertyRef Name="CARGO_ID" />
@@ -222,15 +222,15 @@
           <Property Name="SUC_ID" Type="int" />
           <Property Name="VEH_MODELO" Type="varchar" MaxLength="255" />
           <Property Name="VEH_VERSION" Type="varchar" MaxLength="30" />
-          <Property Name="VEH_CILINDRADA" Type="varchar" MaxLength="30" />
+          <Property Name="VEH_CILINDRADAS" Type="varchar" MaxLength="30" />
           <Property Name="VEH_COLOR" Type="varchar" MaxLength="255" />
           <Property Name="VEH_KILOMETROS" Type="varchar" MaxLength="30" />
           <Property Name="VEH_DETALLES" Type="varchar" MaxLength="255" />
           <Property Name="VEH_PUERTAS" Type="varchar" MaxLength="50" />
-          <Property Name="TCOM_ID" Type="int" />
+          <Property Name="VEH_TIPOCOMBUSTIBLE" Type="int" />
           <Property Name="VEH_AÑO" Type="varchar" MaxLength="30" />
           <Property Name="VEH_PATENTE" Type="varchar" MaxLength="10" />
-          <Property Name="TV_ID" Type="int" />
+          <Property Name="VEH_TIPOVEHICULO" Type="int" />
           <Property Name="VEH_VIGENTE" Type="bit" Nullable="false" />
           <Property Name="VEH_PRECIO_INGRESO" Type="int" />
           <Property Name="VEH_CIERRE" Type="bit" Nullable="false" />
@@ -252,6 +252,7 @@
           <Property Name="IMG_ID" Type="int" />
           <Property Name="ES_ID" Type="int" />
           <Property Name="MON_ID" Type="int" />
+          <Property Name="VEH_MARCA" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="VENTAS">
           <Key>
@@ -711,7 +712,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
               <PropertyRef Name="TCOM_ID" />
             </Principal>
             <Dependent Role="VEHICULOS">
-              <PropertyRef Name="TCOM_ID" />
+              <PropertyRef Name="VEH_TIPOCOMBUSTIBLE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -723,7 +724,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
               <PropertyRef Name="TV_ID" />
             </Principal>
             <Dependent Role="VEHICULOS">
-              <PropertyRef Name="TV_ID" />
+              <PropertyRef Name="VEH_TIPOVEHICULO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -775,6 +776,129 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CLI_ELIMINAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CLI_ID" Type="int" Mode="In" />
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="EMP_AGREGAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="SUC_ID" Type="int" Mode="In" />
+          <Parameter Name="EMP_CODPOSTAL" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_NOMBRE" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_APELLIDO" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_USER" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_PASSWORD" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_TIPO" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_DIRECCION" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_TELEFONO" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_DNI" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EMP_EDITAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="SUC_ID" Type="int" Mode="In" />
+          <Parameter Name="EMP_CODPOSTAL" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_NOMBRE" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_APELLIDO" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_EMAIL" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_USER" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_PASSWORD" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_TIPO" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_DIRECCION" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_TELEFONO" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_DNI" Type="int" Mode="In" />
+          <Parameter Name="EMP_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EMP_ELIMINAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="EMP_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ENT_AGREGAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="FEC_ID" Type="int" Mode="In" />
+          <Parameter Name="VEN_ID" Type="int" Mode="In" />
+          <Parameter Name="MONTO" Type="float" Mode="In" />
+        </Function>
+        <Function Name="ENT_EDITAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="ENT_ID" Type="int" Mode="In" />
+          <Parameter Name="FEC_ID" Type="int" Mode="In" />
+          <Parameter Name="VEN_ID" Type="int" Mode="In" />
+          <Parameter Name="MONTO" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ENT_ELIMINAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="ENT_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FEC_AGREGAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FECHA_INICIO" Type="date" Mode="In" />
+          <Parameter Name="CANT_ANIOS" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FEC_CONSULTA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="FEC_ID" Type="int" Mode="In" />
+          <Parameter Name="FECHA" Type="date" Mode="In" />
+        </Function>
+        <Function Name="getPresupuesto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ING_AGREGAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="VEH_ID" Type="int" Mode="In" />
+          <Parameter Name="EMP_ID" Type="int" Mode="In" />
+          <Parameter Name="FEC_ID" Type="int" Mode="In" />
+          <Parameter Name="MONTO" Type="int" Mode="In" />
+        </Function>
+        <Function Name="LOG_VALIDAR_LOGIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="USER" Type="varchar" Mode="In" />
+          <Parameter Name="PASS" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ORD_AGREGAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="ORD_ID" Type="int" Mode="In" />
+          <Parameter Name="SER_ID" Type="int" Mode="In" />
+          <Parameter Name="VEH_ID" Type="int" Mode="In" />
+          <Parameter Name="FEC_ID" Type="int" Mode="In" />
+          <Parameter Name="ASESOR" Type="varchar" Mode="In" />
+          <Parameter Name="SER_COSTO" Type="int" Mode="In" />
+        </Function>
+        <Function Name="REC_AGREGAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="REC_MARCA" Type="varchar" Mode="In" />
+          <Parameter Name="REC_MODELO" Type="varchar" Mode="In" />
+          <Parameter Name="REC_VERSION" Type="varchar" Mode="In" />
+          <Parameter Name="REC_ANIO" Type="varchar" Mode="In" />
+          <Parameter Name="REC_PRECIO" Type="int" Mode="In" />
+        </Function>
+        <Function Name="RES_AGREGAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="VEH_ID" Type="int" Mode="In" />
+          <Parameter Name="EMP_ID" Type="int" Mode="In" />
+          <Parameter Name="RES_SENIA" Type="int" Mode="In" />
+          <Parameter Name="RES_VALOR_PACTADO" Type="int" Mode="In" />
+          <Parameter Name="RES_INICIO" Type="date" Mode="In" />
+          <Parameter Name="RES_FIN" Type="date" Mode="In" />
+          <Parameter Name="RES_ESTADO" Type="bit" Mode="In" />
+          <Parameter Name="FEC_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SER_AGREGAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="SER_DESCRIP" Type="varchar" Mode="In" />
+          <Parameter Name="SER_COSTO" Type="int" Mode="In" />
+          <Parameter Name="SUC_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SUC_AGREGAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="SUC_DESCRIP" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="VEN_AGREGAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MESSAGE" Type="varchar" Mode="In" />
+          <Parameter Name="FEC_ID" Type="int" Mode="In" />
+          <Parameter Name="CLI_ID" Type="int" Mode="In" />
+          <Parameter Name="VEH_ID" Type="int" Mode="In" />
+          <Parameter Name="EMP_ID" Type="int" Mode="In" />
+          <Parameter Name="MONTO" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="OctopusModelStoreContainer">
           <EntitySet Name="CARGOS" EntityType="Self.CARGOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CLIENTES" EntityType="Self.CLIENTES" Schema="dbo" store:Type="Tables" />
@@ -975,7 +1099,8 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
             <End Role="VENTAS" EntitySet="VENTAS" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OctopusModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -987,7 +1112,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <Property Name="CARGO_DESC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CARGOS1" Relationship="Self.FK_CARGOS_CARGOS" FromRole="CARGOS" ToRole="CARGOS1" />
           <NavigationProperty Name="CARGOS2" Relationship="Self.FK_CARGOS_CARGOS" FromRole="CARGOS1" ToRole="CARGOS" />
-          <NavigationProperty Name="EMPLEADOS" Relationship="OctopusModel.FK_EMPLEADOS_CARGOS" FromRole="CARGOS" ToRole="EMPLEADOS" />
+          <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_EMPLEADOS_CARGOS" FromRole="CARGOS" ToRole="EMPLEADOS" />
         </EntityType>
         <EntityType Name="CLIENTES">
           <Key>
@@ -1043,6 +1168,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <Property Name="EMP_DNI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_USUARIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EMP_ESTADO" Type="Int32" />
+          <NavigationProperty Name="CARGOS" Relationship="Self.FK_EMPLEADOS_CARGOS" FromRole="EMPLEADOS" ToRole="CARGOS" />
           <NavigationProperty Name="ESTADOS" Relationship="Self.FK_EMPLEADOS_ESTADOS" FromRole="EMPLEADOS" ToRole="ESTADOS" />
           <NavigationProperty Name="SUCURSALES" Relationship="Self.FK_EMPLEADOS_SUCURSALES1" FromRole="EMPLEADOS" ToRole="SUCURSALES" />
           <NavigationProperty Name="USUARIOS" Relationship="Self.FK_EMPLEADOS_USUARIOS" FromRole="EMPLEADOS" ToRole="USUARIOS" />
@@ -1050,7 +1176,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <NavigationProperty Name="RESERVAS" Relationship="Self.FK_RESERVAS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="RESERVAS" />
           <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_VEHICULOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="VEHICULOS" />
           <NavigationProperty Name="VENTAS" Relationship="Self.FK_VENTAS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="VENTAS" />
-          <NavigationProperty Name="CARGOS" Relationship="OctopusModel.FK_EMPLEADOS_CARGOS" FromRole="EMPLEADOS" ToRole="CARGOS" />
         </EntityType>
         <EntityType Name="ENTREGAS">
           <Key>
@@ -1147,16 +1272,16 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <Property Name="ES_ID" Type="Int32" Nullable="false" />
           <Property Name="PRE_FECHA_FIN" Type="Int32" />
           <Property Name="PRE_PRECIO" Type="Int32" Nullable="false" />
+          <Property Name="img1path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="img2path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="img3path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="img4path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CLIENTES" Relationship="Self.FK_PRESUPUESTOS_CLIENTES" FromRole="PRESUPUESTOS" ToRole="CLIENTES" />
           <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_PRESUPUESTOS_EMPLEADOS" FromRole="PRESUPUESTOS" ToRole="EMPLEADOS" />
           <NavigationProperty Name="ESTADOS" Relationship="Self.FK_PRESUPUESTOS_ESTADOS" FromRole="PRESUPUESTOS" ToRole="ESTADOS" />
           <NavigationProperty Name="FECHAS" Relationship="Self.FK_PRESUPUESTOS_FECHAS" FromRole="PRESUPUESTOS" ToRole="FECHAS" />
           <NavigationProperty Name="FECHAS1" Relationship="Self.FK_PRESUPUESTOS_FECHAS1" FromRole="PRESUPUESTOS" ToRole="FECHAS" />
           <NavigationProperty Name="MARCAS" Relationship="Self.FK_PRESUPUESTOS_MARCAS" FromRole="PRESUPUESTOS" ToRole="MARCAS" />
-          <Property Name="img1path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="img2path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="img3path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="img4path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="RESERVAS">
           <Key>
@@ -1261,15 +1386,15 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <Property Name="SUC_ID" Type="Int32" />
           <Property Name="VEH_MODELO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="VEH_VERSION" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="VEH_CILINDRADA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="VEH_CILINDRADAS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="VEH_COLOR" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="VEH_KILOMETROS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="VEH_DETALLES" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="VEH_PUERTAS" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TCOM_ID" Type="Int32" />
+          <Property Name="VEH_TIPOCOMBUSTIBLE" Type="Int32" />
           <Property Name="VEH_AÑO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="VEH_PATENTE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="TV_ID" Type="Int32" />
+          <Property Name="VEH_TIPOVEHICULO" Type="Int32" />
           <Property Name="VEH_VIGENTE" Type="Boolean" Nullable="false" />
           <Property Name="VEH_PRECIO_INGRESO" Type="Int32" />
           <Property Name="VEH_CIERRE" Type="Boolean" Nullable="false" />
@@ -1291,6 +1416,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <Property Name="IMG_ID" Type="Int32" />
           <Property Name="ES_ID" Type="Int32" />
           <Property Name="MON_ID" Type="Int32" />
+          <Property Name="VEH_MARCA" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CLIENTES" Relationship="Self.FK_VEHICULOS_CLIENTES" FromRole="VEHICULOS" ToRole="CLIENTES" />
           <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_VEHICULOS_EMPLEADOS" FromRole="VEHICULOS" ToRole="EMPLEADOS" />
           <NavigationProperty Name="ESTADOS" Relationship="Self.FK_VEHICULOS_ESTADOS" FromRole="VEHICULOS" ToRole="ESTADOS" />
@@ -1344,6 +1470,18 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
             </Principal>
             <Dependent Role="CARGOS1">
               <PropertyRef Name="CARGO_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLEADOS_CARGOS">
+          <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="1" />
+          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARGOS">
+              <PropertyRef Name="CARGO_ID" />
+            </Principal>
+            <Dependent Role="EMPLEADOS">
+              <PropertyRef Name="EMP_CARGO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1775,7 +1913,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
               <PropertyRef Name="TCOM_ID" />
             </Principal>
             <Dependent Role="VEHICULOS">
-              <PropertyRef Name="TCOM_ID" />
+              <PropertyRef Name="VEH_TIPOCOMBUSTIBLE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1787,7 +1925,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
               <PropertyRef Name="TV_ID" />
             </Principal>
             <Dependent Role="VEHICULOS">
-              <PropertyRef Name="TV_ID" />
+              <PropertyRef Name="VEH_TIPOVEHICULO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1842,6 +1980,10 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <AssociationSet Name="FK_CARGOS_CARGOS" Association="Self.FK_CARGOS_CARGOS">
             <End Role="CARGOS" EntitySet="CARGOS" />
             <End Role="CARGOS1" EntitySet="CARGOS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADOS_CARGOS" Association="Self.FK_EMPLEADOS_CARGOS">
+            <End Role="CARGOS" EntitySet="CARGOS" />
+            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
           </AssociationSet>
           <AssociationSet Name="FK_CLIENTES_ESTADOS" Association="Self.FK_CLIENTES_ESTADOS">
             <End Role="ESTADOS" EntitySet="ESTADOS" />
@@ -1999,23 +2141,154 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
             <End Role="VEHICULOS" EntitySet="VEHICULOS" />
             <End Role="VENTAS" EntitySet="VENTAS" />
           </AssociationSet>
-          <AssociationSet Name="FK_EMPLEADOS_CARGOS" Association="OctopusModel.FK_EMPLEADOS_CARGOS">
-            <End Role="CARGOS" EntitySet="CARGOS" />
-            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
-          </AssociationSet>
+          <FunctionImport Name="CLI_ELIMINAR">
+            <Parameter Name="CLI_ID" Mode="In" Type="Int32" />
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="EMP_AGREGAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="SUC_ID" Mode="In" Type="Int32" />
+            <Parameter Name="EMP_CODPOSTAL" Mode="In" Type="String" />
+            <Parameter Name="EMP_NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="EMP_APELLIDO" Mode="In" Type="String" />
+            <Parameter Name="EMP_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="EMP_USER" Mode="In" Type="String" />
+            <Parameter Name="EMP_PASSWORD" Mode="In" Type="String" />
+            <Parameter Name="EMP_TIPO" Mode="In" Type="String" />
+            <Parameter Name="EMP_DIRECCION" Mode="In" Type="String" />
+            <Parameter Name="EMP_TELEFONO" Mode="In" Type="String" />
+            <Parameter Name="EMP_DNI" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EMP_EDITAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="SUC_ID" Mode="In" Type="Int32" />
+            <Parameter Name="EMP_CODPOSTAL" Mode="In" Type="String" />
+            <Parameter Name="EMP_NOMBRE" Mode="In" Type="String" />
+            <Parameter Name="EMP_APELLIDO" Mode="In" Type="String" />
+            <Parameter Name="EMP_EMAIL" Mode="In" Type="String" />
+            <Parameter Name="EMP_USER" Mode="In" Type="String" />
+            <Parameter Name="EMP_PASSWORD" Mode="In" Type="String" />
+            <Parameter Name="EMP_TIPO" Mode="In" Type="String" />
+            <Parameter Name="EMP_DIRECCION" Mode="In" Type="String" />
+            <Parameter Name="EMP_TELEFONO" Mode="In" Type="String" />
+            <Parameter Name="EMP_DNI" Mode="In" Type="Int32" />
+            <Parameter Name="EMP_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EMP_ELIMINAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="EMP_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ENT_AGREGAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="FEC_ID" Mode="In" Type="Int32" />
+            <Parameter Name="VEN_ID" Mode="In" Type="Int32" />
+            <Parameter Name="MONTO" Mode="In" Type="Double" />
+          </FunctionImport>
+          <FunctionImport Name="ENT_EDITAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="ENT_ID" Mode="In" Type="Int32" />
+            <Parameter Name="FEC_ID" Mode="In" Type="Int32" />
+            <Parameter Name="VEN_ID" Mode="In" Type="Int32" />
+            <Parameter Name="MONTO" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ENT_ELIMINAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="ENT_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FEC_AGREGAR">
+            <Parameter Name="FECHA_INICIO" Mode="In" Type="DateTime" />
+            <Parameter Name="CANT_ANIOS" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FEC_CONSULTA">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="FEC_ID" Mode="In" Type="Int32" />
+            <Parameter Name="FECHA" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="getPresupuesto" ReturnType="Collection(OctopusModel.getPresupuesto_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ING_AGREGAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="VEH_ID" Mode="In" Type="Int32" />
+            <Parameter Name="EMP_ID" Mode="In" Type="Int32" />
+            <Parameter Name="FEC_ID" Mode="In" Type="Int32" />
+            <Parameter Name="MONTO" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="LOG_VALIDAR_LOGIN">
+            <Parameter Name="USER" Mode="In" Type="String" />
+            <Parameter Name="PASS" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ORD_AGREGAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="ORD_ID" Mode="In" Type="Int32" />
+            <Parameter Name="SER_ID" Mode="In" Type="Int32" />
+            <Parameter Name="VEH_ID" Mode="In" Type="Int32" />
+            <Parameter Name="FEC_ID" Mode="In" Type="Int32" />
+            <Parameter Name="ASESOR" Mode="In" Type="String" />
+            <Parameter Name="SER_COSTO" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="REC_AGREGAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="REC_MARCA" Mode="In" Type="String" />
+            <Parameter Name="REC_MODELO" Mode="In" Type="String" />
+            <Parameter Name="REC_VERSION" Mode="In" Type="String" />
+            <Parameter Name="REC_ANIO" Mode="In" Type="String" />
+            <Parameter Name="REC_PRECIO" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="RES_AGREGAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="VEH_ID" Mode="In" Type="Int32" />
+            <Parameter Name="EMP_ID" Mode="In" Type="Int32" />
+            <Parameter Name="RES_SENIA" Mode="In" Type="Int32" />
+            <Parameter Name="RES_VALOR_PACTADO" Mode="In" Type="Int32" />
+            <Parameter Name="RES_INICIO" Mode="In" Type="DateTime" />
+            <Parameter Name="RES_FIN" Mode="In" Type="DateTime" />
+            <Parameter Name="RES_ESTADO" Mode="In" Type="Boolean" />
+            <Parameter Name="FEC_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SER_AGREGAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="SER_DESCRIP" Mode="In" Type="String" />
+            <Parameter Name="SER_COSTO" Mode="In" Type="Int32" />
+            <Parameter Name="SUC_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SUC_AGREGAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="SUC_DESCRIP" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VEN_AGREGAR">
+            <Parameter Name="MESSAGE" Mode="In" Type="String" />
+            <Parameter Name="FEC_ID" Mode="In" Type="Int32" />
+            <Parameter Name="CLI_ID" Mode="In" Type="Int32" />
+            <Parameter Name="VEH_ID" Mode="In" Type="Int32" />
+            <Parameter Name="EMP_ID" Mode="In" Type="Int32" />
+            <Parameter Name="MONTO" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
-        <Association Name="FK_EMPLEADOS_CARGOS">
-          <End Type="OctopusModel.CARGOS" Role="CARGOS" Multiplicity="1" />
-          <End Type="OctopusModel.EMPLEADOS" Role="EMPLEADOS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CARGOS">
-              <PropertyRef Name="CARGO_ID" />
-            </Principal>
-            <Dependent Role="EMPLEADOS">
-              <PropertyRef Name="EMP_CARGO" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <ComplexType Name="getPresupuesto_Result">
+          <Property Type="Int32" Name="PRE_ID" Nullable="false" />
+          <Property Type="Int32" Name="FEC_ID" Nullable="false" />
+          <Property Type="Int32" Name="EMP_ID" Nullable="false" />
+          <Property Type="Int32" Name="PRE_MARCA" Nullable="false" />
+          <Property Type="String" Name="PRE_MODELO" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PRE_VERSION" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="PRE_ANIO" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PRE_PATENTE" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PRE_ESTADO_CHASIS" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PRE_ESTADO_PINTURA" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PRE_ESTADO_PARABRISAS" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PRE_ESTADO_NEUMATICOS" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PRE_ESTADO_INTERIOR" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PRE_DETALLES" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="CLI_ID" Nullable="false" />
+          <Property Type="Int32" Name="ES_ID" Nullable="false" />
+          <Property Type="Int32" Name="PRE_FECHA_FIN" Nullable="true" />
+          <Property Type="Int32" Name="PRE_PRECIO" Nullable="false" />
+          <Property Type="String" Name="img1path" Nullable="true" />
+          <Property Type="String" Name="img2path" Nullable="true" />
+          <Property Type="String" Name="img3path" Nullable="true" />
+          <Property Type="String" Name="img4path" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2141,10 +2414,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <EntitySetMapping Name="PRESUPUESTOS">
             <EntityTypeMapping TypeName="OctopusModel.PRESUPUESTOS">
               <MappingFragment StoreEntitySet="PRESUPUESTOS">
-                <ScalarProperty Name="img4path" ColumnName="img4path" />
-                <ScalarProperty Name="img3path" ColumnName="img3path" />
-                <ScalarProperty Name="img2path" ColumnName="img2path" />
-                <ScalarProperty Name="img1path" ColumnName="img1path" />
                 <ScalarProperty Name="PRE_ID" ColumnName="PRE_ID" />
                 <ScalarProperty Name="FEC_ID" ColumnName="FEC_ID" />
                 <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
@@ -2163,6 +2432,10 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
                 <ScalarProperty Name="ES_ID" ColumnName="ES_ID" />
                 <ScalarProperty Name="PRE_FECHA_FIN" ColumnName="PRE_FECHA_FIN" />
                 <ScalarProperty Name="PRE_PRECIO" ColumnName="PRE_PRECIO" />
+                <ScalarProperty Name="img1path" ColumnName="img1path" />
+                <ScalarProperty Name="img2path" ColumnName="img2path" />
+                <ScalarProperty Name="img3path" ColumnName="img3path" />
+                <ScalarProperty Name="img4path" ColumnName="img4path" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2257,15 +2530,15 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
                 <ScalarProperty Name="SUC_ID" ColumnName="SUC_ID" />
                 <ScalarProperty Name="VEH_MODELO" ColumnName="VEH_MODELO" />
                 <ScalarProperty Name="VEH_VERSION" ColumnName="VEH_VERSION" />
-                <ScalarProperty Name="VEH_CILINDRADA" ColumnName="VEH_CILINDRADA" />
+                <ScalarProperty Name="VEH_CILINDRADAS" ColumnName="VEH_CILINDRADAS" />
                 <ScalarProperty Name="VEH_COLOR" ColumnName="VEH_COLOR" />
                 <ScalarProperty Name="VEH_KILOMETROS" ColumnName="VEH_KILOMETROS" />
                 <ScalarProperty Name="VEH_DETALLES" ColumnName="VEH_DETALLES" />
                 <ScalarProperty Name="VEH_PUERTAS" ColumnName="VEH_PUERTAS" />
-                <ScalarProperty Name="TCOM_ID" ColumnName="TCOM_ID" />
+                <ScalarProperty Name="VEH_TIPOCOMBUSTIBLE" ColumnName="VEH_TIPOCOMBUSTIBLE" />
                 <ScalarProperty Name="VEH_AÑO" ColumnName="VEH_AÑO" />
                 <ScalarProperty Name="VEH_PATENTE" ColumnName="VEH_PATENTE" />
-                <ScalarProperty Name="TV_ID" ColumnName="TV_ID" />
+                <ScalarProperty Name="VEH_TIPOVEHICULO" ColumnName="VEH_TIPOVEHICULO" />
                 <ScalarProperty Name="VEH_VIGENTE" ColumnName="VEH_VIGENTE" />
                 <ScalarProperty Name="VEH_PRECIO_INGRESO" ColumnName="VEH_PRECIO_INGRESO" />
                 <ScalarProperty Name="VEH_CIERRE" ColumnName="VEH_CIERRE" />
@@ -2287,6 +2560,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
                 <ScalarProperty Name="IMG_ID" ColumnName="IMG_ID" />
                 <ScalarProperty Name="ES_ID" ColumnName="ES_ID" />
                 <ScalarProperty Name="MON_ID" ColumnName="MON_ID" />
+                <ScalarProperty Name="VEH_MARCA" ColumnName="VEH_MARCA" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2319,6 +2593,51 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CLI_ELIMINAR" FunctionName="OctopusModel.Store.CLI_ELIMINAR" />
+          <FunctionImportMapping FunctionImportName="EMP_AGREGAR" FunctionName="OctopusModel.Store.EMP_AGREGAR" />
+          <FunctionImportMapping FunctionImportName="EMP_EDITAR" FunctionName="OctopusModel.Store.EMP_EDITAR" />
+          <FunctionImportMapping FunctionImportName="EMP_ELIMINAR" FunctionName="OctopusModel.Store.EMP_ELIMINAR" />
+          <FunctionImportMapping FunctionImportName="ENT_AGREGAR" FunctionName="OctopusModel.Store.ENT_AGREGAR" />
+          <FunctionImportMapping FunctionImportName="ENT_EDITAR" FunctionName="OctopusModel.Store.ENT_EDITAR" />
+          <FunctionImportMapping FunctionImportName="ENT_ELIMINAR" FunctionName="OctopusModel.Store.ENT_ELIMINAR" />
+          <FunctionImportMapping FunctionImportName="FEC_AGREGAR" FunctionName="OctopusModel.Store.FEC_AGREGAR" />
+          <FunctionImportMapping FunctionImportName="FEC_CONSULTA" FunctionName="OctopusModel.Store.FEC_CONSULTA" />
+          <FunctionImportMapping FunctionImportName="getPresupuesto" FunctionName="OctopusModel.Store.getPresupuesto">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="OctopusModel.getPresupuesto_Result">
+                <ScalarProperty Name="PRE_ID" ColumnName="PRE_ID" />
+                <ScalarProperty Name="FEC_ID" ColumnName="FEC_ID" />
+                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
+                <ScalarProperty Name="PRE_MARCA" ColumnName="PRE_MARCA" />
+                <ScalarProperty Name="PRE_MODELO" ColumnName="PRE_MODELO" />
+                <ScalarProperty Name="PRE_VERSION" ColumnName="PRE_VERSION" />
+                <ScalarProperty Name="PRE_ANIO" ColumnName="PRE_ANIO" />
+                <ScalarProperty Name="PRE_PATENTE" ColumnName="PRE_PATENTE" />
+                <ScalarProperty Name="PRE_ESTADO_CHASIS" ColumnName="PRE_ESTADO_CHASIS" />
+                <ScalarProperty Name="PRE_ESTADO_PINTURA" ColumnName="PRE_ESTADO_PINTURA" />
+                <ScalarProperty Name="PRE_ESTADO_PARABRISAS" ColumnName="PRE_ESTADO_PARABRISAS" />
+                <ScalarProperty Name="PRE_ESTADO_NEUMATICOS" ColumnName="PRE_ESTADO_NEUMATICOS" />
+                <ScalarProperty Name="PRE_ESTADO_INTERIOR" ColumnName="PRE_ESTADO_INTERIOR" />
+                <ScalarProperty Name="PRE_DETALLES" ColumnName="PRE_DETALLES" />
+                <ScalarProperty Name="CLI_ID" ColumnName="CLI_ID" />
+                <ScalarProperty Name="ES_ID" ColumnName="ES_ID" />
+                <ScalarProperty Name="PRE_FECHA_FIN" ColumnName="PRE_FECHA_FIN" />
+                <ScalarProperty Name="PRE_PRECIO" ColumnName="PRE_PRECIO" />
+                <ScalarProperty Name="img1path" ColumnName="img1path" />
+                <ScalarProperty Name="img2path" ColumnName="img2path" />
+                <ScalarProperty Name="img3path" ColumnName="img3path" />
+                <ScalarProperty Name="img4path" ColumnName="img4path" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ING_AGREGAR" FunctionName="OctopusModel.Store.ING_AGREGAR" />
+          <FunctionImportMapping FunctionImportName="LOG_VALIDAR_LOGIN" FunctionName="OctopusModel.Store.LOG_VALIDAR_LOGIN" />
+          <FunctionImportMapping FunctionImportName="ORD_AGREGAR" FunctionName="OctopusModel.Store.ORD_AGREGAR" />
+          <FunctionImportMapping FunctionImportName="REC_AGREGAR" FunctionName="OctopusModel.Store.REC_AGREGAR" />
+          <FunctionImportMapping FunctionImportName="RES_AGREGAR" FunctionName="OctopusModel.Store.RES_AGREGAR" />
+          <FunctionImportMapping FunctionImportName="SER_AGREGAR" FunctionName="OctopusModel.Store.SER_AGREGAR" />
+          <FunctionImportMapping FunctionImportName="SUC_AGREGAR" FunctionName="OctopusModel.Store.SUC_AGREGAR" />
+          <FunctionImportMapping FunctionImportName="VEN_AGREGAR" FunctionName="OctopusModel.Store.VEN_AGREGAR" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -15,20 +15,14 @@ namespace Octopus.Controllers
         private OctopusEntities db = new OctopusEntities();
 
         // GET: /Reservas/
-        public ActionResult Index()
-        {
-            var reservas = db.RESERVAS.Include(r => r.CLIENTES).Include(r => r.EMPLEADOS).Include(r => r.FECHAS).Include(r => r.VEHICULOS);
-            return View(reservas.ToList());
-        }
-
         // GET: /Reservas/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int res_id = 0)
         {
-            if (id == null)
+            if (res_id == 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RESERVAS reservas = db.RESERVAS.Find(id);
+            RESERVAS reservas = db.RESERVAS.Include(r => r.CLIENTES).Include(r => r.ESTADOS).Include(r => r.EMPLEADOS).Include(r => r.FECHAS).Include(r => r.VEHICULOS).SingleOrDefault(r => r.RES_ID == res_id);
             if (reservas == null)
             {
                 return HttpNotFound();
@@ -158,29 +152,115 @@ namespace Octopus.Controllers
             {
                 db.RESERVAS.Add(reservas);
                 db.SaveChanges();
-                return RedirectToAction("List");
-            } 
+                //return RedirectToAction("List");
+            }
 
-            return View(reservas);
+            
+            try
+            {
+                return RedirectToAction("UpdateState", "Vehiculos", new { veh_id = reservas.VEH_ID, ESTADO_ID = 32, operation = "Reserve" });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
+        public ActionResult ListActivas(string searchReserve)
+        {
+            try
+            {
+                var reservas = db.RESERVAS.Include(r => r.CLIENTES).Include(r => r.EMPLEADOS).Include(r => r.FECHAS).Include(r => r.SUCURSALES).Where(r => r.RES_ESTADO == 41);
+                if (!String.IsNullOrEmpty(searchReserve))
+                {
+                    reservas = reservas.Where(r => r.VEHICULOS.VEH_PATENTE.Contains(searchReserve)
+                        || r.VEHICULOS.VEH_MARCA.Contains(searchReserve)
+                        || r.VEHICULOS.VEH_MODELO.Contains(searchReserve)
+                        || r.CLIENTES.CLI_APELLIDO.Contains(searchReserve)
+                        || r.CLIENTES.CLI_CUIL.Contains(searchReserve)
+                        || r.CLIENTES.CLI_RI_CUIT.Contains(searchReserve)
+                        || r.CLIENTES.CLI_DOC.Contains(searchReserve)
+                        || r.CLIENTES.CLI_RI_RAZONSOCIAL.Contains(searchReserve)
+                        );
+                }
+
+                return View(reservas.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw ex; 
+            }
+        }
+
+        public ActionResult ListVencidas(string searchReserve)
+        {
+            try
+            {
+                var reservas = db.RESERVAS.Include(r => r.CLIENTES).Include(r => r.EMPLEADOS).Include(r => r.FECHAS).Include(r => r.SUCURSALES).Where(r => r.RES_ESTADO == 43);
+                if (!String.IsNullOrEmpty(searchReserve))
+                {
+                    reservas = reservas.Where(r => r.VEHICULOS.VEH_PATENTE.Contains(searchReserve)
+                        || r.VEHICULOS.VEH_MARCA.Contains(searchReserve)
+                        || r.VEHICULOS.VEH_MODELO.Contains(searchReserve)
+                        || r.CLIENTES.CLI_APELLIDO.Contains(searchReserve)
+                        || r.CLIENTES.CLI_CUIL.Contains(searchReserve)
+                        || r.CLIENTES.CLI_RI_CUIT.Contains(searchReserve)
+                        || r.CLIENTES.CLI_DOC.Contains(searchReserve)
+                        || r.CLIENTES.CLI_RI_RAZONSOCIAL.Contains(searchReserve)
+                        );
+                }
+
+                return View(reservas.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public ActionResult ListCanceladas(string searchReserve)
+        {
+            try
+            {
+                var reservas = db.RESERVAS.Include(r => r.CLIENTES).Include(r => r.EMPLEADOS).Include(r => r.FECHAS).Include(r => r.SUCURSALES).Where(r => r.RES_ESTADO == 42);
+                if (!String.IsNullOrEmpty(searchReserve))
+                {
+                    reservas = reservas.Where(r => r.VEHICULOS.VEH_PATENTE.Contains(searchReserve)
+                        || r.VEHICULOS.VEH_MARCA.Contains(searchReserve)
+                        || r.VEHICULOS.VEH_MODELO.Contains(searchReserve)
+                        || r.CLIENTES.CLI_APELLIDO.Contains(searchReserve)
+                        || r.CLIENTES.CLI_CUIL.Contains(searchReserve)
+                        || r.CLIENTES.CLI_RI_CUIT.Contains(searchReserve)
+                        || r.CLIENTES.CLI_DOC.Contains(searchReserve)
+                        || r.CLIENTES.CLI_RI_RAZONSOCIAL.Contains(searchReserve)
+                        );
+                }
+
+                return View(reservas.ToList());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         // GET: /Reservas/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? res_id)
         {
-            if (id == null)
+            if (res_id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            RESERVAS reservas = db.RESERVAS.Find(id);
+            RESERVAS reservas = db.RESERVAS.Find(res_id);
             if (reservas == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DOC", reservas.CLI_ID);
-            ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_NOMBRE", reservas.EMP_ID);
-            ViewBag.FEC_ID_INICIO = new SelectList(db.FECHAS, "FEC_ID", "FEC_NOMBREDIA", reservas.FEC_ID_INICIO);
-            ViewBag.VEH_ID = new SelectList(db.VEHICULOS, "VEH_ID", "VEH_MARCA", reservas.VEH_ID);
+            //ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DOC", reservas.CLI_ID);
+            //ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_NOMBRE", reservas.EMP_ID);
+            ViewBag.FEC_ID_FIN = new SelectList(db.FECHAS, "FEC_ID", "FEC_NOMBREDIA", reservas.FEC_ID_FIN);
+            //ViewBag.VEH_ID = new SelectList(db.VEHICULOS, "VEH_ID", "VEH_MARCA", reservas.VEH_ID);
             return View(reservas);
         }
 
@@ -189,45 +269,68 @@ namespace Octopus.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="RES_ID,VEH_ID,EMP_ID,RES_SENIA,RES_VALOR_PACTADO,RES_INICIO,RES_FIN,RES_ESTADO,FEC_ID,CLI_ID")] RESERVAS reservas)
+        public ActionResult Edit(RESERVAS reservas, DateTime fechaResFin)
         {
+            //ASIGNA ESTADO DE RESERVA
+            if (fechaResFin >= DateTime.Now) { reservas.RES_ESTADO = 41; }
+            else { reservas.RES_ESTADO = 43; };
+
+            reservas.FEC_ID_FIN = (from f in db.FECHAS
+                                  where f.FEC_FECHA == fechaResFin
+                                  select f.FEC_ID).FirstOrDefault();
             if (ModelState.IsValid)
             {
                 db.Entry(reservas).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new {res_id = reservas.RES_ID});
             }
-            ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DOC", reservas.CLI_ID);
-            ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_NOMBRE", reservas.EMP_ID);
-            ViewBag.FEC_ID_INICIO = new SelectList(db.FECHAS, "FEC_ID", "FEC_NOMBREDIA", reservas.FEC_ID_INICIO);
-            ViewBag.VEH_ID = new SelectList(db.VEHICULOS, "VEH_ID", "VEH_MARCA", reservas.VEH_ID);
-            return View(reservas);
+            //ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DOC", reservas.CLI_ID);
+            //ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_NOMBRE", reservas.EMP_ID);
+            ViewBag.FEC_ID_FIN = new SelectList(db.FECHAS, "FEC_ID", "FEC_NOMBREDIA", reservas.FEC_ID_FIN);
+            //ViewBag.VEH_ID = new SelectList(db.VEHICULOS, "VEH_ID", "VEH_MARCA", reservas.VEH_ID);
+            return RedirectToAction("Details", reservas.RES_ID);
         }
 
-        // GET: /Reservas/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RESERVAS reservas = db.RESERVAS.Find(id);
-            if (reservas == null)
-            {
-                return HttpNotFound();
-            }
-            return View(reservas);
-        }
-
+        
         // POST: /Reservas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult Delete(int res_id)
         {
-            RESERVAS reservas = db.RESERVAS.Find(id);
-            db.RESERVAS.Remove(reservas);
+            RESERVAS reservas = db.RESERVAS.Find(res_id);
+            reservas.RES_ESTADO = 42;
+            db.Entry(reservas).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ListCanceladas");
+        }
+
+        [HttpPost]
+        public ActionResult Acciones(int res_id, string Action)
+        {
+            try
+            {
+
+                if (Action == "Edit")
+                {
+                    return RedirectToAction("Edit", new { res_id = res_id });
+                }
+                else if (Action == "Delete")
+                {
+                    return Delete(res_id);
+                }
+                else
+                {
+                    return RedirectToAction("List");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            //     return RedirectToAction("List");
+
+
         }
 
         protected override void Dispose(bool disposing)

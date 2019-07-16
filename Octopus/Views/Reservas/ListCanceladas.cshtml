@@ -1,0 +1,86 @@
+﻿@model IEnumerable<Octopus.Models.RESERVAS>
+
+@{
+    ViewBag.Title = "Reservas";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+}
+
+
+<section class="full-width pageContent">
+    <div class="mdl-tabs__tab-bar">
+        <a href="@Url.Action("ListActivas", "Reservas")" class="mdl-tabs__tab" id="btn-ResNuevo" >ACTIVAS</a>
+        <div class="mdl-tooltip" for="btn-ResNuevo">Reservas Activas</div>
+        <a href="@Url.Action("ListVencidas", "Reservas")" class="mdl-tabs__tab" id="btn-ResVencidas">VENCIDAS</a>
+        <div class="mdl-tooltip" for="btn-ResVencidas">Reservas Vencidas</div>
+        <a href="@Url.Action("ListCanceladas", "Reservas")" class="mdl-tabs__tab" id="btn-ResCanceladas" style="color: #2e6da4; font-weight:bold">CANCELADAS</a>
+        <div class="mdl-tooltip" for="btn-ResCanceladas">Reservas Canceladas</div>
+    </div>
+    <section class="full-width header-well">
+        <div class="full-width header-well-icon">
+            <i class="zmdi zmdi-label"></i>
+        </div>
+        <div class="full-width header-well-text">
+            <p class="text-condensedLight">
+                <b>LISTADO DE RESERVAS CANCELADAS</b><br />
+                Presione sobre los 3 puntos para ver los detalles
+            </p><br />
+        </div>
+    </section>
+
+
+    <div class="full-width divider-menu-h"></div>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+            @using (Html.BeginForm("List", "Reservas", FormMethod.Get))
+            {
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchReserve" id="btn-searchReserve">
+                        <i class="zmdi zmdi-search" onclick=""></i>
+                    </label>
+                    <div class="mdl-tooltip" for="btn-searchReserve">Buscar Reserva</div>
+                    <div class="mdl-textfield__expandable-holder">
+                        @Html.TextBox("searchReserve", null, new { @class = "mdl-textfield__input" })
+                    </div>
+                    <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color:none; visibility:hidden" />
+                </div>
+            }
+            <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width table-responsive">
+                <thead>
+                    <tr>
+                        <th style="text-align:center"><b>VEHÍCULO</b></th>
+                        <th style="text-align:center"><b>CLIENTE</b></th>
+                        <th style="text-align:center"><b>SUCURSAL</b></th>
+                        <th style="text-align:center"><b>EMPLEADO</b></th>
+                        <th style="text-align:center"><b>INICIO</b></th>
+                        <th style="text-align:center"><b>VENCIMIENTO</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{var cont = 0;}
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center"><b>@Html.DisplayFor(modelItem => item.VEHICULOS.VEH_PAT_MARCA_MODELO)</b></td>
+                            @if (item.CLIENTES.TC_ID.Equals(1))
+                            {
+                                <td>@Html.DisplayFor(modelItem => item.CLIENTES.CLI_APELLIDO_NOMBRE)</td> }
+                            else
+                            {
+                                <td>@Html.DisplayFor(modelItem => item.CLIENTES.CLI_RI_RAZONSOCIAL)</td> }
+                            <td style="text-align:center">@Html.DisplayFor(modelItem => item.SUCURSALES.SUC_DESCRIP)</td>
+                            <td style="text-align:center">@Html.DisplayFor(modelItem => item.EMPLEADOS.EMP_APELLIDO_NOMBRE)</td>
+                            <td style="text-align:center">@Html.DisplayFor(modelItem => item.FECHAS.FEC_FECHA)</td>
+                            <td style="text-align:center">@Html.DisplayFor(modelItem => item.FECHAS1.FEC_FECHA)</td>
+                            @{cont = cont + 1;}
+                            <td style="text-align:center"><a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Reservas", new { res_id = item.RES_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</section>
+
+

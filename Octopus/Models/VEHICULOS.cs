@@ -25,15 +25,15 @@ namespace Octopus.Models
         public Nullable<int> SUC_ID { get; set; }
         public string VEH_MODELO { get; set; }
         public string VEH_VERSION { get; set; }
-        public string VEH_CILINDRADA { get; set; }
+        public string VEH_CILINDRADAS { get; set; }
         public string VEH_COLOR { get; set; }
         public string VEH_KILOMETROS { get; set; }
         public string VEH_DETALLES { get; set; }
         public string VEH_PUERTAS { get; set; }
-        public Nullable<int> TCOM_ID { get; set; }
+        public Nullable<int> VEH_TIPOCOMBUSTIBLE { get; set; }
         public string VEH_AÑO { get; set; }
         public string VEH_PATENTE { get; set; }
-        public Nullable<int> TV_ID { get; set; }
+        public Nullable<int> VEH_TIPOVEHICULO { get; set; }
         public bool VEH_VIGENTE { get; set; }
         public Nullable<int> VEH_PRECIO_INGRESO { get; set; }
         public bool VEH_CIERRE { get; set; }
@@ -55,6 +55,7 @@ namespace Octopus.Models
         public Nullable<int> IMG_ID { get; set; }
         public Nullable<int> ES_ID { get; set; }
         public Nullable<int> MON_ID { get; set; }
+        public string VEH_MARCA { get; set; }
     
         public virtual CLIENTES CLIENTES { get; set; }
         public virtual EMPLEADOS EMPLEADOS { get; set; }

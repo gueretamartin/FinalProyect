@@ -220,6 +220,9 @@
     <Compile Include="Models\FECHAS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\getPresupuesto_Result.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IMAGENES.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
@@ -434,6 +437,10 @@
     <Content Include="Views\Presupuestos\Create.cshtml" />
     <Content Include="Views\Presupuestos\Details_Report.cshtml" />
     <Content Include="Views\Presupuestos\Report.cshtml" />
+    <Content Include="Views\Reservas\ListActivas.cshtml" />
+    <Content Include="Views\Reservas\ListCanceladas.cshtml" />
+    <Content Include="Views\Reservas\ListVencidas.cshtml" />
+    <Content Include="Views\Vehiculos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

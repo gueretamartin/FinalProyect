@@ -35,6 +35,7 @@ namespace Octopus.Models
         public string EMP_USUARIO { get; set; }
         public Nullable<int> EMP_ESTADO { get; set; }
     
+        public virtual CARGOS CARGOS { get; set; }
         public virtual ESTADOS ESTADOS { get; set; }
         public virtual SUCURSALES SUCURSALES { get; set; }
         public virtual USUARIOS USUARIOS { get; set; }
@@ -42,6 +43,5 @@ namespace Octopus.Models
         public virtual ICollection<RESERVAS> RESERVAS { get; set; }
         public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
         public virtual ICollection<VENTAS> VENTAS { get; set; }
-        public virtual CARGOS CARGOS { get; set; }
     }
 }

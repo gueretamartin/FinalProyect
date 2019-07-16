@@ -19,7 +19,7 @@ namespace Octopus.Models
         string VEH_VERSION { get; set; }
 
         [StringLength(30, ErrorMessage = "CILINDRADA: Se aceptan hasta 30 caracteres.")]
-        string VEH_CILINDRADA { get; set; }
+        string VEH_CILINDRADAS { get; set; }
 
         [StringLength(255, ErrorMessage = "COLOR: Se aceptan hasta 255 caracteres.")]
         string VEH_COLOR { get; set; }
@@ -34,7 +34,6 @@ namespace Octopus.Models
         [StringLength(50, ErrorMessage = "PUERTAS: Se aceptan hasta 50 caracteres.")]
         string VEH_PUERTAS { get; set; }
 
-        Nullable<int> TCOM_ID { get; set; }
 
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "AÑO: Sólo se permiten números")]
         [StringLength(30, ErrorMessage = "AÑO: Se aceptan hasta 30 números.")]
@@ -43,8 +42,7 @@ namespace Octopus.Models
         [StringLength(10, ErrorMessage = "PATENTE: Se aceptan hasta 10 caracteres.")]
         string VEH_PATENTE { get; set; }
 
-        Nullable<int> TV_ID { get; set; }
-
+        
         bool VEH_VIGENTE { get; set; }
 
         [RegularExpression("([1-9][0-9]*)", ErrorMessage = "PRECIO DE INGRESO: Sólo se permiten números")]
@@ -75,20 +73,7 @@ namespace Octopus.Models
 
         [StringLength(50, ErrorMessage = "CÓDIGO DE ESTEREO: Se aceptan hasta 50 caracteres.")]
         string VEH_STEREO_CODIGO { get; set; }
-        
-        Nullable<int> CLI_ID { get; set; }
-        
-        Nullable<int> EMP_ID { get; set; }
-        
-        Nullable<int> FEC_ID { get; set; }
-
-        Nullable<int> MAR_ID { get; set; }
-
-        Nullable<int> IMG_ID { get; set; }
-
-        Nullable<int> ES_ID { get; set; }
-
-        Nullable<int> MON_ID { get; set; }
+    
 
     }
     

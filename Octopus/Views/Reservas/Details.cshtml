@@ -1,91 +1,145 @@
 ﻿@model Octopus.Models.RESERVAS
+@using Octopus.Models
+@using System.Web.UI.WebControls
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Reservas - Detalles";
     Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
 
-<h2>Details</h2>
+<!-- pageContent -->
+<section class="full-width pageContent">
 
-<div>
-    <h4>RESERVAS</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.RES_SENIA)
-        </dt>
+    <div>
+        <div class="mdl-tabs__tab-bar">
+            <a href="@Url.Action("ListActivas", "Reservas")" class="mdl-tabs__tab" id="btn-ResNuevo">ACTIVAS</a>
+            <div class="mdl-tooltip" for="btn-ResNuevo">Reservas Activas</div>
+            <a href="@Url.Action("ListVencidas", "Reservas")" class="mdl-tabs__tab" id="btn-ResVencidas">VENCIDAS</a>
+            <div class="mdl-tooltip" for="btn-ResVencidas">Reservas Vencidas</div>
+            <a href="@Url.Action("ListCanceladas", "Reservas")" class="mdl-tabs__tab" id="btn-ResCanceladas">CANCELADAS</a>
+            <div class="mdl-tooltip" for="btn-ResCanceladas">Reservas Canceladas</div>
+            <a href="@Url.Action("ListActivas", "Reservas")" class="mdl-tabs__tab" style="color: #2e6da4; font-weight:bold" id="btn-ResDetalle">DETALLES</a>
+            <div class="mdl-tooltip" for="btn-ResDetalle">Detalle de Reserva</div>
+        </div>
+        <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+                        <div class="full-width panel-tittle bg-primary text-center tittles">
+                            @Model.ESTADOS.ES_DESCRIPCION
+                        </div>
+                        <div class="full-width panel-content">
 
-        <dd>
-            @Html.DisplayFor(model => model.RES_SENIA)
-        </dd>
+                            @using (Html.BeginForm("Acciones", "Reservas", new { res_id = @Model.RES_ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.CLI_ID)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_ID)</div>
+                                <div class="mdl-grid">
+                                    <div id="ReservaLU" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        @Html.HiddenFor(a => a.VEH_ID, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14" })
+                                        @Html.HiddenFor(a => a.FEC_ID_INICIO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14" })
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">VEHÍCULO SELECCIONADO</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEHICULOS.VEH_FIRSTS_DETAILS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Vehiculos", new { veh_id = Model.VEHICULOS.VEH_ID })" target="_blank"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">VERSIÓN</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEHICULOS.SUCURSALES.SUC_DESCRIP, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">SUCURSAL ACTUAL</label>
+                                        </div>
+                                    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RES_VALOR_PACTADO)
-        </dt>
+                                    <div id="ReservaRU" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight">  &nbsp;</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEHICULOS.VEH_SECONDS_DETAILS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Vehiculos", new { veh_id = Model.VEHICULOS.VEH_ID })" target="_blank"><i class="zmdi zmdi-more" style="color: #FFFFFF"></i></a>
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DETALLES</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEHICULOS.EMPLEADOS.EMP_APELLIDO_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">EMPLEADO RECEPCIONISTA</label>
+                                        </div>
+                                    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.RES_VALOR_PACTADO)
-        </dd>
+                                    <div id="ReservaLM" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">CLIENTE COMPRADOR</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.CLIENTES.TIPO_CLIENTE.TC_DESCRIPCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Clientes", new { cli_id = Model.CLI_ID})" target="_blank"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">TIPO DE IVA</label>
+                                        </div>
+                                    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RES_INICIO)
-        </dt>
+                                    <div id="ReservaRM" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight">  &nbsp;</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @if (Model.CLIENTES.TC_ID.Equals(1))
+                                            {
+                                                @Html.TextBoxFor(a => a.CLIENTES.CLI_APELLIDO_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">APELLIDO Y NOMBRE</label>
+                                            }
+                                            else
+                                            {
+                                                @Html.TextBoxFor(a => a.CLIENTES.CLI_RI_RAZONSOCIAL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">APELLIDO Y NOMBRE</label>
+                                            }
+                                            
+                                        </div>
+                                     </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.RES_INICIO)
-        </dd>
+                                    <div id="ReservaLD" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">DETALLES DE RESERVA</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.SUCURSALES.SUC_DESCRIP, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">SUCURSAL</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.RES_SENIA, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14", Value =  Model.RES_SENIA, disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">VALOR DE SEÑA</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.FECHAS.FEC_FECHA, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14", Value = String.Format("{0:dd/MM/yyyy}", Model.FECHAS.FEC_FECHA), disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">FECHA INICIO</label>
+                                        </div>
+                                    </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RES_FIN)
-        </dt>
+                                    <div id="ReservaRD" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <br style="margin-top:40px" />
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.EMPLEADOS.EMP_APELLIDO_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">EMPLEADO VENDEDOR</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.RES_VALOR_PACTADO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14", Value = Model.RES_VALOR_PACTADO, disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">VALOR PACTADO</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.FECHAS1.FEC_FECHA, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14", Value = String.Format("{0:dd/MM/yyyy}", Model.FECHAS1.FEC_FECHA), disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">FECHA FIN</label>
+                                        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.RES_FIN)
-        </dd>
+                                    </div>
+                                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RES_ESTADO)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RES_ESTADO)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CLIENTES.CLI_DOC)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CLIENTES.CLI_DOC)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EMPLEADOS.EMP_NOMBRE)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EMPLEADOS.EMP_NOMBRE)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FECHAS.FEC_NOMBREDIA)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FECHAS.FEC_NOMBREDIA)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.VEHICULOS.VEH_MARCA)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VEHICULOS.VEH_MARCA)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.RES_ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+                                <p class="text-center">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Edit" id="btn-EditRes">
+                                        <i class="zmdi zmdi-edit" style="display: inline-block; font: normal normal normal 14px/1"></i>
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Delete" id="btn-DeleteRes">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                    <div class="mdl-tooltip" for="btn-EditRes">Editar Reserva</div>
+                                    <div class="mdl-tooltip" for="btn-DeleteRes">Eliminar Reserva</div>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

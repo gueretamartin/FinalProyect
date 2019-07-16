@@ -12,6 +12,8 @@ namespace Octopus.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class OctopusEntities : DbContext
     {
@@ -48,5 +50,443 @@ namespace Octopus.Models
         public virtual DbSet<VENTAS> VENTAS { get; set; }
         public virtual DbSet<VW_MARCAS> VW_MARCAS { get; set; }
         public virtual DbSet<VW_Statistics> VW_Statistics { get; set; }
+    
+        public virtual int CLI_ELIMINAR(Nullable<int> cLI_ID, string mESSAGE)
+        {
+            var cLI_IDParameter = cLI_ID.HasValue ?
+                new ObjectParameter("CLI_ID", cLI_ID) :
+                new ObjectParameter("CLI_ID", typeof(int));
+    
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CLI_ELIMINAR", cLI_IDParameter, mESSAGEParameter);
+        }
+    
+        public virtual int EMP_AGREGAR(string mESSAGE, Nullable<int> sUC_ID, string eMP_CODPOSTAL, string eMP_NOMBRE, string eMP_APELLIDO, string eMP_EMAIL, string eMP_USER, string eMP_PASSWORD, string eMP_TIPO, string eMP_DIRECCION, string eMP_TELEFONO, Nullable<int> eMP_DNI)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var sUC_IDParameter = sUC_ID.HasValue ?
+                new ObjectParameter("SUC_ID", sUC_ID) :
+                new ObjectParameter("SUC_ID", typeof(int));
+    
+            var eMP_CODPOSTALParameter = eMP_CODPOSTAL != null ?
+                new ObjectParameter("EMP_CODPOSTAL", eMP_CODPOSTAL) :
+                new ObjectParameter("EMP_CODPOSTAL", typeof(string));
+    
+            var eMP_NOMBREParameter = eMP_NOMBRE != null ?
+                new ObjectParameter("EMP_NOMBRE", eMP_NOMBRE) :
+                new ObjectParameter("EMP_NOMBRE", typeof(string));
+    
+            var eMP_APELLIDOParameter = eMP_APELLIDO != null ?
+                new ObjectParameter("EMP_APELLIDO", eMP_APELLIDO) :
+                new ObjectParameter("EMP_APELLIDO", typeof(string));
+    
+            var eMP_EMAILParameter = eMP_EMAIL != null ?
+                new ObjectParameter("EMP_EMAIL", eMP_EMAIL) :
+                new ObjectParameter("EMP_EMAIL", typeof(string));
+    
+            var eMP_USERParameter = eMP_USER != null ?
+                new ObjectParameter("EMP_USER", eMP_USER) :
+                new ObjectParameter("EMP_USER", typeof(string));
+    
+            var eMP_PASSWORDParameter = eMP_PASSWORD != null ?
+                new ObjectParameter("EMP_PASSWORD", eMP_PASSWORD) :
+                new ObjectParameter("EMP_PASSWORD", typeof(string));
+    
+            var eMP_TIPOParameter = eMP_TIPO != null ?
+                new ObjectParameter("EMP_TIPO", eMP_TIPO) :
+                new ObjectParameter("EMP_TIPO", typeof(string));
+    
+            var eMP_DIRECCIONParameter = eMP_DIRECCION != null ?
+                new ObjectParameter("EMP_DIRECCION", eMP_DIRECCION) :
+                new ObjectParameter("EMP_DIRECCION", typeof(string));
+    
+            var eMP_TELEFONOParameter = eMP_TELEFONO != null ?
+                new ObjectParameter("EMP_TELEFONO", eMP_TELEFONO) :
+                new ObjectParameter("EMP_TELEFONO", typeof(string));
+    
+            var eMP_DNIParameter = eMP_DNI.HasValue ?
+                new ObjectParameter("EMP_DNI", eMP_DNI) :
+                new ObjectParameter("EMP_DNI", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EMP_AGREGAR", mESSAGEParameter, sUC_IDParameter, eMP_CODPOSTALParameter, eMP_NOMBREParameter, eMP_APELLIDOParameter, eMP_EMAILParameter, eMP_USERParameter, eMP_PASSWORDParameter, eMP_TIPOParameter, eMP_DIRECCIONParameter, eMP_TELEFONOParameter, eMP_DNIParameter);
+        }
+    
+        public virtual int EMP_EDITAR(string mESSAGE, Nullable<int> sUC_ID, string eMP_CODPOSTAL, string eMP_NOMBRE, string eMP_APELLIDO, string eMP_EMAIL, string eMP_USER, string eMP_PASSWORD, string eMP_TIPO, string eMP_DIRECCION, string eMP_TELEFONO, Nullable<int> eMP_DNI, Nullable<int> eMP_ID)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var sUC_IDParameter = sUC_ID.HasValue ?
+                new ObjectParameter("SUC_ID", sUC_ID) :
+                new ObjectParameter("SUC_ID", typeof(int));
+    
+            var eMP_CODPOSTALParameter = eMP_CODPOSTAL != null ?
+                new ObjectParameter("EMP_CODPOSTAL", eMP_CODPOSTAL) :
+                new ObjectParameter("EMP_CODPOSTAL", typeof(string));
+    
+            var eMP_NOMBREParameter = eMP_NOMBRE != null ?
+                new ObjectParameter("EMP_NOMBRE", eMP_NOMBRE) :
+                new ObjectParameter("EMP_NOMBRE", typeof(string));
+    
+            var eMP_APELLIDOParameter = eMP_APELLIDO != null ?
+                new ObjectParameter("EMP_APELLIDO", eMP_APELLIDO) :
+                new ObjectParameter("EMP_APELLIDO", typeof(string));
+    
+            var eMP_EMAILParameter = eMP_EMAIL != null ?
+                new ObjectParameter("EMP_EMAIL", eMP_EMAIL) :
+                new ObjectParameter("EMP_EMAIL", typeof(string));
+    
+            var eMP_USERParameter = eMP_USER != null ?
+                new ObjectParameter("EMP_USER", eMP_USER) :
+                new ObjectParameter("EMP_USER", typeof(string));
+    
+            var eMP_PASSWORDParameter = eMP_PASSWORD != null ?
+                new ObjectParameter("EMP_PASSWORD", eMP_PASSWORD) :
+                new ObjectParameter("EMP_PASSWORD", typeof(string));
+    
+            var eMP_TIPOParameter = eMP_TIPO != null ?
+                new ObjectParameter("EMP_TIPO", eMP_TIPO) :
+                new ObjectParameter("EMP_TIPO", typeof(string));
+    
+            var eMP_DIRECCIONParameter = eMP_DIRECCION != null ?
+                new ObjectParameter("EMP_DIRECCION", eMP_DIRECCION) :
+                new ObjectParameter("EMP_DIRECCION", typeof(string));
+    
+            var eMP_TELEFONOParameter = eMP_TELEFONO != null ?
+                new ObjectParameter("EMP_TELEFONO", eMP_TELEFONO) :
+                new ObjectParameter("EMP_TELEFONO", typeof(string));
+    
+            var eMP_DNIParameter = eMP_DNI.HasValue ?
+                new ObjectParameter("EMP_DNI", eMP_DNI) :
+                new ObjectParameter("EMP_DNI", typeof(int));
+    
+            var eMP_IDParameter = eMP_ID.HasValue ?
+                new ObjectParameter("EMP_ID", eMP_ID) :
+                new ObjectParameter("EMP_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EMP_EDITAR", mESSAGEParameter, sUC_IDParameter, eMP_CODPOSTALParameter, eMP_NOMBREParameter, eMP_APELLIDOParameter, eMP_EMAILParameter, eMP_USERParameter, eMP_PASSWORDParameter, eMP_TIPOParameter, eMP_DIRECCIONParameter, eMP_TELEFONOParameter, eMP_DNIParameter, eMP_IDParameter);
+        }
+    
+        public virtual int EMP_ELIMINAR(string mESSAGE, Nullable<int> eMP_ID)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var eMP_IDParameter = eMP_ID.HasValue ?
+                new ObjectParameter("EMP_ID", eMP_ID) :
+                new ObjectParameter("EMP_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("EMP_ELIMINAR", mESSAGEParameter, eMP_IDParameter);
+        }
+    
+        public virtual int ENT_AGREGAR(string mESSAGE, Nullable<int> fEC_ID, Nullable<int> vEN_ID, Nullable<double> mONTO)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var fEC_IDParameter = fEC_ID.HasValue ?
+                new ObjectParameter("FEC_ID", fEC_ID) :
+                new ObjectParameter("FEC_ID", typeof(int));
+    
+            var vEN_IDParameter = vEN_ID.HasValue ?
+                new ObjectParameter("VEN_ID", vEN_ID) :
+                new ObjectParameter("VEN_ID", typeof(int));
+    
+            var mONTOParameter = mONTO.HasValue ?
+                new ObjectParameter("MONTO", mONTO) :
+                new ObjectParameter("MONTO", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ENT_AGREGAR", mESSAGEParameter, fEC_IDParameter, vEN_IDParameter, mONTOParameter);
+        }
+    
+        public virtual int ENT_EDITAR(string mESSAGE, Nullable<int> eNT_ID, Nullable<int> fEC_ID, Nullable<int> vEN_ID, Nullable<int> mONTO)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var eNT_IDParameter = eNT_ID.HasValue ?
+                new ObjectParameter("ENT_ID", eNT_ID) :
+                new ObjectParameter("ENT_ID", typeof(int));
+    
+            var fEC_IDParameter = fEC_ID.HasValue ?
+                new ObjectParameter("FEC_ID", fEC_ID) :
+                new ObjectParameter("FEC_ID", typeof(int));
+    
+            var vEN_IDParameter = vEN_ID.HasValue ?
+                new ObjectParameter("VEN_ID", vEN_ID) :
+                new ObjectParameter("VEN_ID", typeof(int));
+    
+            var mONTOParameter = mONTO.HasValue ?
+                new ObjectParameter("MONTO", mONTO) :
+                new ObjectParameter("MONTO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ENT_EDITAR", mESSAGEParameter, eNT_IDParameter, fEC_IDParameter, vEN_IDParameter, mONTOParameter);
+        }
+    
+        public virtual int ENT_ELIMINAR(string mESSAGE, Nullable<int> eNT_ID)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var eNT_IDParameter = eNT_ID.HasValue ?
+                new ObjectParameter("ENT_ID", eNT_ID) :
+                new ObjectParameter("ENT_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ENT_ELIMINAR", mESSAGEParameter, eNT_IDParameter);
+        }
+    
+        public virtual int FEC_AGREGAR(Nullable<System.DateTime> fECHA_INICIO, Nullable<int> cANT_ANIOS)
+        {
+            var fECHA_INICIOParameter = fECHA_INICIO.HasValue ?
+                new ObjectParameter("FECHA_INICIO", fECHA_INICIO) :
+                new ObjectParameter("FECHA_INICIO", typeof(System.DateTime));
+    
+            var cANT_ANIOSParameter = cANT_ANIOS.HasValue ?
+                new ObjectParameter("CANT_ANIOS", cANT_ANIOS) :
+                new ObjectParameter("CANT_ANIOS", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("FEC_AGREGAR", fECHA_INICIOParameter, cANT_ANIOSParameter);
+        }
+    
+        public virtual int FEC_CONSULTA(string mESSAGE, Nullable<int> fEC_ID, Nullable<System.DateTime> fECHA)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var fEC_IDParameter = fEC_ID.HasValue ?
+                new ObjectParameter("FEC_ID", fEC_ID) :
+                new ObjectParameter("FEC_ID", typeof(int));
+    
+            var fECHAParameter = fECHA.HasValue ?
+                new ObjectParameter("FECHA", fECHA) :
+                new ObjectParameter("FECHA", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("FEC_CONSULTA", mESSAGEParameter, fEC_IDParameter, fECHAParameter);
+        }
+    
+        public virtual ObjectResult<getPresupuesto_Result> getPresupuesto(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getPresupuesto_Result>("getPresupuesto", idParameter);
+        }
+    
+        public virtual int ING_AGREGAR(string mESSAGE, Nullable<int> vEH_ID, Nullable<int> eMP_ID, Nullable<int> fEC_ID, Nullable<int> mONTO)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var vEH_IDParameter = vEH_ID.HasValue ?
+                new ObjectParameter("VEH_ID", vEH_ID) :
+                new ObjectParameter("VEH_ID", typeof(int));
+    
+            var eMP_IDParameter = eMP_ID.HasValue ?
+                new ObjectParameter("EMP_ID", eMP_ID) :
+                new ObjectParameter("EMP_ID", typeof(int));
+    
+            var fEC_IDParameter = fEC_ID.HasValue ?
+                new ObjectParameter("FEC_ID", fEC_ID) :
+                new ObjectParameter("FEC_ID", typeof(int));
+    
+            var mONTOParameter = mONTO.HasValue ?
+                new ObjectParameter("MONTO", mONTO) :
+                new ObjectParameter("MONTO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ING_AGREGAR", mESSAGEParameter, vEH_IDParameter, eMP_IDParameter, fEC_IDParameter, mONTOParameter);
+        }
+    
+        public virtual int LOG_VALIDAR_LOGIN(string uSER, string pASS)
+        {
+            var uSERParameter = uSER != null ?
+                new ObjectParameter("USER", uSER) :
+                new ObjectParameter("USER", typeof(string));
+    
+            var pASSParameter = pASS != null ?
+                new ObjectParameter("PASS", pASS) :
+                new ObjectParameter("PASS", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LOG_VALIDAR_LOGIN", uSERParameter, pASSParameter);
+        }
+    
+        public virtual int ORD_AGREGAR(string mESSAGE, Nullable<int> oRD_ID, Nullable<int> sER_ID, Nullable<int> vEH_ID, Nullable<int> fEC_ID, string aSESOR, Nullable<int> sER_COSTO)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var oRD_IDParameter = oRD_ID.HasValue ?
+                new ObjectParameter("ORD_ID", oRD_ID) :
+                new ObjectParameter("ORD_ID", typeof(int));
+    
+            var sER_IDParameter = sER_ID.HasValue ?
+                new ObjectParameter("SER_ID", sER_ID) :
+                new ObjectParameter("SER_ID", typeof(int));
+    
+            var vEH_IDParameter = vEH_ID.HasValue ?
+                new ObjectParameter("VEH_ID", vEH_ID) :
+                new ObjectParameter("VEH_ID", typeof(int));
+    
+            var fEC_IDParameter = fEC_ID.HasValue ?
+                new ObjectParameter("FEC_ID", fEC_ID) :
+                new ObjectParameter("FEC_ID", typeof(int));
+    
+            var aSESORParameter = aSESOR != null ?
+                new ObjectParameter("ASESOR", aSESOR) :
+                new ObjectParameter("ASESOR", typeof(string));
+    
+            var sER_COSTOParameter = sER_COSTO.HasValue ?
+                new ObjectParameter("SER_COSTO", sER_COSTO) :
+                new ObjectParameter("SER_COSTO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("ORD_AGREGAR", mESSAGEParameter, oRD_IDParameter, sER_IDParameter, vEH_IDParameter, fEC_IDParameter, aSESORParameter, sER_COSTOParameter);
+        }
+    
+        public virtual int REC_AGREGAR(string mESSAGE, string rEC_MARCA, string rEC_MODELO, string rEC_VERSION, string rEC_ANIO, Nullable<int> rEC_PRECIO)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var rEC_MARCAParameter = rEC_MARCA != null ?
+                new ObjectParameter("REC_MARCA", rEC_MARCA) :
+                new ObjectParameter("REC_MARCA", typeof(string));
+    
+            var rEC_MODELOParameter = rEC_MODELO != null ?
+                new ObjectParameter("REC_MODELO", rEC_MODELO) :
+                new ObjectParameter("REC_MODELO", typeof(string));
+    
+            var rEC_VERSIONParameter = rEC_VERSION != null ?
+                new ObjectParameter("REC_VERSION", rEC_VERSION) :
+                new ObjectParameter("REC_VERSION", typeof(string));
+    
+            var rEC_ANIOParameter = rEC_ANIO != null ?
+                new ObjectParameter("REC_ANIO", rEC_ANIO) :
+                new ObjectParameter("REC_ANIO", typeof(string));
+    
+            var rEC_PRECIOParameter = rEC_PRECIO.HasValue ?
+                new ObjectParameter("REC_PRECIO", rEC_PRECIO) :
+                new ObjectParameter("REC_PRECIO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("REC_AGREGAR", mESSAGEParameter, rEC_MARCAParameter, rEC_MODELOParameter, rEC_VERSIONParameter, rEC_ANIOParameter, rEC_PRECIOParameter);
+        }
+    
+        public virtual int RES_AGREGAR(string mESSAGE, Nullable<int> vEH_ID, Nullable<int> eMP_ID, Nullable<int> rES_SENIA, Nullable<int> rES_VALOR_PACTADO, Nullable<System.DateTime> rES_INICIO, Nullable<System.DateTime> rES_FIN, Nullable<bool> rES_ESTADO, Nullable<int> fEC_ID)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var vEH_IDParameter = vEH_ID.HasValue ?
+                new ObjectParameter("VEH_ID", vEH_ID) :
+                new ObjectParameter("VEH_ID", typeof(int));
+    
+            var eMP_IDParameter = eMP_ID.HasValue ?
+                new ObjectParameter("EMP_ID", eMP_ID) :
+                new ObjectParameter("EMP_ID", typeof(int));
+    
+            var rES_SENIAParameter = rES_SENIA.HasValue ?
+                new ObjectParameter("RES_SENIA", rES_SENIA) :
+                new ObjectParameter("RES_SENIA", typeof(int));
+    
+            var rES_VALOR_PACTADOParameter = rES_VALOR_PACTADO.HasValue ?
+                new ObjectParameter("RES_VALOR_PACTADO", rES_VALOR_PACTADO) :
+                new ObjectParameter("RES_VALOR_PACTADO", typeof(int));
+    
+            var rES_INICIOParameter = rES_INICIO.HasValue ?
+                new ObjectParameter("RES_INICIO", rES_INICIO) :
+                new ObjectParameter("RES_INICIO", typeof(System.DateTime));
+    
+            var rES_FINParameter = rES_FIN.HasValue ?
+                new ObjectParameter("RES_FIN", rES_FIN) :
+                new ObjectParameter("RES_FIN", typeof(System.DateTime));
+    
+            var rES_ESTADOParameter = rES_ESTADO.HasValue ?
+                new ObjectParameter("RES_ESTADO", rES_ESTADO) :
+                new ObjectParameter("RES_ESTADO", typeof(bool));
+    
+            var fEC_IDParameter = fEC_ID.HasValue ?
+                new ObjectParameter("FEC_ID", fEC_ID) :
+                new ObjectParameter("FEC_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RES_AGREGAR", mESSAGEParameter, vEH_IDParameter, eMP_IDParameter, rES_SENIAParameter, rES_VALOR_PACTADOParameter, rES_INICIOParameter, rES_FINParameter, rES_ESTADOParameter, fEC_IDParameter);
+        }
+    
+        public virtual int SER_AGREGAR(string mESSAGE, string sER_DESCRIP, Nullable<int> sER_COSTO, Nullable<int> sUC_ID)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var sER_DESCRIPParameter = sER_DESCRIP != null ?
+                new ObjectParameter("SER_DESCRIP", sER_DESCRIP) :
+                new ObjectParameter("SER_DESCRIP", typeof(string));
+    
+            var sER_COSTOParameter = sER_COSTO.HasValue ?
+                new ObjectParameter("SER_COSTO", sER_COSTO) :
+                new ObjectParameter("SER_COSTO", typeof(int));
+    
+            var sUC_IDParameter = sUC_ID.HasValue ?
+                new ObjectParameter("SUC_ID", sUC_ID) :
+                new ObjectParameter("SUC_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SER_AGREGAR", mESSAGEParameter, sER_DESCRIPParameter, sER_COSTOParameter, sUC_IDParameter);
+        }
+    
+        public virtual int SUC_AGREGAR(string mESSAGE, string sUC_DESCRIP)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var sUC_DESCRIPParameter = sUC_DESCRIP != null ?
+                new ObjectParameter("SUC_DESCRIP", sUC_DESCRIP) :
+                new ObjectParameter("SUC_DESCRIP", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SUC_AGREGAR", mESSAGEParameter, sUC_DESCRIPParameter);
+        }
+    
+        public virtual int VEN_AGREGAR(string mESSAGE, Nullable<int> fEC_ID, Nullable<int> cLI_ID, Nullable<int> vEH_ID, Nullable<int> eMP_ID, Nullable<int> mONTO)
+        {
+            var mESSAGEParameter = mESSAGE != null ?
+                new ObjectParameter("MESSAGE", mESSAGE) :
+                new ObjectParameter("MESSAGE", typeof(string));
+    
+            var fEC_IDParameter = fEC_ID.HasValue ?
+                new ObjectParameter("FEC_ID", fEC_ID) :
+                new ObjectParameter("FEC_ID", typeof(int));
+    
+            var cLI_IDParameter = cLI_ID.HasValue ?
+                new ObjectParameter("CLI_ID", cLI_ID) :
+                new ObjectParameter("CLI_ID", typeof(int));
+    
+            var vEH_IDParameter = vEH_ID.HasValue ?
+                new ObjectParameter("VEH_ID", vEH_ID) :
+                new ObjectParameter("VEH_ID", typeof(int));
+    
+            var eMP_IDParameter = eMP_ID.HasValue ?
+                new ObjectParameter("EMP_ID", eMP_ID) :
+                new ObjectParameter("EMP_ID", typeof(int));
+    
+            var mONTOParameter = mONTO.HasValue ?
+                new ObjectParameter("MONTO", mONTO) :
+                new ObjectParameter("MONTO", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VEN_AGREGAR", mESSAGEParameter, fEC_IDParameter, cLI_IDParameter, vEH_IDParameter, eMP_IDParameter, mONTOParameter);
+        }
     }
 }
