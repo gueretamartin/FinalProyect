@@ -34,7 +34,7 @@ namespace Octopus.Controllers
 
                 return View(clientes.ToList());
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return RedirectToAction("Home", "Home");
             }
@@ -59,7 +59,7 @@ namespace Octopus.Controllers
 
                 return View(clientes);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return RedirectToAction("Home", "Home");
             }
@@ -79,7 +79,7 @@ namespace Octopus.Controllers
 
                 return View();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return RedirectToAction("Home", "Home");
             }
@@ -110,7 +110,7 @@ namespace Octopus.Controllers
 
                         if (cli.Count() != 0)
                         {
-                            ModelState.AddModelError("CLI_CUIL", "CUIL: Ya existe.");
+                            ModelState.AddModelError("CLI_CUIL", "CUIL: Ya iste.");
                             return this.Create();
                         }
 
@@ -188,7 +188,7 @@ namespace Octopus.Controllers
 
                         if (cli.Count() != 0)
                         {
-                            ModelState.AddModelError("CLI_RI_CUIT", "CUIT: Ya existe.");
+                            ModelState.AddModelError("CLI_RI_CUIT", "CUIT: Ya iste.");
                             return this.Create();
                         }
 
@@ -321,7 +321,7 @@ namespace Octopus.Controllers
 
                 return RedirectToAction("List");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Home", "Home");
             }
@@ -399,9 +399,9 @@ namespace Octopus.Controllers
 
                 return var_cliente;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw ex;
+                throw ;
             }
         }
 
@@ -426,7 +426,7 @@ namespace Octopus.Controllers
                 
                 return View(cliente);
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return RedirectToAction("Home", "Home");
             }
@@ -668,7 +668,7 @@ namespace Octopus.Controllers
                     return View("List");
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return RedirectToAction("Home", "Home");
             }
@@ -705,7 +705,7 @@ namespace Octopus.Controllers
 
                 return RedirectToAction("List");
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return RedirectToAction("Home", "Home");
             }

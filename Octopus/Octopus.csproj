@@ -58,6 +58,17 @@
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Spire.Doc">
+      <HintPath>..\packages\Spire.Doc.7.5.9\lib\net40\Spire.Doc.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.License, Version=1.3.7.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Spire.PDF.5.6.2\lib\net40\Spire.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=5.6.2.2040, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Spire.PDF.5.6.2\lib\net40\Spire.Pdf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -178,6 +189,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\ManualController.cs" />
     <Compile Include="Controllers\ReservasController.cs" />
     <Compile Include="Controllers\SucursalesController.cs" />
     <Compile Include="Controllers\PresupuestosController.cs" />
@@ -262,9 +274,6 @@
     <Compile Include="Models\TIPO_VEHICULOS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\USOS_INTERNOS.cs">
-      <DependentUpon>Octopus.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\USUARIOS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
@@ -283,29 +292,7 @@
     <Compile Include="Models\VW_Statistics.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
-    <Compile Include="OctopusDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OctopusDataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Presupuesto.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Presupuesto.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reports\Presupuestos.aspx.cs">
-      <DependentUpon>Presupuestos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Reports\Presupuestos.aspx.designer.cs">
-      <DependentUpon>Presupuestos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Reports\Presupuestos.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Presupuestos.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -319,11 +306,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Css\bootstrap-lightbox.min.css" />
     <Content Include="Css\jquery.mCustomScrollbar.css" />
     <Content Include="Css\main.css" />
     <Content Include="Css\material-design-iconic-font.min.css" />
     <Content Include="Css\material.min.css" />
     <Content Include="Css\normalize.css" />
+    <Content Include="Css\Presupuesto.css" />
     <Content Include="Css\sweetalert2.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -333,6 +322,8 @@
     <Content Include="fonts\robotocondensed-light.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Js\bootstrap-lightbox.min.js" />
+    <Content Include="Js\Presupuestos.js" />
     <Content Include="Js\Reservas.js" />
     <Content Include="Js\Vehiculos.js" />
     <Content Include="Js\Clientes.js" />
@@ -341,7 +332,16 @@
     <Content Include="Js\main.js" />
     <Content Include="Js\material.min.js" />
     <Content Include="Js\sweetalert2.min.js" />
-    <Content Include="Reports\Presupuestos.aspx" />
+    <Content Include="Models\Octopus.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Octopus.edmx</DependentUpon>
+      <LastGenOutput>Octopus.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Octopus.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Octopus.edmx</DependentUpon>
+      <LastGenOutput>Octopus.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\Material-Design-Iconic-Font.eot" />
@@ -361,55 +361,12 @@
     <Content Include="fonts\robotocondensed-light.woff" />
     <Content Include="fonts\robotocondensed-light.woff2" />
     <Content Include="ClassDiagram1.cd" />
-    <Content Include="OctopusDataSet.xsc">
-      <DependentUpon>OctopusDataSet.xsd</DependentUpon>
-    </Content>
     <EntityDeploy Include="Models\Octopus.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Octopus.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Octopus.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Octopus.edmx</DependentUpon>
-      <LastGenOutput>Octopus.Context.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\Octopus.edmx.diagram">
       <DependentUpon>Octopus.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\Octopus.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Octopus.edmx</DependentUpon>
-      <LastGenOutput>Octopus.cs</LastGenOutput>
-    </Content>
-    <None Include="OctopusDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>OctopusDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="OctopusDataSet.xss">
-      <DependentUpon>OctopusDataSet.xsd</DependentUpon>
-    </Content>
-    <Content Include="Reports\Presupuestos.xsc">
-      <DependentUpon>Presupuestos.xsd</DependentUpon>
-    </Content>
-    <Content Include="Presupuesto.xsc">
-      <DependentUpon>Presupuesto.xsd</DependentUpon>
-    </Content>
-    <None Include="Presupuesto.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Presupuesto.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="Presupuesto.xss">
-      <DependentUpon>Presupuesto.xsd</DependentUpon>
-    </Content>
-    <None Include="Reports\Presupuestos.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>Presupuestos.Designer.cs</LastGenOutput>
-    </None>
-    <Content Include="Reports\Presupuestos.xss">
-      <DependentUpon>Presupuestos.xsd</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -450,7 +407,6 @@
     <Content Include="Views\Clientes\Details.cshtml" />
     <Content Include="Views\Empleados\List.cshtml" />
     <Content Include="Views\Usuarios\Create.cshtml" />
-    <Content Include="Views\Usuarios\Delete.cshtml" />
     <Content Include="Views\Usuarios\Details.cshtml" />
     <Content Include="Views\Usuarios\Edit.cshtml" />
     <Content Include="Views\Usuarios\List.cshtml" />
@@ -460,12 +416,11 @@
     <Content Include="Views\Sucursales\Create.cshtml" />
     <Content Include="Views\Sucursales\Delete.cshtml" />
     <Content Include="Views\Usuarios\ListInactivos.cshtml" />
-    <Content Include="Views\Presupuestos\Create.cshtml" />
+    <Content Include="Views\Presupuestos\Create_old.cshtml" />
     <Content Include="Views\Presupuestos\Delete.cshtml" />
     <Content Include="Views\Presupuestos\Details.cshtml" />
     <Content Include="Views\Presupuestos\Edit.cshtml" />
     <Content Include="Views\Presupuestos\List.cshtml" />
-    <Content Include="Views\Reports\Report.cshtml" />
     <Content Include="Views\Vehiculos\Create.cshtml" />
     <Content Include="Views\Vehiculos\Delete.cshtml" />
     <Content Include="Views\Vehiculos\Details.cshtml" />
@@ -476,9 +431,16 @@
     <Content Include="Views\Reservas\Details.cshtml" />
     <Content Include="Views\Reservas\Edit.cshtml" />
     <Content Include="Views\Reservas\Index.cshtml" />
+    <Content Include="Views\Presupuestos\Create.cshtml" />
+    <Content Include="Views\Presupuestos\Details_Report.cshtml" />
+    <Content Include="Views\Presupuestos\Report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Image\" />
+    <Folder Include="Manuals\" />
+    <Folder Include="RPTS\" />
+    <Folder Include="Views\Manual\" />
     <Folder Include="Views\Statistics\" />
   </ItemGroup>
   <ItemGroup>
@@ -490,9 +452,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Reports\Presupuestos.rdlc" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

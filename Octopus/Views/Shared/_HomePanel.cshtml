@@ -1,8 +1,12 @@
 ﻿@using Octopus.Models
+@if (Session["Username"] == null) { 
+    Response.Redirect("~/Login/Login");
+}
 @{
-       USUARIOS user = Session["Usuario"] as USUARIOS;
-       
-   }
+
+       USUARIOS user = Session["UserName"] as USUARIOS;
+  }
+
 
 
 <!DOCTYPE html>
@@ -20,55 +24,67 @@
     <link rel="stylesheet" href="~/Css/jquery.mCustomScrollbar.css">
     <link rel="stylesheet" href="~/Css/main.css">
     <link rel="stylesheet" type="text/css" href="~/Css/flaticon.css"> 
-   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    
-   <script src="../Js/material.min.js"></script>
-    <script src="~/Js/material.min.js"></script>
-    <script src="~/Js/sweetalert2.min.js"></script>
-    <script src="~/Js/jquery.mCustomScrollbar.concat.min.js"></script>
-  
-
-     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.6.2.js">
-    </script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.8.1/jquery.validate.js">
-
-   </script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.js">
-    </script>
-
     <!-- Carousel Slider -->
-
     <link rel="stylesheet" href="~/Content/bootstrap.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <script src="~/Js/jquery-1.11.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
 
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.1.0.js"></script>
+@*
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    
+    @*<script type='text/javascript' src="~/Scripts/jquery.validate.unobtrusive.min.js" ></script>*@
+    @*<script type='text/javascript' src="~/Scripts/jquery.validate.js" ></script>*@
+    @*<script type='text/javascript' src="~/Scripts/bootstrap.js"></script>
+    <script type='text/javascript' src="~/Scripts/bootstrap.min.js"></script>*@ 
+    <script src="@Url.Content("~/Scripts/jquery-1.6.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script> 
+    <script type='text/javascript' src="~/Js/material.min.js"></script>
+    <script type='text/javascript' src="~/Js/material.min.js"></script>
+    <script type='text/javascript' src="~/Js/sweetalert2.min.js"></script>
+    <script type='text/javascript' src="~/Js/jquery.mCustomScrollbar.concat.min.js"></script>
     <script type='text/javascript' src="~/Js/Clientes.js"></script>
     <script type='text/javascript' src="~/Js/Vehiculos.js"></script>
     <script type='text/javascript' src="~/Js/Reservas.js"></script>
-   <script>window.jQuery || document.write('<script src="js/jquery-1.11.2.min.js"><\/script>')</script>
-    <script src="~/Js/main.js"></script>
+    <script type='text/javascript' src="~/Js/Presupuestos.js"></script>
+    <script type='text/javascript' src="~/Js/main.js"></script>
+    <script>
+        function msg() {
+            alert("Hello world!");
+        }
+    </script>
+
 </head>
 <body>
     <!-- navBar -->
     <div class="full-width navBar" style="background-color: #2e6da4">
+
         <div class="full-width navBar-options">
-            <i class="zmdi zmdi-more-vert btn-menu" id="btn-menu" data-toggle="tooltip" data-placement="bottom" title="Menu"></i>
-            <nav class="navBar-options-list">
-                <ul class="list-unstyle">
-                    <li class="btn-exit" id="btn-exit" data-toggle="tooltip" data-placement="bottom" title="Salir del Sistema">
-                        <i class="zmdi zmdi-power"></i>
-                    </li>
-                    <li class="text-condensedLight noLink"><small></small></li>
-                    <li class="noLink">
-                        <figure>
-                            <img src="~/Assets/img/avatar-male.png" alt="Avatar" class="img-responsive">
-                        </figure>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+            <i class="zmdi zmdi-more-vert btn-menu" id="btn-menu"></i>
+            <div class="mdl-tooltip" for="btn-menu">Menu</div>
+           
+                <nav class="navBar-options-list ">
+                    <ul>
+                        <li class="nav-item dropleft">
+                            <a class="nav-link" href="#" id="navbarDropdownMenuLink" style="color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @*<i class="zmdi zmdi-face"></i> Hola  @Html.DisplayText(Session["Username"].ToString())*@
+                                </a> 
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="@Url.Action("LogOut", "Login")">Cerrar Sesión</a>
+                            </div>
+                        </li>
+                       
+                    </ul>
+                </nav>
+</div>
     </div>
     <!-- navLateral -->
     <section class="full-width navLateral">
@@ -77,17 +93,20 @@
             <div class="full-width navLateral-body-logo tittles" style="background-color: #2e6da4">
                 <i class="zmdi zmdi-close btn-menu"></i>  RAYCO S.R.L
             </div>
-            <figure class="full-width" style="height: 77px;">
-                <div class="navLateral-body-cl">
-                    <img src="~/Assets/img/avatar-male.png" alt="Avatar" class="img-responsive">
-                </div>
-                <figcaption class="navLateral-body-cr hide-on-tablet">
+            <div class="full-width text-center">
+                <figure class="full-width " style="   width: 150px;">
+                    @*<div class="navLateral-body-cl"  >*@
+                    <img src="~/Image/rayco_logo.jpg" alt="Avatar" class="img-responsive" style=" height: 100px;">
+                    @*</div>*@
+
+                    @*<figcaption class="navLateral-body-cr hide-on-tablet">
                     <span>
                      <br>
                         <small></small>
                     </span>
-                </figcaption>
-            </figure>
+                </figcaption>*@
+                </figure>
+            </div>
             <div class="full-width tittles navLateral-body-tittle-menu">
                 <i class="zmdi zmdi-desktop-mac"></i><span class="hide-on-tablet">&nbsp; MENÚ DE GESTIÓN</span>
             </div>
@@ -194,12 +213,12 @@
 </li>
                     <li class="full-width divider-menu-h"></li>
                     <li class="full-width">
-                        <a href="inventory.html" class="full-width">
+                        <a href="@Url.Action("Report","Presupuestos")" class="full-width">
                             <div class="navLateral-body-cl">
-                                <i class="zmdi zmdi-shopping-cart"></i>
+                                <i class="zmdi zmdi-search-in-file"></i>
                             </div>
                             <div class="navLateral-body-cr hide-on-tablet">
-                                REPORTES
+                                REPORTES DE PRESUPUESTOS
                             </div>
                         </a>
                     </li>
@@ -207,12 +226,13 @@
             </nav>
         </div>
     </section>
+
+
+
     @RenderBody()
     @Scripts.Render("~/bundles/jquery") 
-    @RenderSection("scripts", required: false)
   
        
-       
-       
 </body>
+
 </html>

@@ -43,7 +43,7 @@ namespace Octopus.Controllers
 
                 return View(vehiculos.ToList());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Home", "Home");
             }
@@ -110,7 +110,7 @@ namespace Octopus.Controllers
                 return View();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Home", "Home");
             }
@@ -488,7 +488,7 @@ namespace Octopus.Controllers
 
                 return RedirectToAction("List");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Home", "Home");
             }

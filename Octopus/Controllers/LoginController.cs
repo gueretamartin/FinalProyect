@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Octopus.Models;
 using System.Dynamic;
+using System.Web.Security;
 
 
 namespace Octopus.Controllers
@@ -19,35 +20,54 @@ namespace Octopus.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Login(USUARIOS objUser)
-        {
-            if (ModelState.IsValid)
-            {
-                using (OctopusEntities db = new OctopusEntities())
-                {
-                    USUARIOS obj = db.USUARIOS.Where(a => a.Usuario.Equals(objUser.Usuario) && a.Contraseña.Equals(objUser.Contraseña)).FirstOrDefault();
-                    if (obj != null)
-                    {
-                        //Session["UserUser"] = obj.Usuario.ToString();
-                        //Session["UserName"] = obj.Nombre.ToString();
-                        //@ViewBag.Message = "Bienvenido " + obj.Nombre + ' ' + obj.Apellido;
-
-                        //@ViewBag.Usuario = (Octopus.Models.USUARIOS)obj;
-
-                        //Pasar más de un modelo
-                        //ViewData["Usuario"] = obj; -- tanto como viewbag, no se pueden usar porque al redireccionar become null
-
-                        //TempData["Usuario"] = (USUARIOS)obj; --También funciona
-                        Session["Usuario"] = obj;
-                        return RedirectToAction("Home", "Home");
-
-                        //return View();
+       
+  
+        [HttpPost]  
+        [ValidateAntiForgeryToken]  
+        public ActionResult Login(USUARIOS objUser)   
+        {  
+            if (ModelState.IsValid)   
+            {  
+                using(OctopusEntities db = new OctopusEntities())  
+                {  
+                    var obj = db.USUARIOS.Where(a => a.Usuario.Equals(objUser.Usuario) && a.Contraseña.Equals(objUser.Contraseña)).FirstOrDefault();  
+                    if (obj != null)  
+                    {  
+                        Session["UserName"] = obj.Usuario.ToString();  
+                        Session["Rol"] = obj.Rol.ToString();
+                        FormsAuthentication.SetAuthCookie(obj.Usuario, true);
+                        return RedirectToAction("Home");  
                     }
-                }
-            }
-            return View(objUser);
+                    else { ModelState.AddModelError("Usuario", "El usuario y/o la contraseña son incorrectos"); }
+                }  
+            }  
+            return View();  
+        }  
+  
+        public ActionResult Home()  
+        {  
+            if (Session["UserName"] != null)  
+            {
+                
+                return RedirectToAction("Home", "Home");
+            } else  
+            {
+                ModelState.AddModelError("Usuario", "El usuario y/o la contraseña son incorrectos");
+                return View();  
+            }  
+        }
+
+        
+        public ActionResult LogOut()
+        {
+
+            Session["UserName"] = null;
+            Session["Rol"] = null;
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Login", "Login");
+        }
+          
         }
 
     }
-}

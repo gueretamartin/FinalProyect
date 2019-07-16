@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OctopusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OctopusModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CARGOS">
           <Key>
             <PropertyRef Name="CARGO_ID" />
@@ -52,7 +52,7 @@
           <Property Name="EMP_NOMBRE" Type="varchar" MaxLength="255" />
           <Property Name="EMP_APELLIDO" Type="varchar" MaxLength="255" />
           <Property Name="EMP_EMAIL" Type="varchar" MaxLength="255" />
-          <Property Name="EMP_CARGO" Type="int" />
+          <Property Name="EMP_CARGO" Type="int" Nullable="false" />
           <Property Name="EMP_DIRECCION" Type="varchar" MaxLength="255" />
           <Property Name="EMP_TELEFONO" Type="varchar" MaxLength="255" />
           <Property Name="EMP_DNI" Type="varchar" MaxLength="255" />
@@ -133,7 +133,11 @@
           <Property Name="CLI_ID" Type="int" Nullable="false" />
           <Property Name="ES_ID" Type="int" Nullable="false" />
           <Property Name="PRE_FECHA_FIN" Type="int" />
-          <Property Name="PRE_PRECIO" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PRE_PRECIO" Type="int" Nullable="false" />
+          <Property Name="img1path" Type="varchar(max)" />
+          <Property Name="img2path" Type="varchar(max)" />
+          <Property Name="img3path" Type="varchar(max)" />
+          <Property Name="img4path" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="RESERVAS">
           <Key>
@@ -193,17 +197,6 @@
           </Key>
           <Property Name="TV_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TV_DESCRIPCION" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="USOS_INTERNOS">
-          <Key>
-            <PropertyRef Name="USO_ID" />
-          </Key>
-          <Property Name="USO_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="VEH_ID" Type="int" />
-          <Property Name="EMP_ID" Type="int" />
-          <Property Name="USO_DESCRIP" Type="varchar" MaxLength="255" />
-          <Property Name="USO_FECHA_INI" Type="datetime" />
-          <Property Name="USO_FECHA_FIN" Type="datetime" />
         </EntityType>
         <EntityType Name="USUARIOS">
           <Key>
@@ -339,7 +332,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EMPLEADOS_CARGOS">
-          <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="0..1" />
+          <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="1" />
           <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CARGOS">
@@ -602,18 +595,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_USOS_INTERNOS_EMPLEADOS">
-          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
-          <End Role="USOS_INTERNOS" Type="Self.USOS_INTERNOS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLEADOS">
-              <PropertyRef Name="EMP_ID" />
-            </Principal>
-            <Dependent Role="USOS_INTERNOS">
-              <PropertyRef Name="EMP_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_USUARIOS_ESTADOS">
           <End Role="ESTADOS" Type="Self.ESTADOS" Multiplicity="1" />
           <End Role="USUARIOS" Type="Self.USUARIOS" Multiplicity="*" />
@@ -812,7 +793,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <EntitySet Name="TIPO_COMBUSTIBLES" EntityType="Self.TIPO_COMBUSTIBLES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_DOCUMENTO" EntityType="Self.TIPO_DOCUMENTO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPO_VEHICULOS" EntityType="Self.TIPO_VEHICULOS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="USOS_INTERNOS" EntityType="Self.USOS_INTERNOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USUARIOS_TIPOS" EntityType="Self.USUARIOS_TIPOS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VEHICULOS" EntityType="Self.VEHICULOS" Schema="dbo" store:Type="Tables" />
@@ -934,10 +914,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
             <End Role="SUCURSALES" EntitySet="SUCURSALES" />
             <End Role="SERVICIOS" EntitySet="SERVICIOS" />
           </AssociationSet>
-          <AssociationSet Name="FK_USOS_INTERNOS_EMPLEADOS" Association="Self.FK_USOS_INTERNOS_EMPLEADOS">
-            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
-            <End Role="USOS_INTERNOS" EntitySet="USOS_INTERNOS" />
-          </AssociationSet>
           <AssociationSet Name="FK_USUARIOS_ESTADOS" Association="Self.FK_USUARIOS_ESTADOS">
             <End Role="ESTADOS" EntitySet="ESTADOS" />
             <End Role="USUARIOS" EntitySet="USUARIOS" />
@@ -999,8 +975,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
             <End Role="VENTAS" EntitySet="VENTAS" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OctopusModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1012,7 +987,7 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <Property Name="CARGO_DESC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CARGOS1" Relationship="Self.FK_CARGOS_CARGOS" FromRole="CARGOS" ToRole="CARGOS1" />
           <NavigationProperty Name="CARGOS2" Relationship="Self.FK_CARGOS_CARGOS" FromRole="CARGOS1" ToRole="CARGOS" />
-          <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_EMPLEADOS_CARGOS" FromRole="CARGOS" ToRole="EMPLEADOS" />
+          <NavigationProperty Name="EMPLEADOS" Relationship="OctopusModel.FK_EMPLEADOS_CARGOS" FromRole="CARGOS" ToRole="EMPLEADOS" />
         </EntityType>
         <EntityType Name="CLIENTES">
           <Key>
@@ -1062,21 +1037,20 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <Property Name="EMP_NOMBRE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_APELLIDO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="EMP_CARGO" Type="Int32" />
+          <Property Name="EMP_CARGO" Type="Int32" Nullable="false" />
           <Property Name="EMP_DIRECCION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_TELEFONO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_DNI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="EMP_USUARIO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EMP_ESTADO" Type="Int32" />
-          <NavigationProperty Name="CARGOS" Relationship="Self.FK_EMPLEADOS_CARGOS" FromRole="EMPLEADOS" ToRole="CARGOS" />
           <NavigationProperty Name="ESTADOS" Relationship="Self.FK_EMPLEADOS_ESTADOS" FromRole="EMPLEADOS" ToRole="ESTADOS" />
           <NavigationProperty Name="SUCURSALES" Relationship="Self.FK_EMPLEADOS_SUCURSALES1" FromRole="EMPLEADOS" ToRole="SUCURSALES" />
           <NavigationProperty Name="USUARIOS" Relationship="Self.FK_EMPLEADOS_USUARIOS" FromRole="EMPLEADOS" ToRole="USUARIOS" />
           <NavigationProperty Name="PRESUPUESTOS" Relationship="Self.FK_PRESUPUESTOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="PRESUPUESTOS" />
           <NavigationProperty Name="RESERVAS" Relationship="Self.FK_RESERVAS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="RESERVAS" />
-          <NavigationProperty Name="USOS_INTERNOS" Relationship="Self.FK_USOS_INTERNOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="USOS_INTERNOS" />
           <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_VEHICULOS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="VEHICULOS" />
           <NavigationProperty Name="VENTAS" Relationship="Self.FK_VENTAS_EMPLEADOS" FromRole="EMPLEADOS" ToRole="VENTAS" />
+          <NavigationProperty Name="CARGOS" Relationship="OctopusModel.FK_EMPLEADOS_CARGOS" FromRole="EMPLEADOS" ToRole="CARGOS" />
         </EntityType>
         <EntityType Name="ENTREGAS">
           <Key>
@@ -1172,13 +1146,17 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <Property Name="CLI_ID" Type="Int32" Nullable="false" />
           <Property Name="ES_ID" Type="Int32" Nullable="false" />
           <Property Name="PRE_FECHA_FIN" Type="Int32" />
-          <Property Name="PRE_PRECIO" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="PRE_PRECIO" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CLIENTES" Relationship="Self.FK_PRESUPUESTOS_CLIENTES" FromRole="PRESUPUESTOS" ToRole="CLIENTES" />
           <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_PRESUPUESTOS_EMPLEADOS" FromRole="PRESUPUESTOS" ToRole="EMPLEADOS" />
           <NavigationProperty Name="ESTADOS" Relationship="Self.FK_PRESUPUESTOS_ESTADOS" FromRole="PRESUPUESTOS" ToRole="ESTADOS" />
           <NavigationProperty Name="FECHAS" Relationship="Self.FK_PRESUPUESTOS_FECHAS" FromRole="PRESUPUESTOS" ToRole="FECHAS" />
           <NavigationProperty Name="FECHAS1" Relationship="Self.FK_PRESUPUESTOS_FECHAS1" FromRole="PRESUPUESTOS" ToRole="FECHAS" />
           <NavigationProperty Name="MARCAS" Relationship="Self.FK_PRESUPUESTOS_MARCAS" FromRole="PRESUPUESTOS" ToRole="MARCAS" />
+          <Property Name="img1path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="img2path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="img3path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="img4path" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="RESERVAS">
           <Key>
@@ -1254,18 +1232,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <Property Name="TV_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TV_DESCRIPCION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="VEHICULOS" Relationship="Self.FK_VEHICULOS_TIPO_VEHICULOS" FromRole="TIPO_VEHICULOS" ToRole="VEHICULOS" />
-        </EntityType>
-        <EntityType Name="USOS_INTERNOS">
-          <Key>
-            <PropertyRef Name="USO_ID" />
-          </Key>
-          <Property Name="USO_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="VEH_ID" Type="Int32" />
-          <Property Name="EMP_ID" Type="Int32" />
-          <Property Name="USO_DESCRIP" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="USO_FECHA_INI" Type="DateTime" Precision="3" />
-          <Property Name="USO_FECHA_FIN" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="EMPLEADOS" Relationship="Self.FK_USOS_INTERNOS_EMPLEADOS" FromRole="USOS_INTERNOS" ToRole="EMPLEADOS" />
         </EntityType>
         <EntityType Name="USUARIOS">
           <Key>
@@ -1378,18 +1344,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
             </Principal>
             <Dependent Role="CARGOS1">
               <PropertyRef Name="CARGO_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EMPLEADOS_CARGOS">
-          <End Role="CARGOS" Type="Self.CARGOS" Multiplicity="0..1" />
-          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CARGOS">
-              <PropertyRef Name="CARGO_ID" />
-            </Principal>
-            <Dependent Role="EMPLEADOS">
-              <PropertyRef Name="EMP_CARGO" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1545,18 +1499,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
               <PropertyRef Name="EMP_ID" />
             </Principal>
             <Dependent Role="RESERVAS">
-              <PropertyRef Name="EMP_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_USOS_INTERNOS_EMPLEADOS">
-          <End Role="EMPLEADOS" Type="Self.EMPLEADOS" Multiplicity="0..1" />
-          <End Role="USOS_INTERNOS" Type="Self.USOS_INTERNOS" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EMPLEADOS">
-              <PropertyRef Name="EMP_ID" />
-            </Principal>
-            <Dependent Role="USOS_INTERNOS">
               <PropertyRef Name="EMP_ID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1891,7 +1833,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <EntitySet Name="TIPO_COMBUSTIBLES" EntityType="Self.TIPO_COMBUSTIBLES" />
           <EntitySet Name="TIPO_DOCUMENTO" EntityType="Self.TIPO_DOCUMENTO" />
           <EntitySet Name="TIPO_VEHICULOS" EntityType="Self.TIPO_VEHICULOS" />
-          <EntitySet Name="USOS_INTERNOS" EntityType="Self.USOS_INTERNOS" />
           <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" />
           <EntitySet Name="USUARIOS_TIPOS" EntityType="Self.USUARIOS_TIPOS" />
           <EntitySet Name="VEHICULOS" EntityType="Self.VEHICULOS" />
@@ -1901,10 +1842,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <AssociationSet Name="FK_CARGOS_CARGOS" Association="Self.FK_CARGOS_CARGOS">
             <End Role="CARGOS" EntitySet="CARGOS" />
             <End Role="CARGOS1" EntitySet="CARGOS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EMPLEADOS_CARGOS" Association="Self.FK_EMPLEADOS_CARGOS">
-            <End Role="CARGOS" EntitySet="CARGOS" />
-            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
           </AssociationSet>
           <AssociationSet Name="FK_CLIENTES_ESTADOS" Association="Self.FK_CLIENTES_ESTADOS">
             <End Role="ESTADOS" EntitySet="ESTADOS" />
@@ -1957,10 +1894,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <AssociationSet Name="FK_RESERVAS_EMPLEADOS" Association="Self.FK_RESERVAS_EMPLEADOS">
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
             <End Role="RESERVAS" EntitySet="RESERVAS" />
-          </AssociationSet>
-          <AssociationSet Name="FK_USOS_INTERNOS_EMPLEADOS" Association="Self.FK_USOS_INTERNOS_EMPLEADOS">
-            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
-            <End Role="USOS_INTERNOS" EntitySet="USOS_INTERNOS" />
           </AssociationSet>
           <AssociationSet Name="FK_VEHICULOS_EMPLEADOS" Association="Self.FK_VEHICULOS_EMPLEADOS">
             <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
@@ -2066,7 +1999,23 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
             <End Role="VEHICULOS" EntitySet="VEHICULOS" />
             <End Role="VENTAS" EntitySet="VENTAS" />
           </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADOS_CARGOS" Association="OctopusModel.FK_EMPLEADOS_CARGOS">
+            <End Role="CARGOS" EntitySet="CARGOS" />
+            <End Role="EMPLEADOS" EntitySet="EMPLEADOS" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_EMPLEADOS_CARGOS">
+          <End Type="OctopusModel.CARGOS" Role="CARGOS" Multiplicity="1" />
+          <End Type="OctopusModel.EMPLEADOS" Role="EMPLEADOS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CARGOS">
+              <PropertyRef Name="CARGO_ID" />
+            </Principal>
+            <Dependent Role="EMPLEADOS">
+              <PropertyRef Name="EMP_CARGO" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2192,6 +2141,10 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
           <EntitySetMapping Name="PRESUPUESTOS">
             <EntityTypeMapping TypeName="OctopusModel.PRESUPUESTOS">
               <MappingFragment StoreEntitySet="PRESUPUESTOS">
+                <ScalarProperty Name="img4path" ColumnName="img4path" />
+                <ScalarProperty Name="img3path" ColumnName="img3path" />
+                <ScalarProperty Name="img2path" ColumnName="img2path" />
+                <ScalarProperty Name="img1path" ColumnName="img1path" />
                 <ScalarProperty Name="PRE_ID" ColumnName="PRE_ID" />
                 <ScalarProperty Name="FEC_ID" ColumnName="FEC_ID" />
                 <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
@@ -2276,18 +2229,6 @@ warning 6002: The table/view 'Octopus.dbo.VW_Statistics' does not have a primary
               <MappingFragment StoreEntitySet="TIPO_VEHICULOS">
                 <ScalarProperty Name="TV_ID" ColumnName="TV_ID" />
                 <ScalarProperty Name="TV_DESCRIPCION" ColumnName="TV_DESCRIPCION" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="USOS_INTERNOS">
-            <EntityTypeMapping TypeName="OctopusModel.USOS_INTERNOS">
-              <MappingFragment StoreEntitySet="USOS_INTERNOS">
-                <ScalarProperty Name="USO_ID" ColumnName="USO_ID" />
-                <ScalarProperty Name="VEH_ID" ColumnName="VEH_ID" />
-                <ScalarProperty Name="EMP_ID" ColumnName="EMP_ID" />
-                <ScalarProperty Name="USO_DESCRIP" ColumnName="USO_DESCRIP" />
-                <ScalarProperty Name="USO_FECHA_INI" ColumnName="USO_FECHA_INI" />
-                <ScalarProperty Name="USO_FECHA_FIN" ColumnName="USO_FECHA_FIN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

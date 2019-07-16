@@ -28,7 +28,9 @@ namespace Octopus.Controllers
             {
                 empleados = empleados.Where(c => c.EMP_NOMBRE.Contains(searchEmpleado)
                     || c.EMP_APELLIDO.Contains(searchEmpleado)
-                    || c.EMP_DNI.Contains(searchEmpleado));
+                    || c.EMP_DNI.Contains(searchEmpleado)
+                    || c.CARGOS.CARGO_DESC.Contains(searchEmpleado)
+                    || c.EMP_EMAIL.Contains(searchEmpleado));
             }
             return View(empleados.ToList().ToPagedList(page ?? 1, 4));
         }
@@ -97,11 +99,18 @@ namespace Octopus.Controllers
         {
             try
             {
-                ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP", db.EMPLEADOS.SingleOrDefault(e => e.EMP_ID == EMP_ID).SUC_ID);
-                ViewBag.CARGO_ID = new SelectList(db.CARGOS, "CARGO_ID", "CARGO_DESC", db.EMPLEADOS.SingleOrDefault(e => e.EMP_ID == EMP_ID).EMP_CARGO);
+                var model = new EMPLEADOS();
+                model = db.EMPLEADOS.SingleOrDefault(c => c.EMP_ID == EMP_ID);
+                var sucursales = db.SUCURSALES;
+                var cargos = db.CARGOS;
+               
+                model.Sucursales_List = new SelectList(sucursales, "SUC_ID", "SUC_DESCRIP", model.SUC_ID);
+                model.Cargos_List = new SelectList(cargos, "CARGO_ID", "CARGO_DESC", model.EMP_CARGO);
+
+                return View(model);
+
+
                 
-                EMPLEADOS empleado = db.EMPLEADOS.SingleOrDefault(e => e.EMP_ID == EMP_ID);
-                return View(empleado);
             }
             catch (Exception ex)
             {

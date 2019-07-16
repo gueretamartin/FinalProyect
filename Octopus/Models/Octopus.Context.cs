@@ -42,7 +42,6 @@ namespace Octopus.Models
         public virtual DbSet<TIPO_COMBUSTIBLES> TIPO_COMBUSTIBLES { get; set; }
         public virtual DbSet<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
         public virtual DbSet<TIPO_VEHICULOS> TIPO_VEHICULOS { get; set; }
-        public virtual DbSet<USOS_INTERNOS> USOS_INTERNOS { get; set; }
         public virtual DbSet<USUARIOS> USUARIOS { get; set; }
         public virtual DbSet<USUARIOS_TIPOS> USUARIOS_TIPOS { get; set; }
         public virtual DbSet<VEHICULOS> VEHICULOS { get; set; }

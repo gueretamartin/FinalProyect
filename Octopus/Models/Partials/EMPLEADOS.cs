@@ -14,23 +14,29 @@ namespace Octopus.Models
     
     public interface IEmpleadosMetadata
     {
-        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "DNI - Sólo se permiten letras y numeros")]
-        [Required(ErrorMessage = "DNI - Campo Requerido")]
+        
+        [Required(ErrorMessage = "DNI: Campo Requerido")]
+        [RegularExpression("^[a-zA-Z0-9]*$", ErrorMessage = "DNI: Sólo se permiten letras y numeros")]
         string EMP_DNI { get; set; }
 
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Nombre - Sólo se permiten letras")]
-        [Required(ErrorMessage = "Nombre - Campo Requerido")]
+        [Required(ErrorMessage = "NOMBRE: Campo Requerido")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "NOMBRE: Sólo se permiten letras")]
         string EMP_NOMBRE { get; set; }
 
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Apellido - Sólo se permiten letras")]
-        [Required(ErrorMessage = "Apellido - Campo Requerido")]
+        [Required(ErrorMessage = "APELLIDO: Campo Requerido")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "APELLIDO: Sólo se permiten letras")]
         string EMP_APELLIDO { get; set; }
 
-        [Required(ErrorMessage = "E-Mail - Campo Requerido")]
+        [Required(ErrorMessage = "E-MAIL: Campo Requerido")]
+        [EmailAddress(ErrorMessage = "E-MAIL: Ingrese un E-MAIL válido. (example@example.com)")]
         string EMP_EMAIL { get; set; }
 
-        [Required(ErrorMessage = "Sucursal - Campo Requerido")]
+        [Required(ErrorMessage = "SUCURSAL: Campo Requerido")]
         int SUC_ID { get; set; }
+
+        [Required(ErrorMessage = "CARGO: Campo Requerido")]
+        int EMP_CARGO { get; set; }
+
         
     }
     
@@ -38,6 +44,10 @@ namespace Octopus.Models
     public partial class EMPLEADOS : IEmpleadosMetadata
     {
         private OctopusEntities db = new OctopusEntities();
+
+        public SelectList Sucursales_List { get; set; }
+        public SelectList Cargos_List { get; set; }
+       
 
         public string NombreParaMostrar
         {

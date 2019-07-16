@@ -11,16 +11,36 @@
 <!-- pageContent -->
 <section class="full-width pageContent">
     <div>
-        <div class="mdl-tabs__tab-bar">
-            <a href="@Url.Action("List","Empleados")" class="mdl-tabs__tab">LISTA</a>
+        <div id="help">
+            <div class="text-right" style="padding-top:15px; padding-right:15px;">
+                <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+            </div>
         </div>
+
+        <div class="mdl-tabs__tab-bar">
+            <a class="mdl-tabs__tab" style="color: #2e6da4">NUEVO</a>
+            <a href="@Url.Action("List", "Empleados")" class="mdl-tabs__tab" id="btn-Listar">LISTA</a>
+            <div class="mdl-tooltip" for="btn-Listar">Listar Empleados</div>
+        </div>
+        <div class="full-width header-well">
+
+            <div class="full-width header-well-icon">
+                <i class="zmdi zmdi-account-add"></i>
+            </div>
+            <div class="full-width header-well-text">
+                <p class="text-condensedLight">
+                    <b>AÑADIR EMPLEADO</b><br />
+                    Complete los campos indicados para dar de alta un nuevo Empleado
+                </p>
+            </div>
+        </div>
+
+
         <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
                     <div class="full-width panel mdl-shadow--2dp">
-                        <div class="full-width panel-tittle bg-primary text-center tittles">
-                            NUEVO EMPLEADO
-                        </div>
+
                         <div class="full-width panel-content">
                             @using (Html.BeginForm("Create", "Empleados", FormMethod.Post))
                             {
@@ -35,51 +55,56 @@
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_DIRECCION)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_TELEFONO)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_EMAIL)</div>
-
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_CARGO)</div>
                                 <div class="mdl-grid">
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
                                         @Html.TextBoxFor(a => a.EMP_DNI, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1" })
                                         <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DNI*</label>
-                                    </div>
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        @Html.TextBoxFor(a => a.EMP_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2" })
-                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre*</label>
-                                    </div>
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        @Html.TextBoxFor(a => a.EMP_APELLIDO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3" })
+                                         </div>
+                                </div>
+
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                            @Html.TextBoxFor(a => a.EMP_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre*  </label>
+                                    </div>   
+
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                         @Html.TextBoxFor(a => a.EMP_APELLIDO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3" })
                                         <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido*</label>
                                     </div>
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                        @Html.DropDownListFor(a => a.SUC_ID, (IEnumerable<SelectListItem>)ViewBag.Sucursal, "Seleccione una Sucursal*", new { @class = "mdl-textfield__input", tabindex = "4" })
-                                        @Html.ValidationMessageFor(a => a.SUC_ID)
-                                    </div>
-                                    <!--El Tipo de Empleado debería ser otra tabla.-->
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    
+                                    <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
                                         @Html.DropDownListFor(a => a.EMP_CARGO, (IEnumerable<SelectListItem>)ViewBag.Cargos, "Seleccione un Cargo*", new { @class = "mdl-textfield__input", tabindex = "4" })
-                                        @Html.ValidationMessageFor(a => a.EMP_CARGO)
                                     </div>
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                        @Html.DropDownListFor(a => a.SUC_ID, (IEnumerable<SelectListItem>)ViewBag.Sucursal, "Seleccione una Sucursal*", new { @class = "mdl-textfield__input", tabindex = "5" })
+                                     </div>
+
+                                    
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
                                         @Html.TextBoxFor(a => a.EMP_EMAIL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6" })
                                         <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">E-Mail*</label>
                                     </div>
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                        @Html.TextBoxFor(a => a.EMP_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "7" })
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Teléfono</label>
+                                    </div>
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
                                         @Html.TextBoxFor(a => a.EMP_DIRECCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "8" })
                                         <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Direccion</label>
                                     </div>
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
                                         @Html.TextBoxFor(a => a.EMP_CODPOSTAL, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "9" })
                                         <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Código Postal</label>
                                     </div>
-                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label ">
-                                        @Html.TextBoxFor(a => a.EMP_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "10" })
-                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Teléfono</label>
-                                    </div>
-                                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                 
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                         <p style="color:red">Los campos * son obligatorios</p>
                                     </div>
-                                  </div>
+                                </div>
                                 <p class="text-center">
-                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin" tabindex="10;">
                                         <i class="zmdi zmdi-account-add"></i>
                                     </button>
                                     <div class="mdl-tooltip" for="btn-addAdmin">Agregar Empleado</div>

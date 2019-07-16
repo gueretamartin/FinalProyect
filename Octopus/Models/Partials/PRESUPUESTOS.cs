@@ -13,25 +13,37 @@ namespace Octopus.Models
     public interface IPresupuestosMetadata
     {
         int PRE_ID { get; set; }
+         
+        [Required(ErrorMessage = "EMPLEADO: Seleccione un Empleado")]
         int EMP_ID { get; set; }
-        [Required(ErrorMessage = "Cliente - Campo Requerido")]
+
+        [Required(ErrorMessage = "CLIENTE: Seleccione un Cliente")]
         int CLI_ID { get; set; }
-        [Required(ErrorMessage = "Marca - Campo Requerido")]
+
+        [Required(ErrorMessage = "MARCA: Seleccione una Marca")]
         int PRE_MARCA { get; set; }  
-        [Required(ErrorMessage = "Modelo - Campo Requerido")]
+
+        [Required(ErrorMessage = "MODELO: Campo Requerido")]
+        [StringLength(255, ErrorMessage = "MODELO: Se aceptan hasta 255 caracteres.")]
         string PRE_MODELO { get; set; }
-        [Required(ErrorMessage = "Año - Campo Requerido")]
+
+        [Required(ErrorMessage = "AÑO: Campo Requerido")]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "AÑO: Sólo se permiten números")]
+        [StringLength(30, ErrorMessage = "AÑO: Se aceptan hasta 30 números.")]
         string PRE_ANIO { get; set; }
-        [Required(ErrorMessage = "Versión - Campo Requerido")]
+
+        [Required(ErrorMessage = "VERSIÓN: Campo Requerido")]
+        [StringLength(30, ErrorMessage = "VERSIÓN: Se aceptan hasta 30 caracteres.")]
         string PRE_VERSION { get; set; }
-        [Required(ErrorMessage = "Patente - Campo Requerido")]
+
+        [Required(ErrorMessage = "PATENTE: Campo Requerido")]
+        [StringLength(10, ErrorMessage = "PATENTE: Se aceptan hasta 10 caracteres.")]
         string PRE_PATENTE { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:0.00}", ApplyFormatInEditMode = true)]
-
-         [Required(ErrorMessage = "Precio - Campo Requerido")]
-        decimal PRE_PRECIO { get; set; }
-
+        [Required(ErrorMessage = "PRECIO: Campo Requerido")]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "PRECIO: Sólo se permiten números")]
+        int PRE_PRECIO { get; set; }
+      
     }
     
     [MetadataType(typeof(IPresupuestosMetadata))]
@@ -77,5 +89,9 @@ namespace Octopus.Models
             }
         }
 
+        public String ImageFile
+        { get; set; }
+        public string ImagePath { get; set; }
+        public int Contador { get; set; }
     }
 }

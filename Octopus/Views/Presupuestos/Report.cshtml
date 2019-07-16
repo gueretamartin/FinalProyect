@@ -1,0 +1,92 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<string>
+
+@{ //if(Session["Usuario"] != null)
+    //{
+    // USUARIOS user = Session["Usuario"] as USUARIOS;
+    ViewBag.Title = "Presupuestos";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+    // }
+    //else
+    //{
+    //  @Url.Action("Login","Login")
+    // }
+}
+<section class="full-width pageContent">
+
+    <section class="full-width header-well">
+        <div class="full-width header-well-icon">
+            <i class="zmdi zmdi-trending-up"></i>
+        </div>
+        <div class="full-width header-well-text">
+            <p class="text-condensedLight">
+                <b>LISTADO DE PRESUPUESTOS</b><br />
+                Presione sobre los 3 puntos para abrir el pdf
+            </p><br />
+        </div>
+    </section>
+
+    <div class="full-width divider-menu-h"></div>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+            @using (Html.BeginForm("Report", "Presupuestos", FormMethod.Get))
+                {
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchPresupuesto" id="btn-searchPresupuesto">
+                        <i class="zmdi zmdi-search" onclick=""></i>
+                    </label>
+                    <div class="mdl-tooltip" for="btn-searchClient">Buscar Presupuesto</div>
+                    <div class="mdl-textfield__expandable-holder">
+                        @Html.TextBox("searchPresupuesto", null, new { @class = "mdl-textfield__input" })
+                    </div>
+                    <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color:none; visibility:hidden" />
+                </div>
+            }
+            <div class="table-responsive">
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left"><b>Fecha de Creación</b></th>
+                            <th style="text-align:left"><b>Cliente</b></th>
+                            <th style="text-align:left"><b>Nombre del archivo</b></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var cont = 0;}
+                        @foreach (var item in Model)
+                        {
+                            String filename = Path.GetFileName(item);
+                            String dateP = filename.Substring(0, 4) + "-" + filename.Substring(4, 2) + "-" + filename.Substring(6, 2);
+
+                            String cliente = filename.Substring(13);
+                            int lon = cliente.Length - 4;
+                            String clienteC = cliente.Substring(0,lon);
+                             <tr>
+                                <td style="text-align: left">
+                                    @dateP
+                            </td>
+                                 <td style="text-align: left">
+                                     @clienteC
+                                 </td>
+                                <td style="text-align: left">@filename
+                                </td>
+                          
+                                @{cont = cont + 1;}
+                                <td style="text-align: left"><a class="mdl-list__item-secondary-action" href="@Url.Action("OpenPDF", "Presupuestos", new { filename = @filename })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="text-align:center;">
+     
+         @Html.PagedListPager(Model, page => Url.Action("Report", "Presupuestos", new { page, search = Request.QueryString["search"], @class = "list-unstyle text-center" }))
+</div>
+    
+
+</section>

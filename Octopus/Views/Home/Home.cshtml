@@ -2,13 +2,15 @@
 @model  IEnumerable<Octopus.Models.VW_Statistics>
 @using System.Web.UI.WebControls
 @{
-    ViewBag.Title = "Inicio";
-    Layout = "~/Views/Shared/_HomePanel.cshtml";
+      ViewBag.Title = "Inicio";
+      Layout = "~/Views/Shared/_HomePanel.cshtml";
+
+   
 }
 <!-- pageContent -->
 <section class="full-width pageContent">
     <section class="full-width text-center" style="padding: 40px 0;">
-        <h3 class="text-center tittles">INGRESOS ÚLTIMOS MES</h3>
+        <h3 class="text-center tittles">ESTADÍSTICAS</h3>
         <!-- Tiles -->
         @foreach (var item in Model)
         {

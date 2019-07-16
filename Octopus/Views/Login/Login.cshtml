@@ -39,13 +39,14 @@
 
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
-
+                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.Usuario)</div>
 
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                   
                     <div>
                         @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "Text" })
                         <label class="mdl-textfield__label" for="userName">Usuario</label>
-                        <div>@Html.ValidationMessageFor(a => a.Usuario)</div>
+                        
                     </div>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">

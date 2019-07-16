@@ -17,8 +17,8 @@ namespace Octopus.Controllers
 
         private OctopusEntities db = new OctopusEntities();
 
-
-        public ActionResult Details(String user)
+        // GET: /Usuarios/Details/5
+        public ActionResult Details(string user)
         {
             USUARIOS USUARIOS = db.USUARIOS.Find(user);
             if (USUARIOS == null)
@@ -40,7 +40,7 @@ namespace Octopus.Controllers
             // var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
             ViewBag.Rol = new SelectList(db.USUARIOS_TIPOS, "ROL_ID", "ROL_DESC");
             //ViewBag.Estado = new SelectList(states, "ES_ID", "ES_DESCRIPCION");
-            ViewBag.Empleados = new SelectList(empleados, "EMP_ID", "EMP_NOMBRE");
+            ViewBag.Empleados = new SelectList(empleados, "EMP_ID", "EMP_APELLIDO_NOMBRE");
             return View();
 
         }
@@ -102,16 +102,18 @@ namespace Octopus.Controllers
 
 
         // GET: /Usuarios/
-        public ActionResult List(string searchUser, int? page)
+        public ActionResult List(string searchUsuario, int? page)
         {
 
             try
             {
                 var usuarios = from c in db.USUARIOS where (c.Estado == 1) select c;
 
-                if (!String.IsNullOrEmpty(searchUser))
+                if (!String.IsNullOrEmpty(searchUsuario))
                 {
-                    usuarios = usuarios.Where(c => c.Usuario.Contains(searchUser));
+                    usuarios = usuarios.Where(c => c.Usuario.Contains(searchUsuario)
+                        || c.USUARIOS_TIPOS.ROL_DESC.Contains(searchUsuario)
+                        );
                 }
 
                 return View(usuarios.ToList().ToPagedList(page ?? 1, 4));
@@ -124,16 +126,17 @@ namespace Octopus.Controllers
         }
       
         // GET: /Usuarios/
-        public ActionResult ListInactivos(string searchUser, int? page)
+        public ActionResult ListInactivos(string searchUsuario, int? page)
         {
 
             try
             {
                 var usuarios = from c in db.USUARIOS where (c.Estado == 2) select c;
 
-                if (!String.IsNullOrEmpty(searchUser))
+                if (!String.IsNullOrEmpty(searchUsuario))
                 {
-                    usuarios = usuarios.Where(c => c.Usuario.Contains(searchUser));
+                    usuarios = usuarios.Where(c => c.Usuario.Contains(searchUsuario)
+                         || c.USUARIOS_TIPOS.ROL_DESC.Contains(searchUsuario));
 
                 }
 
@@ -190,18 +193,26 @@ namespace Octopus.Controllers
         public ActionResult Edit(USUARIOS var_usuario)
         {
 
+            // Voy a actualizar el empleado de un Usuario .. 
 
+            //Traigo el empleado viejo, que voy a des-setear
             EMPLEADOS empleado_old = db.EMPLEADOS.FirstOrDefault(a => a.EMP_USUARIO == var_usuario.Usuario);
+            
+            //Me traigo el empleado nuevo
             int? emp = var_usuario.emp_id;
             EMPLEADOS empleado = db.EMPLEADOS.FirstOrDefault(e => e.EMP_ID == emp);
+            
+            //Si el empleado nuevo es <> de nulo 
             if (empleado != null)
             {
+                //Seteo el nuevo usuario  y lo pongo de alta.
                 empleado.EMP_USUARIO = var_usuario.Usuario;
                 empleado.EMP_ESTADO = var_usuario.Estado;
+                // Lo remuevo porque si no falla el ModelState
                 ModelState.Remove("EMPLEADOS");
                 if (empleado_old != null && empleado_old.EMP_DNI != empleado.EMP_DNI)
                 {
-
+                    //Le quito el usuario al empleado viejo. 
                     empleado_old.EMP_USUARIO = null;
                 }
 
@@ -230,7 +241,7 @@ namespace Octopus.Controllers
             }
             if (ModelState.IsValid)
             {
-                var_usuario.Estado = 0;
+                var_usuario.Estado = 2;
                 db.Entry(var_usuario).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("ListInactivos");

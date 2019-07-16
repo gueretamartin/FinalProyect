@@ -31,7 +31,11 @@ namespace Octopus.Models
         public int CLI_ID { get; set; }
         public int ES_ID { get; set; }
         public Nullable<int> PRE_FECHA_FIN { get; set; }
-        public decimal PRE_PRECIO { get; set; }
+        public int PRE_PRECIO { get; set; }
+        public string img1path { get; set; }
+        public string img2path { get; set; }
+        public string img3path { get; set; }
+        public string img4path { get; set; }
     
         public virtual CLIENTES CLIENTES { get; set; }
         public virtual EMPLEADOS EMPLEADOS { get; set; }

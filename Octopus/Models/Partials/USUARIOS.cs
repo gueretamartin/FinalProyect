@@ -46,7 +46,7 @@ namespace Octopus.Models
         public SelectList Roles_List { get; set; }
         public SelectList Estados_List { get; set; }
         public SelectList Empleados_List { get; set; }
-
+        public SelectList Sucursales_List { get; set; }
         public  int? emp_id { get; set; }
 
 

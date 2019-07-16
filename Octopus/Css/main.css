@@ -849,4 +849,15 @@ html, body{
 		right: 122%;
 		text-align: right;
 	}
+img-responsive-detail-main{
+float:initial;
+box-shadow: 7px 7px 5px #484747;
+border:ridge;
+}
+#img-responsive-detail {
+float: initial;
+height: 50px;
+box-shadow: 7px 7px 5px #484747;
+border:outset;
+}
 }

@@ -77,8 +77,7 @@ $(document).ready(function (e) {
         }
     });
 });
-
-$(window).load(function () {
+$(window).on("load",function () {
     
     //var condicion = sessionStorage.getItem("CONDICIONIVA");
     //var condicion = '@Session["CONDICIONIVA"]';
