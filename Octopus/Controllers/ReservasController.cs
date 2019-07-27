@@ -79,9 +79,75 @@ namespace Octopus.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RESERVAS reservas, DateTime fechaResFin, int? CLI_RI_ID, int? CLI_CF_ID, int TC_ID, int SUCURSALES_ID, int EMPLEADO_ID)
+        public ActionResult Create(RESERVAS reservas, DateTime? fechaResFin, int? CLI_RI_ID, int? CLI_CF_ID, int? TC_ID, int? SUCURSALES_ID, int? EMPLEADO_ID)
         {
-            
+
+            RESERVAS resNew = new RESERVAS();
+            resNew.VEH_ID = reservas.VEH_ID;
+            VEHICULOS vehSel = db.VEHICULOS.Include(v => v.SUCURSALES).Include(v => v.EMPLEADOS).Where(v => v.VEH_ID == resNew.VEH_ID).FirstOrDefault();
+            resNew.VEHICULOS = vehSel;
+            resNew.FEC_ID_INICIO = int.Parse(string.Format("{0:yyyyMMdd}", DateTime.Now));
+
+            bool error = false;
+            if (fechaResFin == null)
+            {
+
+                ModelState.AddModelError("FEC_ID_FIN", "FECHA RESERVA: Seleccione la fecha de vencimiento");
+                error = true;
+            }
+            if (fechaResFin != null  )
+            {
+                string anio = fechaResFin.ToString().Substring(6, 4);
+                string mes = fechaResFin.ToString().Substring(3, 2);
+                string dia = fechaResFin.ToString().Substring(0, 2);
+                string fecha = anio + mes + dia;
+                int fechaf = Convert.ToInt32(fecha);
+                if (resNew.FEC_ID_INICIO > fechaf)
+                { 
+                ModelState.AddModelError("FEC_ID_FIN", "FECHA RESERVA: La fecha de vencimiento debe ser mayor o igual a la fecha de hoy");
+                error = true;
+                }
+            }
+            if (TC_ID == null)
+            {
+                ModelState.AddModelError("VEH_ID", "TIPO IVA: Seleccione el Tipo de IVA");
+                error = true;
+            }
+
+            if (CLI_CF_ID == null && CLI_RI_ID == null)
+            {
+                ModelState.AddModelError("CLI_ID", "CLIENTE: Seleccione el Cliente");
+                error = true;
+            }
+
+            if (SUCURSALES_ID == null )
+            {
+                ModelState.AddModelError("SUC_ID", "SUCURSAL: Seleccione la Sucursal");
+                error = true;
+            }
+
+            if (EMPLEADO_ID == null)
+            {
+                ModelState.AddModelError("EMP_ID", "EMPLEADO: Seleccione el Empleado");
+                error = true;
+            }
+            if (reservas.RES_SENIA == null)
+            {
+                ModelState.AddModelError("RES_SENIA", "SEÑA: Ingrese un valor de seña");
+                error = true;
+            }
+
+            if(reservas.RES_VALOR_PACTADO ==null)
+            {
+                ModelState.AddModelError("RES_VALOR_PACTADO", "VALOR PACTADO: Ingrese el valor pactado para el vehículo");
+                error = true;
+            }
+
+            if (error==true)
+            {
+                return this.Create(vehSel);
+            }
+
             if (TC_ID == 1 && CLI_CF_ID != null)
             {
                 reservas.CLI_ID = (from c in db.CLIENTES where c.CLI_ID == CLI_CF_ID select c.CLI_ID).FirstOrDefault();
@@ -95,11 +161,8 @@ namespace Octopus.Controllers
             else
             {
 
-                RESERVAS resNew = new RESERVAS();
-                resNew.VEH_ID = reservas.VEH_ID;
-                VEHICULOS vehSel = db.VEHICULOS.Include(v => v.SUCURSALES).Include(v => v.EMPLEADOS).Where(v => v.VEH_ID == resNew.VEH_ID).FirstOrDefault();
-                resNew.VEHICULOS = vehSel;
-                resNew.FEC_ID_INICIO = int.Parse(string.Format("{0:yyyyMMdd}", DateTime.Now));
+               
+                
 
                 //ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DESCRIPCIONES");
                 ViewBag.EMPLEADO_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_NOMBRE");
@@ -167,7 +230,7 @@ namespace Octopus.Controllers
 
         }
 
-        public ActionResult ListActivas(string searchReserve)
+        public ActionResult List(string searchReserve)
         {
             try
             {
@@ -271,6 +334,43 @@ namespace Octopus.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(RESERVAS reservas, DateTime fechaResFin)
         {
+            bool error = false;
+            if (fechaResFin == null)
+            {
+
+                ModelState.AddModelError("FEC_ID_FIN", "FECHA RESERVA: Seleccione la fecha de vencimiento");
+                error = true;
+            }
+            if (fechaResFin != null)
+            {
+                string anio = fechaResFin.ToString().Substring(6, 4);
+                string mes = fechaResFin.ToString().Substring(3, 2);
+                string dia = fechaResFin.ToString().Substring(0, 2);
+                string fecha = anio + mes + dia;
+                int fechaf = Convert.ToInt32(fecha);
+                if (reservas.FEC_ID_INICIO > fechaf)
+                {
+                    ModelState.AddModelError("FEC_ID_FIN", "FECHA RESERVA: La fecha de vencimiento debe ser mayor o igual a la fecha de hoy");
+                    error = true;
+                }
+            }
+          
+            if (reservas.RES_SENIA == null)
+            {
+                ModelState.AddModelError("RES_SENIA", "SEÑA: Ingrese un valor de seña");
+                error = true;
+            }
+
+            if (reservas.RES_VALOR_PACTADO == null)
+            {
+                ModelState.AddModelError("RES_VALOR_PACTADO", "VALOR PACTADO: Ingrese el valor pactado para el vehículo");
+                error = true;
+            }
+
+            if (error == true)
+            {
+                return this.Edit(reservas.RES_ID);
+            }
             //ASIGNA ESTADO DE RESERVA
             if (fechaResFin >= DateTime.Now) { reservas.RES_ESTADO = 41; }
             else { reservas.RES_ESTADO = 43; };

@@ -1,70 +1,100 @@
-﻿@model IEnumerable<Octopus.Models.SUCURSALES>
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Octopus.Models.SUCURSALES>
 
 @{ //if(Session["Usuario"] != null)
     //{
-     // USUARIOS user = Session["Usuario"] as USUARIOS;
-      ViewBag.Title = "Sucursales";
-      Layout = "~/Views/Shared/_HomePanel.cshtml";
-   // }
-   //else
-   //{
-     //  @Url.Action("Login","Login")
-  // }
+    // USUARIOS user = Session["Usuario"] as USUARIOS;
+    ViewBag.Title = "Sucursales";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+    // }
+    //else
+    //{
+    //  @Url.Action("Login","Login")
+    // }
 }
-
-
-
-<!DOCTYPE html>
-
-<!-- Page Content-->-->
+@if (Session["Username"] != null)
+{
+    if (Session["Rol"].ToString() == "0")
+    {
 <section class="full-width pageContent">
-    <div>
-        <div class="mdl-tabs__tab-bar">
-            <a href="@Url.Action("Create","Sucursales")" class="mdl-tabs__tab">NUEVO</a>
-            <a href="@Url.Action("List","Sucursales")" class="mdl-tabs__tab" style="color: #2e6da4">LISTA</a>
+
+    <section id="help">
+        <div class="text-right" style="padding-top:15px; padding-right:15px;">
+            <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+
         </div>
+    </section>
 
-        <div class="mdl-tabs__panel" id="tabListSucursales">
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--8-col-desktop mdl-cell--2-offset-desktop">
-                    <div class="full-width panel mdl-shadow--2dp">
-                        <div class="full-width panel-tittle bg-primary text-center tittles">
-                            LISTA DE SUCURSALES
-                        </div>
-                        <div class="full-width panel-content">
-                            @using (Html.BeginForm("List", "Sucursales", FormMethod.Get))
-                            {
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchSucursal">
-                                        <i class="zmdi zmdi-search" onclick="Ocultar()"></i>
-                                    </label>
-                                    <div class="mdl-textfield__expandable-holder">
-                                        @Html.TextBox("searchSucursal", null, new { @class = "mdl-textfield__input" })
-                                    </div>
-                                    <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color: none; visibility: hidden" />
-                                </div>
-                            }
-                            <div class="mdl-list">
-                                @foreach (var item in Model)
-                                {
-                                    <div class="mdl-list__item mdl-list__item--two-line">
-                                        <span class="mdl-list__item-primary-content">
-                                            <i class="zmdi zmdi-account mdl-list__item-avatar"></i>
-                                                <span>Sucursal: @Html.DisplayFor(modelItem => item.SUC_DESCRIP)</span><br />    
-                                            </span> 
-                                      <a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Sucursales", new { id = item.SUC_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
-                                    </div>
-                                   
-                                }
-                            </div>
-                        </div>
+    <div class="mdl-tabs__tab-bar">
+        <a href="@Url.Action("Create","Sucursales")" class="mdl-tabs__tab">NUEVO</a>
+        <a class="mdl-tabs__tab" style="color: #2e6da4; font-weight: bold">LISTA</a>
+    </div>
+
+    <section class="full-width header-well">
+
+        <div class="full-width header-well-icon">
+            <i class="zmdi zmdi-balance"></i>
+        </div>
+        <div class="full-width header-well-text">
+            <p class="text-condensedLight">
+                <b>LISTADO DE SUCURSALES</b><br />
+                Presione sobre los 3 puntos para ver los detalles
+            </p>
+            <br />
+        </div>
+    </section>
+
+
+    <div class="full-width divider-menu-h"></div>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+
+            @using (Html.BeginForm("List", "Sucursales", FormMethod.Get))
+            {
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <button id="btn-exit" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
+
+                     <label class="mdl-button mdl-js-button mdl-button--icon" for="searchSucursal">
+                        <i class="zmdi zmdi-search" onclick="Ocultar()"></i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        @Html.TextBox("searchSucursal", null, new { @class = "mdl-textfield__input" })
                     </div>
-
+                    <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color: none; visibility: hidden" />
                 </div>
+            }
+            <div class="table-responsive">
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left"><b>SUCURSAL</b></th>
+                            <th style="text-align: center"> <button id="btn-exit" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var cont = 0;}
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="text-align: left">@Html.DisplayFor(modelItem => item.SUC_DESCRIP)</td>
+                                @{cont = cont + 1;}
+                                <td style="text-align: center"><a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Sucursales", new { id = item.SUC_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-
     </div>
+    <div style="text-align:center;">
+        @Html.PagedListPager(Model, page => Url.Action("List", "Sucursales", new { page, search = Request.QueryString["search"], @class = "list-unstyle text-center" }))
+    </div>
+  
 </section>
 
-
+} else { Response.Redirect("~/Home/Home"); }
+;
+}

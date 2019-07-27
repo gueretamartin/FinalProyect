@@ -15,125 +15,373 @@ namespace Octopus.Controllers
     {
         private OctopusEntities db = new OctopusEntities();
 
+        // GET: /Vehiculos/List?searchVehicle=[Parámetro]
+        // LEVANTA LA VISTA DE LISTADO DE VEHICULOS O LISTA DE VEHICULOS QUE CONTIENEN CON EL PARÁMETRO PASADO
+        public ActionResult List(string searchVehicle)
+        {
+            try
+            { 
+                ViewBag.VW_MAR = new SelectList(db.VW_MARCAS, "VW_MAR_ID", "VW_MAR_DESCRIPCION");
+
+                ViewBag.VW_TV = new SelectList(db.TIPO_VEHICULOS, "TV_ID", "TV_DESCRIPCION");
+
+                var vehiculos = from v in db.VEHICULOS where v.ES_ID == 31 && v.VEH_VIGENTE == true select v;
+            
+                if (!String.IsNullOrEmpty(searchVehicle))
+                {
+                    vehiculos = vehiculos.Where(v => v.MARCAS.MAR_DESCRIPCION.Contains(searchVehicle)
+                        || v.VEH_MODELO.Contains(searchVehicle)
+                        || v.VEH_AÑO.Contains(searchVehicle)
+                        || v.VEH_VERSION.Contains(searchVehicle)
+                        || v.VEH_PATENTE.Contains(searchVehicle)
+                        || v.TIPO_COMBUSTIBLES.TCOM_DESCRIPCION.Contains(searchVehicle)
+                        || v.SUCURSALES.SUC_DESCRIP.Contains(searchVehicle)
+                        || v.TIPO_VEHICULOS.TV_DESCRIPCION.Contains(searchVehicle)
+                    );
+                }
+
+
+                return View(vehiculos.ToList());
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Home", "Home");
+            }
+        }
+
         // GET: /Vehiculos/
 
         // GET: /Vehiculos/Details/5
+        
         public ActionResult Details(int veh_id)
         {
-            VEHICULOS vehiculo = db.VEHICULOS.Include(v => v.CLIENTES).
-                                            Include(v => v.EMPLEADOS).
-                                            Include(v => v.FECHAS).
-                                            Include(v => v.SUCURSALES).
-                                            Include(v => v.IMAGENES).
-                                            SingleOrDefault(x => x.VEH_ID == veh_id);
-            return View(vehiculo);
-        }
+            try 
+            {
+                VEHICULOS vehiculo = db.VEHICULOS.Find(veh_id);
 
+                return View(vehiculo);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Home", "Home");
+            }
+        }
+        
+          
         // GET: /Vehiculos/Create
+        
         public ActionResult Create()
         {
-            //ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_ID");
-            ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_APELLIDO_NOMBRE");
-            ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_FECHA");
-            ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP");
+            try 
+            { 
+                //LISTA DE SUCURSALES
+                ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP");
 
-            //CONDICION IVA
-            var condiciones = (from c in db.CLIENTES
-                               select c.TC_ID).Distinct();
-            ViewBag.TC_ID = new SelectList(condiciones);
+                //LISTA DE EMPLEADOS
+                ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_APELLIDO_NOMBRE");
 
-            //CLIENTES EMPRESAS
-            var empresas = (from c in db.CLIENTES
-                            where c.TC_ID == 2
-                                select c.CLI_RI_CUIT).Distinct();
-            ViewBag.CLI_RI_ID = new SelectList(empresas);
+                //TIPO CLIENTE
+                ViewBag.TC_ID = new SelectList(db.TIPO_CLIENTE, "TC_ID", "TC_DESCRIPCION");
 
-            //CLIENTES FINALES
-            var consumidores = (from c in db.CLIENTES
-                            where c.TC_ID == 1
-                            select c.CLI_DOC).Distinct();
-            ViewBag.CLI_CF_ID = new SelectList(consumidores);
+                //FECHAS
+                ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_FECHA");
 
-            return View();
+                //CLIENTES CUIT
+                var CLI_CUIT = (from c in db.CLIENTES
+                                where c.TC_ID == 2 && c.ES_ID == 1
+                                select c
+                                );
+
+                ViewBag.CLI_CUIT_ID = new SelectList(CLI_CUIT, "CLI_ID", "CLI_RAZONSOCIAL_CUIT");
+
+                //CLIENTES CUIL
+                var CLI_CUIL = (from c in db.CLIENTES
+                            where c.TC_ID == 1 && c.ES_ID == 1
+                            select c
+                            );
+
+                ViewBag.CLI_CUIL_ID = new SelectList(CLI_CUIL, "CLI_ID", "CLI_APELLIDO_NOMBRE_CUIL");
+
+                //TIPO DE VEHÍCULO
+                ViewBag.VEH_TIPOVEHICULO = new SelectList(db.TIPO_VEHICULOS, "TV_ID", "TV_DESCRIPCION");
+
+                //MARCAS
+                ViewBag.MAR_ID = new SelectList(db.MARCAS, "MAR_ID", "MAR_DESCRIPCION");
+
+                //MARCAS
+                ViewBag.VEH_TIPOCOMBUSTIBLE = new SelectList(db.TIPO_COMBUSTIBLES, "TCOM_ID", "TCOM_DESCRIPCION");
+
+                //MARCAS
+                ViewBag.MON_ID = new SelectList(db.MONEDAS, "MON_ID", "MON_DESCRIPCION");
+
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Home", "Home");
+            }
 
         }
 
         // POST: /Vehiculos/Create
+        // VALIDA Y CREA EL CLIENTE QUE DE LA VISTA DE CREAR CLIENTE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( VEHICULOS vehiculos, DateTime fecha, HttpPostedFileBase image1, HttpPostedFileBase image2, HttpPostedFileBase image3, 
-                            HttpPostedFileBase image4, string CLI_RI_ID, string CLI_CF_ID, string TC_ID)
+        public ActionResult Create(VEHICULOS vehiculos, Nullable<DateTime> fecha, HttpPostedFileBase image1, HttpPostedFileBase image2, HttpPostedFileBase image3,
+                            HttpPostedFileBase image4, string CLI_CUIT_ID, string CLI_CUIL_ID, string TC_ID)
         {
-            // VALIDA TIPO DE CLIENTE Y DNI/CUIT
-            if (TC_ID.Equals("CONSUMIDOR_FINAL") && !String.IsNullOrEmpty(CLI_CF_ID))
+            try 
             {
-                vehiculos.CLI_ID = (from c in db.CLIENTES where c.CLI_DOC == CLI_CF_ID select c.CLI_ID).FirstOrDefault();
+                if (!String.IsNullOrEmpty(CLI_CUIT_ID))
+                {
+                    int CLI_ID_INT = int.Parse(CLI_CUIT_ID);
+                    var ClienteSel = from c in db.CLIENTES where c.CLI_ID == CLI_ID_INT select c.CLI_ID;
+                    vehiculos.CLI_ID = ClienteSel.FirstOrDefault();
+                }
+                else if (!String.IsNullOrEmpty(CLI_CUIL_ID))
+                {
+                    int CLI_ID_INT = int.Parse(CLI_CUIL_ID);
+                    var ClienteSel = from c in db.CLIENTES where c.CLI_ID == CLI_ID_INT select c.CLI_ID;
+                    vehiculos.CLI_ID = ClienteSel.FirstOrDefault();
+                }
+
+                if(!fecha.Equals(""))
+                {
+                    var FechaSel = from f in db.FECHAS where f.FEC_FECHA == fecha select f.FEC_ID;
+                    vehiculos.FEC_ID = FechaSel.FirstOrDefault();
+                }
+
+                vehiculos.VEH_VIGENTE = true;
+
+                vehiculos.ES_ID = 31;
+            
+                #region VALIDACIÓN DE CAMPOS DE VEHÍCULO
+                if (!String.IsNullOrEmpty(vehiculos.SUC_ID.ToString()))
+                {
+                    var veh = from v in db.VEHICULOS where v.ES_ID == 31 select v;
+
+                    veh = veh.Where(v => v.VEH_PATENTE.Contains(vehiculos.VEH_PATENTE) 
+                                            && v.VEH_VIGENTE.Equals(vehiculos.VEH_VIGENTE));
+
+                    if (veh.Count() != 0)
+                    {
+                        ModelState.AddModelError("VEH_PATENTE", "PATENTE: La patente ya existe y está vigente.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.EMP_ID.ToString()))
+                    {
+                        ModelState.AddModelError("EMP_ID", "EMPLEADO: Debe seleccionar un empleado.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(TC_ID))
+                    {
+                        ModelState.AddModelError("CLI_ID", "TIPO DE CLIENTE: Debe seleccionar un tipo de cliente.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.CLI_ID.ToString()))
+                    {
+                        ModelState.AddModelError("CLI_ID", "CLIENTE: Debe seleccionar un cliente.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.FEC_ID.ToString()))
+                    {
+                        ModelState.AddModelError("FEC_ID", "FECHA: Debe seleccionar una fecha.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_TIPOVEHICULO.ToString()))
+                    {
+                        ModelState.AddModelError("VEH_TIPOVEHICULO", "TIPO VEHÍCULO: Debe seleccionar un tipo de vehículo.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.MAR_ID.ToString()))
+                    {
+                        ModelState.AddModelError("MAR_ID", "MARCA: Debe seleccionar una marca.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_MODELO))
+                    {
+                        ModelState.AddModelError("VEH_MODELO", "MODELO: Está vacío.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_VERSION))
+                    {
+                        ModelState.AddModelError("VEH_VERSION", "VERSIÓN: Está vacío.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_PATENTE))
+                    {
+                        ModelState.AddModelError("VEH_PATENTE", "PATENTE: Está vacío.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_AÑO))
+                    {
+                        ModelState.AddModelError("VEH_AÑO", "AÑO: Está vacío.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_CILINDRADAS))
+                    {
+                        ModelState.AddModelError("VEH_CILINDRADAS", "CILINDRADA: Está vacío.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_KILOMETROS))
+                    {
+                        ModelState.AddModelError("VEH_KILOMETROS", "KILÓMETROS: Está vacío.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_COLOR))
+                    {
+                        ModelState.AddModelError("VEH_COLOR", "COLOR: Está vacío.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_PUERTAS))
+                    {
+                        ModelState.AddModelError("VEH_PUERTAS", "PUERTAS: Está vacío.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_TIPOCOMBUSTIBLE.ToString()))
+                    {
+                        ModelState.AddModelError("VEH_TIPOCOMBUSTIBLE", "TIPO DE COMBUSTIBLE: Debe seleccionar un tipo de combustible.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.MON_ID.ToString()))
+                    {
+                        ModelState.AddModelError("MON_ID", "MONEDA: Debe seleccionar una moneda.");
+                        return this.Create();
+                    }
+
+                    if (String.IsNullOrEmpty(vehiculos.VEH_PRECIO_INGRESO.ToString()))
+                    {
+                        ModelState.AddModelError("VEH_PRECIO_INGRESO", "PRECIO DE INGRESO: Está vacío.");
+                        return this.Create();
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("SUC_ID", "SUCURSAL: Debe seleccionar una sucursal.");
+                    return this.Create();
+                }
+
+                #endregion
+
+                vehiculos = ToUpperVehicle(vehiculos);
+
+                if (ModelState.IsValid)
+                {
+                    db.VEHICULOS.Add(vehiculos);
+                    db.SaveChanges();
+                }
+
+                if (image1 != null && image1.ContentLength > 0) { LoadImage(image1, vehiculos); }
+                if (image2 != null && image2.ContentLength > 0) { LoadImage(image2, vehiculos); }
+                if (image3 != null && image3.ContentLength > 0) { LoadImage(image3, vehiculos); }
+                if (image4 != null && image4.ContentLength > 0) { LoadImage(image4, vehiculos); }
+            
+            
+                return RedirectToAction("List");
             }
-            else if(TC_ID.Equals("RESPONSABLE_INSCRIPTO") && !String.IsNullOrEmpty(CLI_RI_ID))
+            catch (Exception ex)
             {
-                vehiculos.CLI_ID = (from c in db.CLIENTES where c.CLI_RI_CUIT == CLI_RI_ID select c.CLI_ID).FirstOrDefault();
+                return RedirectToAction("Home", "Home");
             }
-            else
-            {
-                ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_APELLIDO_NOMBRE");
-                ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_FECHA");
-                ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP");
-
-                //CONDICION IVA
-                var condiciones = (from c in db.CLIENTES
-                                   select c.TC_ID
-                                       ).Distinct();
-                ViewBag.TC_ID = new SelectList(condiciones);
-
-                //CLIENTES EMPRESAS
-                var empresas = (from c in db.CLIENTES
-                                where c.TC_ID == 2
-                                select c.CLI_RI_CUIT).Distinct();
-                ViewBag.CLI_RI_ID = new SelectList(empresas);
-
-                //CLIENTES FINALES
-                var consumidores = (from c in db.CLIENTES
-                                    where c.TC_ID == 1
-                                    select c.CLI_DOC).Distinct();
-                ViewBag.CLI_CF_ID = new SelectList(consumidores);
-                ModelState.AddModelError("CLI_ID", "LOS CAMPOS 'CONDICION IVA' Y 'DNI/CUIT' SON OBLIGATORIOS");
-                return View("Create");
-            }
-
-            var FechaSel = from f in db.FECHAS
-                           where f.FEC_FECHA == fecha
-                            select f.FEC_ID;
-            vehiculos.FEC_ID = FechaSel.FirstOrDefault();
-            vehiculos.VEH_VIGENTE = true;
-            if (ModelState.IsValid)
-            {
-                db.VEHICULOS.Add(vehiculos);
-                db.SaveChanges();
-            }
-
-            //ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DNI");
-            //ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_APELLIDO_NOMBRE");
-            //ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_FECHA");
-            //ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP");
-
-            if (image1 != null && image1.ContentLength > 0) { LoadImage(image1, vehiculos); }
-            if (image2 != null && image1.ContentLength > 0) { LoadImage(image2, vehiculos); }
-            if (image3 != null && image1.ContentLength > 0) { LoadImage(image3, vehiculos); }
-            if (image4 != null && image1.ContentLength > 0) { LoadImage(image4, vehiculos); }
-
-            return RedirectToAction("List");
         }
 
+        // TRANSFOMA TODOS LOS CAMPOS DEL CLIENTE A MAYÚSCULA
+        private VEHICULOS ToUpperVehicle(VEHICULOS var_vehiculo)
+        {
+            try
+            {
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_MODELO))
+                {
+                    var_vehiculo.VEH_MODELO = var_vehiculo.VEH_MODELO.ToUpper();
+                }
+
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_VERSION))
+                {
+                    var_vehiculo.VEH_VERSION = var_vehiculo.VEH_VERSION.ToUpper();
+                }
+
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_CILINDRADAS))
+                {
+                    var_vehiculo.VEH_CILINDRADAS = var_vehiculo.VEH_CILINDRADAS.ToUpper();
+                }
+
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_COLOR))
+                {
+                    var_vehiculo.VEH_COLOR = var_vehiculo.VEH_COLOR.ToUpper();
+                }
+
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_KILOMETROS))
+                {
+                    var_vehiculo.VEH_KILOMETROS = var_vehiculo.VEH_KILOMETROS.ToUpper();
+                }
+
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_DETALLES))
+                {
+                    var_vehiculo.VEH_DETALLES = var_vehiculo.VEH_DETALLES.ToUpper();
+                }
+
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_PUERTAS))
+                {
+                    var_vehiculo.VEH_PUERTAS = var_vehiculo.VEH_PUERTAS.ToUpper();
+                }
+
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_AÑO))
+                {
+                    var_vehiculo.VEH_AÑO = var_vehiculo.VEH_AÑO.ToUpper();
+                }
+
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_PATENTE))
+                {
+                    var_vehiculo.VEH_PATENTE = var_vehiculo.VEH_PATENTE.ToUpper();
+                }
+
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_STEREO_MODELO))
+                {
+                    var_vehiculo.VEH_STEREO_MODELO = var_vehiculo.VEH_STEREO_MODELO.ToUpper();
+                }
+
+                if (!String.IsNullOrEmpty(var_vehiculo.VEH_STEREO_CODIGO))
+                {
+                    var_vehiculo.VEH_STEREO_CODIGO = var_vehiculo.VEH_STEREO_CODIGO.ToUpper();
+                }
+
+                return var_vehiculo;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
+        //CARGA LAS IMÁGENES
         public void LoadImage(HttpPostedFileBase imagen, VEHICULOS vehiculo)
         {
             IMAGENES img = new IMAGENES();
-            img.VEH_ID = db.VEHICULOS.First(v => v.VEH_PATENTE.Equals(vehiculo.VEH_PATENTE) && v.VEH_VIGENTE == true).VEH_ID;
+            img.VEH_ID = db.VEHICULOS.First(v => v.VEH_PATENTE.Equals(vehiculo.VEH_PATENTE) && v.VEH_VIGENTE == true && v.ES_ID == 31).VEH_ID;
             img.IMG_NAME = Path.GetFileName(imagen.FileName);
             img.IMG_IMAGE = ConvertToBytes(imagen);
             db.IMAGENES.Add(img);
             db.SaveChanges();
         }
 
+        //CONVIERTE A BYTES
         public byte[] ConvertToBytes(HttpPostedFileBase imagen)
         {
             byte[] imageBytes = null;
@@ -142,21 +390,7 @@ namespace Octopus.Controllers
             return imageBytes;
         }
 
-        public ActionResult List(string searchVehicle)
-        {
-            var vehiculos = db.VEHICULOS.Include(v => v.CLIENTES).Include(v => v.EMPLEADOS).Include(v => v.FECHAS).Include(v => v.SUCURSALES);
-            if (!String.IsNullOrEmpty(searchVehicle))
-            {
-                vehiculos = vehiculos.Where(v => v.VEH_PATENTE.Contains(searchVehicle)
-                    || v.VEH_MARCA.Contains(searchVehicle)
-                    || v.VEH_MODELO.Contains(searchVehicle));
-            }
-  
-
-            return View(vehiculos.ToList());
-        }
-
-        //Trae la primer imagen
+        //TRAE LA PRIMER IMAGEN
         public ActionResult RetrieveImage(int veh_id)
         {
             byte[] imagen = GetImageFromDataBase(veh_id);
@@ -170,7 +404,21 @@ namespace Octopus.Controllers
             }
         }
 
-        //Trae todas las imagenes
+        //TRAE TODAS LAS IMAGEN
+        public ActionResult RetrieveImages(int veh_id, int img_id)
+        {
+            byte[] imagen = GetImageFromDataBase(veh_id, img_id);
+            if (imagen != null)
+            {
+                return File(imagen, "image/jpg");
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        //TRAE TODAS LAS IMAGENES
         public List<int> BuscaImagenes(int veh_id)
         {
             List<int> imgList = db.IMAGENES.Where(x => x.VEH_ID == veh_id).Select(i => i.IMG_ID).ToList();
@@ -178,46 +426,52 @@ namespace Octopus.Controllers
         }
 
 
-        //Convierte la imagen para mostrarla
+        //CONVIERTE LA PRIMER IMAGEN PARA MOSTRARLA
         public byte[] GetImageFromDataBase(int veh_id)
         {
             int imageID = db.IMAGENES.Where(i => i.VEH_ID == veh_id).Max(i => i.IMG_ID);
+
             byte[] imagenBytes = (from i in db.IMAGENES where i.IMG_ID == imageID select i.IMG_IMAGE).First();
 
             return imagenBytes;
-
-            //var imagenDB = from img in db.IMAGENES where img.VEH_ID == veh_id select img.IMG_IMAGE;
-            //byte[] imagenBytes = imagenDB.First();
         }
 
+        //CONVIERTE LAS IMAGENES PARA MOSTRARLAS
         public byte[] GetImageFromDataBase(int veh_id, int img_id)
         {
-            int imageID = db.IMAGENES.Where(i => i.VEH_ID == veh_id).Max(i => i.IMG_ID);
-            byte[] imagenBytes = (from i in db.IMAGENES where i.IMG_ID == imageID select i.IMG_IMAGE).First();
+            byte[] imagenBytes = (from i in db.IMAGENES where i.IMG_ID == img_id select i.IMG_IMAGE).First();
 
             return imagenBytes;
-
-            //var imagenDB = from img in db.IMAGENES where img.VEH_ID == veh_id select img.IMG_IMAGE;
-            //byte[] imagenBytes = imagenDB.First();
         }
+        
 
+        // GET: /Vehiculos/Edit
 
-        // GET: /Vehiculos/Edit/5
         public ActionResult Edit(int veh_id)
         {
             try
             {
-                VEHICULOS vehiculo = db.VEHICULOS.Include(v => v.CLIENTES).
-                                                Include(v => v.EMPLEADOS).
-                                                Include(v => v.FECHAS).
-                                                Include(v => v.SUCURSALES).
-                                                Include(v => v.IMAGENES).
-                                                SingleOrDefault(x => x.VEH_ID == veh_id);
+                VEHICULOS vehiculo = db.VEHICULOS.SingleOrDefault(v => v.VEH_ID == veh_id);
 
-                ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DNI_APELLIDO_NOMBRE", vehiculo.CLI_ID);
+                if (vehiculo.ES_ID != 31)
+                {
+                    return RedirectToAction("Home", "Home");
+                }
+
+                ViewBag.MAR_ID = new SelectList(db.MARCAS, "MAR_ID", "MAR_DESCRIPCION", vehiculo.MAR_ID);
+
                 ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_APELLIDO_NOMBRE", vehiculo.EMP_ID);
+
                 ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_FECHA", vehiculo.FEC_ID);
+
                 ViewBag.SUC_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP", vehiculo.SUC_ID);
+
+                ViewBag.VEH_TIPOVEHICULO = new SelectList(db.TIPO_VEHICULOS, "TV_ID", "TV_DESCRIPCION", vehiculo.VEH_TIPOVEHICULO);
+
+                ViewBag.MON_ID = new SelectList(db.MONEDAS, "MON_ID", "MON_DESCRIPCION", vehiculo.MON_ID);
+
+                ViewBag.VEH_TIPOCOMBUSTIBLE = new SelectList(db.TIPO_COMBUSTIBLES, "TCOM_ID", "TCOM_DESCRIPCION", vehiculo.VEH_TIPOCOMBUSTIBLE);
+
                 return View(vehiculo);
             }
             catch (Exception ex)
@@ -226,86 +480,210 @@ namespace Octopus.Controllers
             }
         }
 
-        // POST: /Vehiculos/Edit/5
+        // POST: /Vehiculos/Edit
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(VEHICULOS vehiculos, DateTime fecha, string Metodo)
+        public ActionResult Edit(VEHICULOS vehiculos, DateTime fecha, string Metodo, string Patente, HttpPostedFileBase image1, HttpPostedFileBase image2, HttpPostedFileBase image3,
+                            HttpPostedFileBase image4, int img1, int img2, int img3, int img4)
         {
+            vehiculos.CLIENTES = null;
+
             var FechaSel = from f in db.FECHAS
                            where f.FEC_FECHA == fecha
                            select f.FEC_ID;
+
             vehiculos.FEC_ID = FechaSel.FirstOrDefault();
-            FECHAS FecActual = db.FECHAS.Find(vehiculos.FEC_ID);
-            vehiculos.FECHAS = FecActual;
 
-            SUCURSALES SucActual = db.SUCURSALES.Find(vehiculos.SUC_ID);
-            vehiculos.SUCURSALES = SucActual;
+            #region VALIDACIÓN DE CAMPOS DE VEHÍCULO
+            if (!String.IsNullOrEmpty(vehiculos.SUC_ID.ToString()))
+            {
+                var veh = from v in db.VEHICULOS where v.ES_ID == 31 && v.VEH_PATENTE != Patente select v;
 
-            CLIENTES CliActual = db.CLIENTES.Find(vehiculos.CLI_ID);
-            vehiculos.CLIENTES = CliActual;
+                veh = veh.Where(v => v.VEH_PATENTE.Contains(vehiculos.VEH_PATENTE)
+                                        && v.VEH_VIGENTE.Equals(vehiculos.VEH_VIGENTE));
 
-            EMPLEADOS EmpActual = db.EMPLEADOS.Find(vehiculos.EMP_ID);
-            vehiculos.EMPLEADOS = EmpActual;
+                if (veh.Count() != 0)
+                {
+                    ModelState.AddModelError("VEH_PATENTE", "PATENTE: La patente ya existe y está vigente.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.EMP_ID.ToString()))
+                {
+                    ModelState.AddModelError("EMP_ID", "EMPLEADO: Debe seleccionar un empleado.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.CLI_ID.ToString()))
+                {
+                    ModelState.AddModelError("CLI_ID", "CLIENTE: Debe seleccionar un cliente.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.FEC_ID.ToString()))
+                {
+                    ModelState.AddModelError("FEC_ID", "FECHA: Debe seleccionar una fecha.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_TIPOVEHICULO.ToString()))
+                {
+                    ModelState.AddModelError("VEH_TIPOVEHICULO", "TIPO VEHÍCULO: Debe seleccionar un tipo de vehículo.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.MAR_ID.ToString()))
+                {
+                    ModelState.AddModelError("MAR_ID", "MARCA: Debe seleccionar una marca.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_MODELO))
+                {
+                    ModelState.AddModelError("VEH_MODELO", "MODELO: Está vacío.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_VERSION))
+                {
+                    ModelState.AddModelError("VEH_VERSION", "VERSIÓN: Está vacío.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_PATENTE))
+                {
+                    ModelState.AddModelError("VEH_PATENTE", "PATENTE: Está vacío.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_AÑO))
+                {
+                    ModelState.AddModelError("VEH_AÑO", "AÑO: Está vacío.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_CILINDRADAS))
+                {
+                    ModelState.AddModelError("VEH_CILINDRADAS", "CILINDRADA: Está vacío.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_KILOMETROS))
+                {
+                    ModelState.AddModelError("VEH_KILOMETROS", "KILÓMETROS: Está vacío.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_COLOR))
+                {
+                    ModelState.AddModelError("VEH_COLOR", "COLOR: Está vacío.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_PUERTAS))
+                {
+                    ModelState.AddModelError("VEH_PUERTAS", "PUERTAS: Está vacío.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_TIPOCOMBUSTIBLE.ToString()))
+                {
+                    ModelState.AddModelError("VEH_TIPOCOMBUSTIBLE", "TIPO DE COMBUSTIBLE: Debe seleccionar un tipo de combustible.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.MON_ID.ToString()))
+                {
+                    ModelState.AddModelError("MON_ID", "MONEDA: Debe seleccionar una moneda.");
+                    return this.Create();
+                }
+
+                if (String.IsNullOrEmpty(vehiculos.VEH_PRECIO_INGRESO.ToString()))
+                {
+                    ModelState.AddModelError("VEH_PRECIO_INGRESO", "PRECIO DE INGRESO: Está vacío.");
+                    return this.Create();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("SUC_ID", "SUCURSAL: Debe seleccionar una sucursal.");
+                return this.Create();
+            }
+
+            #endregion
+
+            vehiculos = ToUpperVehicle(vehiculos);
 
             if (ModelState.IsValid)
             {
                 db.Entry(vehiculos).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("List");
             }
+            
+            if (image1 != null && image1.ContentLength > 0) { removeImage(img1); }
+            if (image2 != null && image2.ContentLength > 0) { removeImage(img2); }
+            if (image3 != null && image3.ContentLength > 0) { removeImage(img3); }
+            if (image4 != null && image4.ContentLength > 0) { removeImage(img4); }
+
+            if (image1 != null && image1.ContentLength > 0) { LoadImage(image1, vehiculos); }
+            if (image2 != null && image2.ContentLength > 0) { LoadImage(image2, vehiculos); }
+            if (image3 != null && image3.ContentLength > 0) { LoadImage(image3, vehiculos); }
+            if (image4 != null && image4.ContentLength > 0) { LoadImage(image4, vehiculos); }
 
             return RedirectToAction("List");
         }
 
-        public ActionResult UpdateState(int veh_id, int ESTADO_ID, string operation)
+        private void removeImage(int img_id)
         {
-
-            VEHICULOS vehSelect = db.VEHICULOS.Include(v => v.CLIENTES).
-                                            Include(v => v.EMPLEADOS).
-                                            Include(v => v.FECHAS).
-                                            Include(v => v.SUCURSALES).
-                                            Include(v => v.IMAGENES).
-                                            SingleOrDefault(x => x.VEH_ID == veh_id);
- 
-            vehSelect.ES_ID = ESTADO_ID;
-            vehSelect.ESTADOS = db.ESTADOS.Find(ESTADO_ID);
-
-            if (ModelState.IsValid)
-            {
-                db.Entry(vehSelect).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-
-            if(operation.Equals("Reserve"))
-            {
-                return RedirectToAction("ListActivas","Reservas");
-            }
-            else
-            {
-                return RedirectToAction("List", "Vehiculos");
-            }
-
+            IMAGENES Image = db.IMAGENES.Find(img_id);
+            db.IMAGENES.Remove(Image);
+            db.SaveChanges();
         }
 
-
-        // POST: /Vehiculos/Delete/5
+        // POST: /Vehiculos/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        
         public ActionResult Delete(int veh_id)
         {
-            VEHICULOS vehiculo = db.VEHICULOS.Find(veh_id);
-            db.VEHICULOS.Remove(vehiculo);
-            db.SaveChanges();
-            return RedirectToAction("List");
+            try
+            {
+                VEHICULOS vehiculos = db.VEHICULOS.Find(veh_id);
+
+                if (vehiculos == null)
+                {
+                    return RedirectToAction("Home", "Home");
+                }
+
+
+                if (vehiculos.ES_ID != 31)
+                {
+                    return RedirectToAction("Home", "Home");
+                }
+
+                vehiculos.ES_ID = 32;
+
+                if (ModelState.IsValid)
+                {
+                    db.Entry(vehiculos).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("List");
+                }
+
+                return RedirectToAction("List");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Home", "Home");
+            }
         }
 
-        // Reserva de vehículo
         public ActionResult Reserve(int veh_id)
         {
-            VEHICULOS vehSelec = db.VEHICULOS.Include(v=>v.SUCURSALES).Include(v=>v.EMPLEADOS).Where(v=> v.VEH_ID == veh_id).FirstOrDefault();
-            
+            VEHICULOS vehSelec = db.VEHICULOS.Include(v => v.SUCURSALES).Include(v => v.EMPLEADOS).Where(v => v.VEH_ID == veh_id).FirstOrDefault();
+
             //Para que sólo tome el vehículo y no sus dependencias
             //vehSelec.EMPLEADOS = null;
             //vehSelec.EMP_ID = 0;
@@ -347,12 +725,12 @@ namespace Octopus.Controllers
                     return RedirectToAction("List");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
 
-       //     return RedirectToAction("List");
+            //     return RedirectToAction("List");
              
 
         }

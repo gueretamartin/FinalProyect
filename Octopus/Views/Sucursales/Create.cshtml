@@ -7,20 +7,43 @@
     Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
 
-
+@if (Session["Username"] != null)
+{
+    if (Session["Rol"].ToString() == "0")
+    {
 <!-- pageContent -->
 <section class="full-width pageContent">
     <div>
-        <div class="mdl-tabs__tab-bar">
-           <a href="@Url.Action("List","Sucursales")" class="mdl-tabs__tab">LISTA</a>
+        <div id="help">
+            <div class="text-right" style="padding-top:15px; padding-right:15px;">
+                <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+            </div>
         </div>
+
+        <div class="mdl-tabs__tab-bar">
+            <a class="mdl-tabs__tab" style="color: #2e6da4; font-weight: bold">NUEVO</a>
+            <a href="@Url.Action("List", "Sucursales")" class="mdl-tabs__tab" id="btn-Listar">LISTA</a>
+            <div class="mdl-tooltip" for="btn-Listar">Listar Sucursales</div>
+        </div>
+        <div class="full-width header-well">
+
+            <div class="full-width header-well-icon">
+                <i class="zmdi zmdi-plus"></i>
+            </div>
+            <div class="full-width header-well-text">
+                <p class="text-condensedLight">
+                    <b>AÑADIR SUCURSAL</b><br />
+                    Complete los campos indicados para dar de alta una nueva Sucursal
+                </p>
+            </div>
+        </div>
+
+
         <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
                     <div class="full-width panel mdl-shadow--2dp">
-                        <div class="full-width panel-tittle bg-primary text-center tittles">
-                            NUEVA SUCURSAL
-                        </div>
+
                         <div class="full-width panel-content">
                             @using (Html.BeginForm("Create", "Sucursales", FormMethod.Post))
                             {
@@ -28,20 +51,20 @@
                                 @Html.ValidationSummary(true)
 
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.SUC_DESCRIP)</div>
-                               
-                                <div class="mdl-grid">
-                                              <div class="mdl-textfield mdl-js-textfield">
 
-                                                @Html.TextBoxFor(a => a.SUC_DESCRIP, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", required = "required" })
-                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Sucursal</label>
+                                <div class="mdl-grid text-center">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
 
-                                            </div>
-                                            
-                                        </div>
-                               
-                                <p  class="text-center">
+                                        @Html.TextBoxFor(a => a.SUC_DESCRIP, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1"})
+                                        <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Sucursal</label>
+
+                                    </div>
+
+                                </div>
+
+                                <p class="text-center">
                                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin">
-                                        <i class="zmdi zmdi-account-add"></i>
+                                       +
                                     </button>
                                     <div class="mdl-tooltip" for="btn-addAdmin">Agregar Sucursal</div>
                                 </p>
@@ -56,4 +79,6 @@
 </section>
 
 
-                               
+} else { Response.Redirect("~/Home/Home"); }
+;
+}

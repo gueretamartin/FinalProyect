@@ -15,7 +15,12 @@
     // }
 }
 <section class="full-width pageContent">
+    <section id="help">
+        <div class="text-right" style="padding-top:15px; padding-right:15px;">
+            <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
 
+        </div>
+    </section>
     <section class="full-width header-well">
         <div class="full-width header-well-icon">
             <i class="zmdi zmdi-trending-up"></i>
@@ -34,6 +39,8 @@
             @using (Html.BeginForm("Report", "Presupuestos", FormMethod.Get))
                 {
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <button id="btn-exit" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
+
                     <label class="mdl-button mdl-js-button mdl-button--icon" for="searchPresupuesto" id="btn-searchPresupuesto">
                         <i class="zmdi zmdi-search" onclick=""></i>
                     </label>
@@ -51,6 +58,7 @@
                             <th style="text-align:left"><b>Fecha de Creación</b></th>
                             <th style="text-align:left"><b>Cliente</b></th>
                             <th style="text-align:left"><b>Nombre del archivo</b></th>
+                            <th style="text-align: left"> <button id="btn-exit" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
                             
                         </tr>
                     </thead>

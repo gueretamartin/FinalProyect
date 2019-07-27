@@ -60,7 +60,7 @@
                 </div>
                 <figcaption class="navLateral-body-cr hide-on-tablet">
                     <span>
-                        @user.Nombre @user.Apellido<br>
+                      @*  @user.Nombre @user.Apellido<br>*@
                         <small>@user.Rol</small>
                     </span>
                 </figcaption>
@@ -82,25 +82,25 @@
                     </li>
                     <li class="full-width divider-menu-h"></li>
                     <li class="full-width">
-                        <a href="@Url.Action("List","Clientes")" class="full-width">
+                   @*     <a href="@Url.Action("List","Clientes")" class="full-width">*@
                             <div class="navLateral-body-cl">
                                 <i class="zmdi zmdi-face"></i>
                             </div>
                             <div class="navLateral-body-cr hide-on-tablet">
                                 CLIENTES
                             </div>
-                        </a>
+                        @*</a>*@
                     </li>
                     <li class="full-width divider-menu-h"></li>
                     <li class="full-width">
-                        <a href="@Url.Action("Create","Vehiculos")" class="full-width">
+                      @*  <a href="@Url.Action("Create","Vehiculos")" class="full-width">*@
                             <div class="navLateral-body-cl">
                                 <i class="zmdi zmdi-car"></i>
                             </div>
                             <div class="navLateral-body-cr hide-on-tablet">
                                 VEHÍCULOS
                             </div>
-                        </a>
+                        @*</a>*@
                     </li>
                     <li class="full-width divider-menu-h"></li>
                     <li class="full-width">

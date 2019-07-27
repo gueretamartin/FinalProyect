@@ -18,6 +18,7 @@ namespace Octopus.Models
         {
             this.PRESUPUESTOS = new HashSet<PRESUPUESTOS>();
             this.RESERVAS = new HashSet<RESERVAS>();
+            this.USOS_INTERNOS = new HashSet<USOS_INTERNOS>();
             this.VEHICULOS = new HashSet<VEHICULOS>();
             this.VENTAS = new HashSet<VENTAS>();
         }
@@ -41,6 +42,7 @@ namespace Octopus.Models
         public virtual USUARIOS USUARIOS { get; set; }
         public virtual ICollection<PRESUPUESTOS> PRESUPUESTOS { get; set; }
         public virtual ICollection<RESERVAS> RESERVAS { get; set; }
+        public virtual ICollection<USOS_INTERNOS> USOS_INTERNOS { get; set; }
         public virtual ICollection<VEHICULOS> VEHICULOS { get; set; }
         public virtual ICollection<VENTAS> VENTAS { get; set; }
     }

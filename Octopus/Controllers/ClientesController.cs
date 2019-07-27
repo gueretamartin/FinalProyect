@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using Octopus.Models;
 using System.Web.SessionState;
+using PagedList;
+using PagedList.Mvc;
 
 namespace Octopus.Controllers
 {
@@ -14,12 +16,10 @@ namespace Octopus.Controllers
     {
         private OctopusEntities db = new OctopusEntities();
 
-        // GET: /Clientes/List?searchClient=[Parámetro]
-        // LEVANTA LA VISTA DE LISTADO DE CLIENTES O LISTA DE CLIENTES QUE CONTIENEN CON EL PARÁMETRO PASADO
-        public ActionResult List(string searchClient)
+        // GET: /Clientes/
+        public ActionResult List(string searchClient, int? page)
         {
-            try
-            {
+            
                 var clientes = from c in db.CLIENTES where c.ES_ID == 1 select c;
 
                 if (!String.IsNullOrEmpty(searchClient))
@@ -27,17 +27,15 @@ namespace Octopus.Controllers
                     clientes = clientes.Where(c => c.CLI_NOMBRE.Contains(searchClient)
                         || c.CLI_APELLIDO.Contains(searchClient)
                         || c.CLI_DOC.Contains(searchClient)
+                        || c.CLI_TELEFONO.Contains(searchClient)
+                        || c.CLI_EMAIL.Contains(searchClient)
                         || c.CLI_RI_RAZONSOCIAL.Contains(searchClient)
                         || c.CLI_RI_CUIT.Contains(searchClient)
                     );
                 }
 
-                return View(clientes.ToList());
-            }
-            catch (Exception )
-            {
-                return RedirectToAction("Home", "Home");
-            }
+                return View(clientes.ToList().ToPagedList(page ?? 1, 4));
+           
         }
 
 

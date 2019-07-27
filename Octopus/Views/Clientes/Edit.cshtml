@@ -10,10 +10,15 @@
 <!-- pageContent -->
 <section class="full-width pageContent">
     <div>
+        <div id="help">
+            <div class="text-right" style="padding-top:15px; padding-right:15px;">
+                <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+
+            </div>
+        </div>
         <div class="mdl-tabs__tab-bar">
             <a href="@Url.Action("Create","Clientes")" class="mdl-tabs__tab" id="btn-Nuevo">NUEVO</a>
             <a href="@Url.Action("List","Clientes")" class="mdl-tabs__tab" id="btn-Listar">LISTA</a>
-            <a class="mdl-tabs__tab" style="color: #2e6da4">EDITAR</a>
             <div class="mdl-tooltip" for="btn-Nuevo">Nuevo Cliente</div>
             <div class="mdl-tooltip" for="btn-Listar">Listar Clientes</div>
         </div>
@@ -21,8 +26,18 @@
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
                     <div class="full-width panel mdl-shadow--2dp">
-                        <div class="full-width panel-tittle bg-primary text-center tittles">
-                            EDITAR CLIENTE
+                        <div class="full-width header-well">
+
+                            <div class="full-width header-well-icon">
+                                <i class="zmdi zmdi-edit"></i>
+                            </div>
+                            <div class="full-width header-well-text">
+                                <p class="text-condensedLight">
+                                    <b>EDITAR CLIENTE</b><br />
+                                    Complete los valores que desea editar y luego guarde los cambios.
+                                </p>
+                                <br />
+                            </div>
                         </div>
                         <div class="full-width panel-content">
                             @using (Html.BeginForm())
@@ -31,7 +46,7 @@
                                 @Html.ValidationSummary(true)
 
                                 <input type="hidden" value="@Session["CONDICIONIVA"]" id="myHiddenVar" />
-                                
+
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.TC_ID)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.CLI_RI_CUIT)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.CLI_RI_RAZONSOCIAL)</div>
@@ -53,11 +68,11 @@
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.CLI_EMAIL)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.CLI_TELEFONO)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.CLI_CODPOSTAL)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.CLI_CUIL)</div>                
-                                
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.CLI_CUIL)</div>
+
                                 @Html.HiddenFor(a => a.CLI_ID, new { @class = "mdl-textfield__input", @typeof = "text" })
                                 @Html.HiddenFor(a => a.ES_ID, new { @class = "mdl-textfield__input", @typeof = "text" })
-                                
+
                                 <div class="mdl-grid">
 
                                     <div class="mdl-textfield mdl-js-textfield">

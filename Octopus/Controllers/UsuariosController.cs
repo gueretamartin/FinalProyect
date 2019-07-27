@@ -168,24 +168,30 @@ namespace Octopus.Controllers
 
         public ActionResult Edit(string user)
         {
-
-            var model = new USUARIOS();
-            model = db.USUARIOS.SingleOrDefault(c => c.Usuario == user);
-            var modelemp = db.EMPLEADOS.SingleOrDefault(c => c.EMP_USUARIO == model.Usuario);
-            var empleados = db.EMPLEADOS.Where(c => c.EMP_USUARIO == null || c.EMP_USUARIO == model.Usuario);
-            var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
-            model.Roles_List = new SelectList(db.USUARIOS_TIPOS, "ROL_ID", "ROL_DESC", model.Rol);
-            model.Estados_List = new SelectList(states, "ES_ID", "ES_DESCRIPCION", model.Estado);
-            if (modelemp != null)
+            if (Session["Username"] != null)
             {
-                model.Empleados_List = new SelectList(empleados, "EMP_ID", "EMP_NOMBRE", modelemp.EMP_ID);
+                if (Session["Rol"].ToString() == "0")
+                {
+                    var model = new USUARIOS();
+                    model = db.USUARIOS.SingleOrDefault(c => c.Usuario == user);
+                    var modelemp = db.EMPLEADOS.SingleOrDefault(c => c.EMP_USUARIO == model.Usuario);
+                    var empleados = db.EMPLEADOS.Where(c => c.EMP_USUARIO == null || c.EMP_USUARIO == model.Usuario);
+                    var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
+                    model.Roles_List = new SelectList(db.USUARIOS_TIPOS, "ROL_ID", "ROL_DESC", model.Rol);
+                    model.Estados_List = new SelectList(states, "ES_ID", "ES_DESCRIPCION", model.Estado);
+                    if (modelemp != null)
+                    {
+                        model.Empleados_List = new SelectList(empleados, "EMP_ID", "EMP_NOMBRE", modelemp.EMP_ID);
+                    }
+                    else
+                    {
+                        model.Empleados_List = new SelectList(empleados, "EMP_ID", "EMP_NOMBRE");
+                    }
+                    return View(model);
+                }
+                else { return RedirectToAction("Home", "Home"); }
             }
-            else
-            {
-                model.Empleados_List = new SelectList(empleados, "EMP_ID", "EMP_NOMBRE");
-            }
-            return View(model);
-
+            else { return RedirectToAction("Home", "Home"); }
         }
 
         [HttpPost]

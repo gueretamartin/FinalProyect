@@ -8,6 +8,9 @@ using System.Web.Mvc;
 using Octopus.Models;
 using System.Web.SessionState;
 
+using PagedList;
+using PagedList.Mvc;
+
 namespace Octopus.Controllers
 {
     public class SucursalesController : Controller
@@ -79,7 +82,7 @@ namespace Octopus.Controllers
          * */
 
 
-        public ActionResult List(string searchSucursal)
+        public ActionResult List(string searchSucursal, int? page)
         {
             var sucursales = from c in db.SUCURSALES
                            select c;
@@ -89,8 +92,10 @@ namespace Octopus.Controllers
             if (!String.IsNullOrEmpty(searchSucursal))
             {
                 
+                 sucursales =    sucursales.Where(c => 
+                        c.SUC_DESCRIP.Contains(searchSucursal));
             }
-            return View(sucursales.ToList());
+            return View(sucursales.ToList().ToPagedList(page ?? 1, 6));
         }
 
 

@@ -6,7 +6,10 @@
     ViewBag.Title = "Empleados - Editar";
     Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
-
+@if (Session["Username"] != null)
+{
+    if (Session["Rol"].ToString() == "0" || Session["Rol"].ToString() == "1" )
+    {
 <!-- pageContent -->
 <section class="full-width pageContent">
     <div id="help">
@@ -27,7 +30,7 @@
                         <div class="full-width header-well">
 
                             <div class="full-width header-well-icon">
-                                <i class="zmdi zmdi-trending-up"></i>
+                                <i class="zmdi zmdi-edit"></i>
                             </div>
                             <div class="full-width header-well-text">
                                 <p class="text-condensedLight">
@@ -120,3 +123,7 @@
         </div>
     </div>
 </section>
+    }
+    else { Response.Redirect("~/Home/Home"); }
+    ;
+}

@@ -35,7 +35,6 @@ namespace Octopus.Models
         public virtual DbSet<FECHAS> FECHAS { get; set; }
         public virtual DbSet<IMAGENES> IMAGENES { get; set; }
         public virtual DbSet<MARCAS> MARCAS { get; set; }
-        public virtual DbSet<MONEDAS> MONEDAS { get; set; }
         public virtual DbSet<PRESUPUESTOS> PRESUPUESTOS { get; set; }
         public virtual DbSet<RESERVAS> RESERVAS { get; set; }
         public virtual DbSet<SERVICIOS> SERVICIOS { get; set; }
@@ -44,12 +43,14 @@ namespace Octopus.Models
         public virtual DbSet<TIPO_COMBUSTIBLES> TIPO_COMBUSTIBLES { get; set; }
         public virtual DbSet<TIPO_DOCUMENTO> TIPO_DOCUMENTO { get; set; }
         public virtual DbSet<TIPO_VEHICULOS> TIPO_VEHICULOS { get; set; }
+        public virtual DbSet<USOS_INTERNOS> USOS_INTERNOS { get; set; }
         public virtual DbSet<USUARIOS> USUARIOS { get; set; }
         public virtual DbSet<USUARIOS_TIPOS> USUARIOS_TIPOS { get; set; }
         public virtual DbSet<VEHICULOS> VEHICULOS { get; set; }
         public virtual DbSet<VENTAS> VENTAS { get; set; }
         public virtual DbSet<VW_MARCAS> VW_MARCAS { get; set; }
         public virtual DbSet<VW_Statistics> VW_Statistics { get; set; }
+        public virtual DbSet<MONEDAS> MONEDAS { get; set; }
     
         public virtual int CLI_ELIMINAR(Nullable<int> cLI_ID, string mESSAGE)
         {

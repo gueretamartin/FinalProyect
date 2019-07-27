@@ -63,11 +63,11 @@ namespace Octopus.Models
         public virtual FECHAS FECHAS { get; set; }
         public virtual ICollection<IMAGENES> IMAGENES { get; set; }
         public virtual MARCAS MARCAS { get; set; }
-        public virtual MONEDAS MONEDAS { get; set; }
         public virtual ICollection<RESERVAS> RESERVAS { get; set; }
         public virtual SUCURSALES SUCURSALES { get; set; }
         public virtual TIPO_COMBUSTIBLES TIPO_COMBUSTIBLES { get; set; }
         public virtual TIPO_VEHICULOS TIPO_VEHICULOS { get; set; }
         public virtual ICollection<VENTAS> VENTAS { get; set; }
+        public virtual MONEDAS MONEDAS { get; set; }
     }
 }

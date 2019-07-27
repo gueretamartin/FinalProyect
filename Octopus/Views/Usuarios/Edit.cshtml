@@ -6,7 +6,8 @@
     ViewBag.Title = "Usuarios - Editar";
     Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
-
+@if (Session["Username"] != null) {
+ if (Session["Rol"].ToString() == "0") {
 <!-- pageContent -->
 <section class="full-width pageContent">
     <div id="help">
@@ -97,3 +98,7 @@
         </div>
     </div>
 </section>
+ }
+ else { Response.Redirect("~/Home/Home"); }
+ ;
+}

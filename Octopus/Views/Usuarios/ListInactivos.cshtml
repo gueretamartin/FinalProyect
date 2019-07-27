@@ -16,10 +16,11 @@
 }
 
 
-
+@if (Session["Username"] != null) {
+ if (Session["Rol"].ToString() == "0") {
 <!DOCTYPE html>
 
-<!-- Page Content-->-->
+<!-- Page Content-->
 <section class="full-width pageContent">
 
     <section id="help">
@@ -31,7 +32,7 @@
     <div class="mdl-tabs__tab-bar">
         <a href="@Url.Action("Create","Usuarios")" class="mdl-tabs__tab">NUEVO</a>
         <a href="@Url.Action("List","Usuarios")" class="mdl-tabs__tab">LISTA ACTIVOS</a>
-        <a class="mdl-tabs__tab" style="color: #2e6da4">LISTA INACTIVOS</a>
+        <a class="mdl-tabs__tab" style="color: #2e6da4; font-weight: bold">LISTA INACTIVOS</a>
     </div>
 
     <section class="full-width header-well">
@@ -111,3 +112,6 @@
     </div>
 
 </section>
+    } else { Response.Redirect("~/Home/Home"); }
+;
+}

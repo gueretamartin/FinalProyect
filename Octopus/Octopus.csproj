@@ -247,6 +247,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Octopus.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Partials\RESERVAS.cs" />
     <Compile Include="Models\Partials\PRESUPUESTOS.cs" />
     <Compile Include="Models\Partials\EMPLEADOS.cs" />
     <Compile Include="Models\Partials\VW_Statistics.cs" />
@@ -275,6 +276,9 @@
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPO_VEHICULOS.cs">
+      <DependentUpon>Octopus.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USOS_INTERNOS.cs">
       <DependentUpon>Octopus.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USUARIOS.cs">
@@ -437,10 +441,9 @@
     <Content Include="Views\Presupuestos\Create.cshtml" />
     <Content Include="Views\Presupuestos\Details_Report.cshtml" />
     <Content Include="Views\Presupuestos\Report.cshtml" />
-    <Content Include="Views\Reservas\ListActivas.cshtml" />
+    <Content Include="Views\Reservas\List.cshtml" />
     <Content Include="Views\Reservas\ListCanceladas.cshtml" />
     <Content Include="Views\Reservas\ListVencidas.cshtml" />
-    <Content Include="Views\Vehiculos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

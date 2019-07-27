@@ -1,14 +1,8 @@
 ﻿@using Octopus.Models
-@if (Session["Username"] == null) { 
-    Response.Redirect("~/Login/Login");
-}
-@{
-
-       USUARIOS user = Session["UserName"] as USUARIOS;
-  }
 
 
-
+@if (Session["Username"] != null) {
+    
 <!DOCTYPE html>
 
 <html>
@@ -75,7 +69,9 @@
                     <ul>
                         <li class="nav-item dropleft">
                             <a class="nav-link" href="#" id="navbarDropdownMenuLink" style="color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @*<i class="zmdi zmdi-face"></i> Hola  @Html.DisplayText(Session["Username"].ToString())*@
+                             
+                              @Session["Username"].ToString()
+                             
                                 </a> 
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="@Url.Action("LogOut", "Login")">Cerrar Sesión</a>
@@ -144,6 +140,8 @@
                             </div>
                         </a>
                     </li>
+            @if (Session["Rol"].ToString() == "0" || Session["Rol"].ToString() == "1") //Admin
+                {
                     <li class="full-width divider-menu-h"></li>
                     <li class="full-width">
                         <a href="@Url.Action("List","Empleados")" class="full-width">
@@ -155,6 +153,9 @@
                             </div>
                         </a>
                     </li>
+                }
+                @if (Session["Rol"].ToString() == "0") //Admin
+                {
                     <li class="full-width divider-menu-h"></li>
                     <li class="full-width">
                         <a href="@Url.Action("List","Sucursales")" class="full-width">
@@ -166,6 +167,7 @@
                             </div>
                         </a>
                     </li>
+               
                     <li class="full-width divider-menu-h"></li>
                     <li class="full-width">
                         <a href="@Url.Action("List","Usuarios")" class="full-width">
@@ -177,9 +179,10 @@
                             </div>
                         </a>
                     </li>
+                  }
                     <li class="full-width divider-menu-h"></li>
                     <li class="full-width">
-                        <a href="#!" class="full-width btn-subMenu">
+                        <a href="@Url.Action("List","Reservas")" class="full-width">
                             <div class="navLateral-body-cl">
                                 <i class="zmdi zmdi-case"></i>
                             </div>
@@ -236,3 +239,5 @@
 </body>
 
 </html>
+}
+else { Response.Redirect("~/Login/Login"); }

@@ -6,9 +6,18 @@
     ViewBag.Title = "Sucursales - Editar";
     Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
-
+@if (Session["Username"] != null)
+{
+    if (Session["Rol"].ToString() == "0")
+    {
 <!-- pageContent -->
 <section class="full-width pageContent">
+    <div id="help">
+        <div class="text-right" style="padding-top:15px; padding-right:15px;">
+            <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+
+        </div>
+    </div>
     <div>
         <div class="mdl-tabs__tab-bar">
             <a href="@Url.Action("Create","Sucursales")" class="mdl-tabs__tab">NUEVO</a>
@@ -18,36 +27,48 @@
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
                     <div class="full-width panel mdl-shadow--2dp">
-                        <div class="full-width panel-tittle bg-primary text-center tittles">
-                            EDITAR SUCURSAL
+                        <div class="full-width header-well">
+
+                            <div class="full-width header-well-icon">
+                                <i class="zmdi zmdi-edit"></i>
+                            </div>
+                            <div class="full-width header-well-text">
+                                <p class="text-condensedLight">
+                                    <b>EDITAR SUCURSAL</b><br />
+                                    Complete los valores que desea editar y luego guarde los cambios.
+                                </p>
+                                <br />
+                            </div>
                         </div>
                         <div class="full-width panel-content">
                             @using (Html.BeginForm())
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary(true)
-                                
+
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.SUC_DESCRIP)</div>
-                                
+
                                 <div class="mdl-grid">
                                     <div class="mdl-textfield mdl-js-textfield">
-                                       
+
                                         <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-                                           
+
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                                 @Html.TextBoxFor(a => a.SUC_DESCRIP, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", required = "required" })
                                                 <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">SUCURSAL</label>
-                                               
+
                                             </div>
-                                         
-                                    </div></div></div>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 <p class="text-center">
                                     <button name="Action" value="Edit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-editClient">
                                         <i class="zmdi zmdi-save"></i>
                                     </button>&nbsp;&nbsp;&nbsp;&nbsp;
                                     <div class="mdl-tooltip" for="btn-editSucursal">Guardar Cambios</div>
                                 </p>
-                               }
+                            }
                         </div>
                     </div>
                 </div>
@@ -55,3 +76,6 @@
         </div>
     </div>
 </section>
+} else { Response.Redirect("~/Home/Home"); }
+;
+}

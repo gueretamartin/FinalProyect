@@ -13,8 +13,9 @@
     
     <div>
         <div class="mdl-tabs__tab-bar">
-            <a href="@Url.Action("Create","Vehiculos")" class="mdl-tabs__tab" style="color: #2e6da4">NUEVO</a>
-            <a href="@Url.Action("List", "Vehiculos")" class="mdl-tabs__tab">LISTA</a>
+            <a class="mdl-tabs__tab" style="color: #2e6da4">NUEVO</a>
+            <a href="@Url.Action("List", "Vehiculos")" class="mdl-tabs__tab" id="btn-Listar">LISTA</a>
+            <div class="mdl-tooltip" for="btn-Listar">Listar Vehículos</div>
         </div>
         <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
             <div class="mdl-grid">
@@ -29,27 +30,37 @@
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary(true)
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_PATENTE)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_MARCA)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.SUC_ID)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.EMP_ID)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.CLI_ID)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.FEC_ID)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_TIPOVEHICULO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.MAR_ID)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_TIPOCOMBUSTIBLE)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.MON_ID)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_MODELO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_PATENTE)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_CILINDRADAS)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_COLOR)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_KILOMETROS)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_DETALLES)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_VERSION)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_AÑO)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_TIPOVEHICULO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_KILOMETROS)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_PUERTAS)</div>
                                 <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_PRECIO_INGRESO)</div>
-                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(model => model.CLI_ID)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_STEREO_MODELO)</div>
+                                <div class="text-condensedLight" style="text-align: center; color: black; background-color: #ff4d4d; width:40%; margin-left:30%; margin-right:30%;">@Html.ValidationMessageFor(a => a.VEH_STEREO_CODIGO)</div>
                                 <div class="mdl-grid">
                                     <div id="VehiculoLU" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
                                         <h5 class="text-condensedLight" style="color: #2e6da4">SUCURSAL Y EX-PROPIETARIO</h5>
                                         <div class="mdl-textfield mdl-js-textfield" >
-                                            @Html.DropDownList("SUC_ID", null, "Sucursal", new { @class = "mdl-textfield__input", tabindex = "1" })
+                                            @Html.DropDownListFor(a => a.SUC_ID, (IEnumerable<SelectListItem>)ViewBag.SUC_ID, "SELECCIONE SUCURSAL *", new { @class = "mdl-textfield__input", tabindex = "1" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield">
-                                            @Html.DropDownList("TC_ID", null, "Tipo de IVA", new { @class = "mdl-textfield__input", tabindex = "2", id = "OptionIVA" })
+                                            @Html.DropDownList("TC_ID", null, "SELECCIONE TIPO DE CLIENTE *", new { @class = "mdl-textfield__input", tabindex = "3", id = "OptionIVA" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            <input type="date" class="mdl-textfield__input" name="fecha">
+                                            <input type="date" class="mdl-textfield__input" name="fecha" tabindex="5" value="@DateTime.Now.ToString(string.Format("yyyy-MM-dd"))">
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4"></label>
                                         </div>
                                     </div>
@@ -57,143 +68,154 @@
                                     <div id="VehiculoRU" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
                                         <h5 class="text-condensedLight">  &nbsp;</h5>
                                         <div class="mdl-textfield mdl-js-textfield">
-                                            @Html.DropDownList("EMP_ID", null, "Empleado", new { @class = "mdl-textfield__input", tabindex = "1" })
+                                            @Html.DropDownListFor(a => a.EMP_ID, (IEnumerable<SelectListItem>)ViewBag.EMP_ID, "SELECCIONE EMPLEADO *", new { @class = "mdl-textfield__input", tabindex = "2" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield" id="VEH_CLI_RI_ID">
-                                            @Html.DropDownList("CLI_RI_ID", null, "Cuit Cliente", new { @class = "mdl-textfield__input", tabindex = "1" })
+                                            @Html.DropDownList("CLI_CUIT_ID", null, "SELECCIONE CLIENTE *", new { @class = "mdl-textfield__input", tabindex = "4" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield" id="VEH_CLI_CF_ID">
-                                            @Html.DropDownList("CLI_CF_ID", null, "DNI Cliente", new { @class = "mdl-textfield__input", tabindex = "1" })
+                                            @Html.DropDownList("CLI_CUIL_ID", null, "SELECCIONE CLIENTE *", new { @class = "mdl-textfield__input", tabindex = "4" })
                                         </div>
                                     </div>
 
                                     <div id="VehiculoLM" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-                                        <h5 class="text-condensedLight" style="color: #2e6da4">VEHICULO</h5>
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">DATOS DEL VEHÍCULO</h5>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_PATENTE, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "3" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Patente</label>
+                                            @Html.DropDownListFor(a => a.VEH_TIPOVEHICULO, (IEnumerable<SelectListItem>)ViewBag.VEH_TIPOVEHICULO, "SELECCIONE TIPO DE VEHÍCULO *", new { @class = "mdl-textfield__input", tabindex = "7" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Modelo</label>
+                                            @Html.TextBoxFor(a => a.VEH_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "9" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">MODELO</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_CILINDRADAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "7" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Cilindradas</label>
+                                            @Html.TextBoxFor(a => a.VEH_PATENTE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "11" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PATENTE</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_KILOMETROS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "9" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Kilometros</label>
+                                            @Html.TextBoxFor(a => a.VEH_CILINDRADAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "13" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CILINDRADA</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_COLOR, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "11" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Color</label>
+                                            @Html.TextBoxFor(a => a.VEH_COLOR, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">COLOR</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_PUERTAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "11" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Cantidad de Puertas</label>
+                                            @Html.DropDownListFor(a => a.VEH_TIPOCOMBUSTIBLE, (IEnumerable<SelectListItem>)ViewBag.VEH_TIPOCOMBUSTIBLE, "SELECCIONE TIPO DE COMBUSTIBLE *", new { @class = "mdl-textfield__input", tabindex = "17" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_DETALLES, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Detalles</label>
+                                            @Html.TextAreaFor(a => a.VEH_DETALLES, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "19" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DETALLE</label>
                                         </div>
                                     </div>
 
                                     <div id="VehiculoRM" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
                                         <h5 class="text-condensedLight">  &nbsp;</h5>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_MARCA, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "4" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Marca</label>
+                                            @Html.DropDownListFor(a => a.MAR_ID, (IEnumerable<SelectListItem>)ViewBag.MAR_ID, "SELECCIONE MARCA DE VEHÍCULO *", new { @class = "mdl-textfield__input", tabindex = "8" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_VERSION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Versión</label>
+                                            @Html.TextBoxFor(a => a.VEH_VERSION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "10" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">VERSIÓN</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_TIPOVEHICULO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "8" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Tipo de Vehículo</label>
+                                            @Html.TextBoxFor(a => a.VEH_AÑO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "12" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">AÑO</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_AÑO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "10" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Año</label>
+                                            @Html.TextBoxFor(a => a.VEH_KILOMETROS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">KILÓMETROS</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_TIPOCOMBUSTIBLE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "10" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Tipo de Combustible</label>
+                                            @Html.TextBoxFor(a => a.VEH_PUERTAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "16" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CANTIDAD DE PUERTAS</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_PRECIO_INGRESO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Precio de Ingreso</label>
+                                            @Html.DropDownListFor(a => a.MON_ID, (IEnumerable<SelectListItem>)ViewBag.MON_ID, "SELECCIONE MONEDA *", new { @class = "mdl-textfield__input", tabindex = "18" })
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEH_PRECIO_INGRESO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "20" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PRECIO DE INGRESO</label>
                                         </div>
                                     </div>
 
                                     <div id="VehiculoLD" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-                                        <h5 class="text-condensedLight" style="color: #2e6da4">STEREO</h5>
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">DATOS DEL STEREO</h5>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_STEREO_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "17" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">MODELO</label>
+                                            @Html.TextBoxFor(a => a.VEH_STEREO_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "21" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">MODELO DE ESTEREO</label>
                                         </div>
                                     </div>
 
                                     <div id="VehiculoRD" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
                                         <h5 class="text-condensedLight">  &nbsp;</h5>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_STEREO_CODIGO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "18" })
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CÓDIGO</label>
+                                            @Html.TextBoxFor(a => a.VEH_STEREO_CODIGO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "22" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CÓDIGO DE ESTEREO</label>
                                         </div>
                                     </div>
 
+
                                     <div id="VehiculoVarios" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-                                        <h5 class="text-condensedLight" style="color: #2e6da4">VARIOS</h5>
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">DATOS VARIOS</h5>
                                         <br />
                                         <label class="mdl-radio" for="option-1">
-                                            @Html.EditorFor(model => model.VEH_CIERRE, new { tabindex = "17" }) Cierre &nbsp;&nbsp;&nbsp;
+                                            @Html.CheckBoxFor(a => a.VEH_CIERRE, new { tabindex = "23" }) Cierre &nbsp;&nbsp;&nbsp;
                                         </label><br />
                                         <label class="mdl-radio" for="option-1">
-                                            @Html.EditorFor(model => model.VEH_LLANTAS, new { tabindex = "18" }) LLantas &nbsp;&nbsp;&nbsp;
+                                            @Html.CheckBoxFor(a => a.VEH_LLANTAS, new { tabindex = "24" }) LLantas &nbsp;&nbsp;&nbsp;
                                         </label><br />
                                         <label class="mdl-radio" for="option-1">
-                                            @Html.EditorFor(model => model.VEH_AIRBAG, new { tabindex = "19" }) Airabg &nbsp;&nbsp;&nbsp;
+                                            @Html.CheckBoxFor(a => a.VEH_AIRBAG, new { tabindex = "25" }) Airabg &nbsp;&nbsp;&nbsp;
                                         </label><br />
                                         <label class="mdl-radio" for="option-1">
-                                            @Html.EditorFor(model => model.VEH_AIRE, new { tabindex = "20" }) Aire &nbsp;&nbsp;&nbsp;
+                                            @Html.CheckBoxFor(a => a.VEH_AIRE, new { tabindex = "26" }) Aire &nbsp;&nbsp;&nbsp;
                                         </label><br />
                                         <label class="mdl-radio" for="option-1">
-                                            @Html.EditorFor(model => model.VEH_LEVANTA_VIDRIOS, new { tabindex = "21" }) Levanta Vidrios &nbsp;&nbsp;&nbsp;
+                                            @Html.CheckBoxFor(a => a.VEH_LEVANTA_VIDRIOS, new { tabindex = "27" }) Levanta Vidrios &nbsp;&nbsp;&nbsp;
                                         </label><br />
                                         <label class="mdl-radio" for="option-1">
-                                            @Html.EditorFor(model => model.VEH_ESPEJOS_AUTOM, new { tabindex = "22" }) Espejos Automáticos &nbsp;&nbsp;&nbsp;
+                                            @Html.CheckBoxFor(a => a.VEH_ESPEJOS_AUTOM, new { tabindex = "28" }) Espejos Automáticos &nbsp;&nbsp;&nbsp;
                                         </label><br />
                                         <label class="mdl-radio" for="option-1">
-                                            @Html.EditorFor(model => model.VEH_ASIENTOS_CUERO, new { tabindex = "23" }) Asientos de Cuero &nbsp;&nbsp;&nbsp;
+                                            @Html.CheckBoxFor(a => a.VEH_ASIENTOS_CUERO, new { tabindex = "29" }) Asientos de Cuero &nbsp;&nbsp;&nbsp;
                                         </label><br />
                                         <label class="mdl-radio" for="option-1">
-                                            @Html.EditorFor(model => model.VEH_FRENOS_ABS, new { tabindex = "24" }) Frenos ABS &nbsp;&nbsp;&nbsp;
+                                            @Html.CheckBoxFor(a => a.VEH_FRENOS_ABS, new { tabindex = "30" }) Frenos ABS &nbsp;&nbsp;&nbsp;
                                         </label><br />
                                         <label class="mdl-radio" for="option-1">
-                                            @Html.EditorFor(model => model.VEH_NEBLINEROS, new { tabindex = "25" }) Neblineros &nbsp;&nbsp;&nbsp;
+                                            @Html.CheckBoxFor(a => a.VEH_NEBLINEROS, new { tabindex = "31" }) Neblineros &nbsp;&nbsp;&nbsp;
                                         </label><br />
                                         <label class="mdl-radio" for="option-1">
-                                            @Html.EditorFor(model => model.VEH_RUEDA_AUXILIAR, new { tabindex = "26" }) Rueda Auxiliar &nbsp;&nbsp;&nbsp;
+                                            @Html.CheckBoxFor(a => a.VEH_RUEDA_AUXILIAR, new { tabindex = "32" }) Rueda Auxiliar &nbsp;&nbsp;&nbsp;
                                         </label><br />
                                     </div>
 
                                     <div id="VehiculoImagenes" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
                                         <br style="margin-top:3px" />
                                         <h5 class="text-condensedLight" style="color: #2e6da4">&nbsp;</h5>
-                                        <br />
-                                        <input type="file" name="image1" /> <hr />
-                                        <input type="file" name="image2" /> <hr />
-                                        <input type="file" name="image3" /> <hr />
-                                        <input type="file" name="image4" /> <hr />
+                                        <input type="file" name="image1" id="fileUpload" />
+                                        <hr />
+                                        <input type="file" name="image2" id="fileUpload" />
+                                        <hr />
+                                        <input type="file" name="image3" id="fileUpload" />
+                                        <hr /> 
+                                        <input type="file" name="image4" id="fileUpload" />
+                                        <hr />
+                                       
                                     </div>
+
+                                    
                                 </div>
 
                                 <p class="text-center">
-                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin">
+                                    <button name="clearVehic" onclick="location.reload();" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-clearClient">
+                                        <i class="zmdi zmdi-refresh-alt"></i>
+                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addVehic">
                                         <i class="zmdi zmdi-plus"></i>
                                     </button>
-                                    <div class="mdl-tooltip" for="btn-addAdmin">Agregar Vehículo</div>
+                                    <div class="mdl-tooltip" for="btn-addVehic">Agregar Vehículo</div>
+                                    <div class="mdl-tooltip" for="btn-clearClient">Refrescar Campos</div>
                                 </p>
                             }
                         </div>
