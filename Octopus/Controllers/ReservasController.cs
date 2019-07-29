@@ -88,6 +88,7 @@ namespace Octopus.Controllers
             resNew.VEHICULOS = vehSel;
             resNew.FEC_ID_INICIO = int.Parse(string.Format("{0:yyyyMMdd}", DateTime.Now));
 
+            /*
             bool error = false;
             if (fechaResFin == null)
             {
@@ -110,7 +111,7 @@ namespace Octopus.Controllers
             }
             if (TC_ID == null)
             {
-                ModelState.AddModelError("VEH_ID", "TIPO IVA: Seleccione el Tipo de IVA");
+                ModelState.AddModelError("TC_ID", "TIPO IVA: Seleccione el Tipo de IVA");
                 error = true;
             }
 
@@ -147,6 +148,7 @@ namespace Octopus.Controllers
             {
                 return this.Create(vehSel);
             }
+              */
 
             if (TC_ID == 1 && CLI_CF_ID != null)
             {
@@ -238,7 +240,7 @@ namespace Octopus.Controllers
                 if (!String.IsNullOrEmpty(searchReserve))
                 {
                     reservas = reservas.Where(r => r.VEHICULOS.VEH_PATENTE.Contains(searchReserve)
-                        || r.VEHICULOS.VEH_MARCA.Contains(searchReserve)
+                        || r.VEHICULOS.MARCAS.MAR_DESCRIPCION.Contains(searchReserve)
                         || r.VEHICULOS.VEH_MODELO.Contains(searchReserve)
                         || r.CLIENTES.CLI_APELLIDO.Contains(searchReserve)
                         || r.CLIENTES.CLI_CUIL.Contains(searchReserve)
@@ -264,7 +266,7 @@ namespace Octopus.Controllers
                 if (!String.IsNullOrEmpty(searchReserve))
                 {
                     reservas = reservas.Where(r => r.VEHICULOS.VEH_PATENTE.Contains(searchReserve)
-                        || r.VEHICULOS.VEH_MARCA.Contains(searchReserve)
+                        || r.VEHICULOS.MARCAS.MAR_DESCRIPCION.Contains(searchReserve)
                         || r.VEHICULOS.VEH_MODELO.Contains(searchReserve)
                         || r.CLIENTES.CLI_APELLIDO.Contains(searchReserve)
                         || r.CLIENTES.CLI_CUIL.Contains(searchReserve)
@@ -290,7 +292,7 @@ namespace Octopus.Controllers
                 if (!String.IsNullOrEmpty(searchReserve))
                 {
                     reservas = reservas.Where(r => r.VEHICULOS.VEH_PATENTE.Contains(searchReserve)
-                        || r.VEHICULOS.VEH_MARCA.Contains(searchReserve)
+                        || r.VEHICULOS.MARCAS.MAR_DESCRIPCION.Contains(searchReserve)
                         || r.VEHICULOS.VEH_MODELO.Contains(searchReserve)
                         || r.CLIENTES.CLI_APELLIDO.Contains(searchReserve)
                         || r.CLIENTES.CLI_CUIL.Contains(searchReserve)

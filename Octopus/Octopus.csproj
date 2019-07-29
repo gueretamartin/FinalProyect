@@ -199,6 +199,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\VehiculosController.cs" />
+    <Compile Include="Controllers\VentasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -331,6 +332,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Js\bootstrap-lightbox.min.js" />
     <Content Include="Js\Presupuestos.js" />
+    <Content Include="Js\Ventas.js" />
     <Content Include="Js\Reservas.js" />
     <Content Include="Js\Vehiculos.js" />
     <Content Include="Js\Clientes.js" />
@@ -444,6 +446,11 @@
     <Content Include="Views\Reservas\List.cshtml" />
     <Content Include="Views\Reservas\ListCanceladas.cshtml" />
     <Content Include="Views\Reservas\ListVencidas.cshtml" />
+    <Content Include="Views\Ventas\Create.cshtml" />
+    <Content Include="Views\Ventas\Delete.cshtml" />
+    <Content Include="Views\Ventas\Details.cshtml" />
+    <Content Include="Views\Ventas\Edit.cshtml" />
+    <Content Include="Views\Ventas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

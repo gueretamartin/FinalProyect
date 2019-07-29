@@ -1,0 +1,59 @@
+﻿@model Octopus.Models.VENTAS
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>VENTAS</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MONTO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MONTO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CLIENTES.CLI_DOC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CLIENTES.CLI_DOC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EMPLEADOS.EMP_NOMBRE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EMPLEADOS.EMP_NOMBRE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FECHAS.FEC_NOMBREDIA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FECHAS.FEC_NOMBREDIA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VEHICULOS.VEH_MODELO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VEHICULOS.VEH_MODELO)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VEN_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

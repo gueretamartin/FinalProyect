@@ -698,6 +698,24 @@ namespace Octopus.Controllers
             //cont.create
         }
 
+        public ActionResult Sell(int veh_id)
+        {
+            VEHICULOS vehSelec = db.VEHICULOS.Include(v => v.SUCURSALES).Include(v => v.EMPLEADOS).Where(v => v.VEH_ID == veh_id).FirstOrDefault();
+
+            //Para que sólo tome el vehículo y no sus dependencias
+            //vehSelec.EMPLEADOS = null;
+            //vehSelec.EMP_ID = 0;
+            vehSelec.CLI_ID = 0;
+            //vehSelec.SUC_ID = 0;
+
+
+            //return RedirectToAction("Create", "Reservas", vehSelec);
+            return RedirectToAction("Create", "Ventas", vehSelec);
+
+            //Controller cont = new ReservasController();
+            //cont.create
+        }
+
         [HttpPost]
         public ActionResult Acciones(int veh_id, string Action)
         {
@@ -720,6 +738,10 @@ namespace Octopus.Controllers
                 {
                     return RedirectToAction("Reserve", new { veh_id = veh_id });
                 }
+                else if (Action == "Sell")
+                {
+                    return RedirectToAction("Sell", new { veh_id = veh_id });
+                }
                 else
                 {
                     return RedirectToAction("List");
@@ -732,6 +754,40 @@ namespace Octopus.Controllers
 
             //     return RedirectToAction("List");
              
+
+        }
+
+        public ActionResult UpdateState(int veh_id, int ESTADO_ID, string operation)
+        {
+
+            VEHICULOS vehSelect = db.VEHICULOS.Include(v => v.CLIENTES).
+                                            Include(v => v.EMPLEADOS).
+                                            Include(v => v.FECHAS).
+                                            Include(v => v.SUCURSALES).
+                                            Include(v => v.IMAGENES).
+                                            SingleOrDefault(x => x.VEH_ID == veh_id);
+
+            vehSelect.ES_ID = ESTADO_ID;
+            vehSelect.ESTADOS = db.ESTADOS.Find(ESTADO_ID);
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(vehSelect).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            if (operation.Equals("Reserve"))
+            {
+                return RedirectToAction("ListActivas", "Reservas");
+            }
+            else if (operation.Equals("Sell"))
+            {
+                return RedirectToAction("List", "Ventas");
+            }
+            else
+            {
+                return RedirectToAction("List", "Vehiculos");
+            }
 
         }
 
