@@ -404,6 +404,22 @@ namespace Octopus.Controllers
             }
         }
 
+        //Mostrar Imagen si existe alguna. 
+        public ActionResult ShowImage(int veh_id)
+        {
+            var img = db.IMAGENES.Where(i=>i.VEH_ID == veh_id);
+            if (img != null)
+            {
+
+            byte[] imagen = GetImageFromDataBase(veh_id);
+            return File(imagen, "image/jpg");
+           }
+            else
+            {
+                return null;
+            }
+        }
+
         //TRAE TODAS LAS IMAGEN
         public ActionResult RetrieveImages(int veh_id, int img_id)
         {
@@ -429,11 +445,16 @@ namespace Octopus.Controllers
         //CONVIERTE LA PRIMER IMAGEN PARA MOSTRARLA
         public byte[] GetImageFromDataBase(int veh_id)
         {
-            int imageID = db.IMAGENES.Where(i => i.VEH_ID == veh_id).Max(i => i.IMG_ID);
 
-            byte[] imagenBytes = (from i in db.IMAGENES where i.IMG_ID == imageID select i.IMG_IMAGE).First();
+             VEHICULOS veh = new VEHICULOS();
+            veh = db.VEHICULOS.First(v => v.VEH_ID.Equals(veh_id) );
+           
+                int imageID = db.IMAGENES.Where(i => i.VEH_ID == veh_id).Max(i => i.IMG_ID);
 
-            return imagenBytes;
+                byte[] imagenBytes = (from i in db.IMAGENES where i.IMG_ID == imageID select i.IMG_IMAGE).First();
+
+                return imagenBytes;
+            
         }
 
         //CONVIERTE LAS IMAGENES PARA MOSTRARLAS

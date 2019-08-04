@@ -2,7 +2,7 @@
 //var condicion = sessionStorage.getItem("CONDICIONIVA");
 
 $(document).ready(function (e) {
-   
+    var condicion = $('#myHiddenVar').val();
     $('#RESPONSABLEINSCRIPTOL').hide();
     $('#RESPONSABLEINSCRIPTOR').hide();
     $('#CONSUMIDORFINALCUILLT').hide();
@@ -13,7 +13,7 @@ $(document).ready(function (e) {
     $('#CONSUMIDORFINALR').hide();
     $('#BUTTONS').hide();
 
-    function ShowCF() {
+    if (condicion == 1) {
         $('#RESPONSABLEINSCRIPTOL').hide();
         $('#RESPONSABLEINSCRIPTOR').hide();
         $('#CONSUMIDORFINALCUILLT').show();
@@ -25,7 +25,7 @@ $(document).ready(function (e) {
         $('#BUTTONS').show();
     }
 
-    function ShowRI() {
+    if (condicion == 2) {
         $('#RESPONSABLEINSCRIPTOL').show();
         $('#RESPONSABLEINSCRIPTOR').show();
         $('#CONSUMIDORFINALCUILLT').show();
@@ -77,14 +77,13 @@ $(document).ready(function (e) {
         }
     });
 });
-$(window).on("load",function () {
-    
+$(window).on("load", function () {
+
     //var condicion = sessionStorage.getItem("CONDICIONIVA");
     //var condicion = '@Session["CONDICIONIVA"]';
     var condicion = $('#myHiddenVar').val();
 
-    if (condicion == 1)
-    {
+    if (condicion == 1) {
         $('#RESPONSABLEINSCRIPTOL').hide();
         $('#RESPONSABLEINSCRIPTOR').hide();
         $('#CONSUMIDORFINALCUILLT').show();
@@ -95,8 +94,7 @@ $(window).on("load",function () {
         $('#CONSUMIDORFINALR').show();
         $('#BUTTONS').show();
     }
-    else if (condicion == 2)
-    {
+    else if (condicion == 2) {
         $('#RESPONSABLEINSCRIPTOL').show();
         $('#RESPONSABLEINSCRIPTOR').show();
         $('#CONSUMIDORFINALCUILLT').show();
@@ -107,8 +105,7 @@ $(window).on("load",function () {
         $('#CONSUMIDORFINALR').show();
         $('#BUTTONS').show();
     }
-    else 
-    {
+    else {
         $('#RESPONSABLEINSCRIPTOL').hide();
         $('#RESPONSABLEINSCRIPTOR').hide();
         $('#CONSUMIDORFINALCUILLT').hide();

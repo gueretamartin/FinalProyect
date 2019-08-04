@@ -1,0 +1,106 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<Octopus.Models.VENTAS>
+
+@{ //if(Session["Usuario"] != null)
+    //{
+    // USUARIOS user = Session["Usuario"] as USUARIOS;
+    ViewBag.Title = "Ventas";
+    Layout = "~/Views/Shared/_HomePanel.cshtml";
+    // }
+    //else
+    //{
+    //  @Url.Action("Login","Login")
+    // }
+}
+
+<section class="full-width pageContent">
+    <section id="help">
+        <div class="text-right" style="padding-top:15px; padding-right:15px;">
+            <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+           
+        </div>
+    </section>
+
+    <div class="mdl-tabs__tab-bar">
+        <a  class="mdl-tabs__tab" id="btn-Listar" style="color: #2e6da4; font-weight: bold">LISTA</a>
+        <div class="mdl-tooltip" for="btn-Listar">Listar Ventas</div>
+    </div>
+
+    <section class="full-width header-well">
+       
+            <div class="full-width header-well-icon">
+                <i class="zmdi zmdi-trending-up"></i>
+            </div>
+            <div class="full-width header-well-text">
+                <p class="text-condensedLight">
+                    <b>LISTADO DE VENTAS</b><br />
+                    Presione sobre los 3 puntos para ver los detalles
+                </p>
+                <br />
+            </div>
+    </section>
+    
+    <div class="full-width divider-menu-h"></div>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+            @using (Html.BeginForm("List", "Ventas", FormMethod.Get))
+            {
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    
+                    <button id="btn-exit" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
+                   
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="searchVenta" id="btn-searchVenta">
+                        <i class="zmdi zmdi-search" onclick=""></i>
+                    </label>
+                    <div class="mdl-tooltip" for="btn-searchVenta">Buscar Venta</div>
+                    <div class="mdl-textfield__expandable-holder">
+                        @Html.TextBox("searchVenta", null, new { @class = "mdl-textfield__input" })
+                    </div>
+                    <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color:none; visibility:hidden" />
+                </div>
+            }
+            <div class="table-responsive">
+                <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left"><b>VEHÍCULO VENDIDO</b></th>
+                            <th style="text-align: left"><b>CLIENTE</b></th>
+                            <th style="text-align: left"><b>EMPLEADO</b></th>
+                            <th style="text-align: left"><b>FECHA DE VENTA</b></th>
+                            <th style="text-align: left"><b>VALOR</b></th>
+                            <th style="text-align: center"> <button id="btn-exit" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
+
+</tr>
+                    </thead>
+                    <tbody>
+                        @{var cont = 0;}
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="text-align: left"><b>@Html.DisplayFor(modelItem => item.VEHICULOS.VEH_PAT_MARCA_MODELO)</b></td>
+                                <td style="text-align: left">@Html.DisplayFor(modelItem => item.CLIENTES.CLI_APELLIDO_NOMBRE)</td>
+                                <td style="text-align: left">@Html.DisplayFor(modelItem => item.EMPLEADOS.EMP_APELLIDO_NOMBRE)</td>
+                                <td style="text-align: left">@Html.DisplayFor(modelItem => item.FechaVentaMostrar)</td>
+                                <td style="text-align: left">$@Html.DisplayFor(modelItem => item.VEN_VALOR)</td>
+                                @{cont = cont + 1;}
+                                <td style="text-align: center"><a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Ventas", new { id = item.VEN_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="text-align:center;">
+        @Html.PagedListPager(Model, page => Url.Action("List", "Ventas", new { page, search = Request.QueryString["search"], @class = "list-unstyle text-center" }))
+    </div>
+    @*<p class="text-center">
+        <a href="@Url.Action("Create", "Ventas")" class="btn btn-primary " role="button" id="btn-Nuevo">AGREGAR NUEVO VENTA</a>
+        <div class="mdl-tooltip" for="btn-Nuevo">Agregar Venta</div>
+    </p>*@    
+
+</section>
+
+<link rel="stylesheet" href="~/Css/bootstrap_pag.css" />

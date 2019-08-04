@@ -8,86 +8,101 @@
 <!-- Page Content-->-->
 <section class="full-width pageContent">
     <div>
+        <section id="help">
+            <div class="text-right" style="padding-top:15px; padding-right:15px;">
+                <button id="btn-help-top" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+                <div class="mdl-tooltip" for="btn-help-top">Ayuda</div>
+            </div>
+        </section>
         <div class="mdl-tabs__tab-bar">
             <a href="@Url.Action("Create","Vehiculos")" class="mdl-tabs__tab" id="btn-Nuevo">NUEVO</a>
             <div class="mdl-tooltip" for="btn-Nuevo">Nuevo Vehículo</div>
-            <a href="@Url.Action("List", "Vehiculos")" class="mdl-tabs__tab" style="color: #2e6da4" id="btn-Listar">LISTA</a>
+            <a  class="mdl-tabs__tab" style="color: #2e6da4" id="btn-Listar"><b>LISTA</b></a>
             <div class="mdl-tooltip" for="btn-Listar">Listar Vehículos</div>
         </div>
+        <section class="full-width header-well">
 
-        <div class="mdl-tabs__panel" id="tabListProducts">
-            <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
-                    <div class="full-width panel mdl-shadow--2dp">
-                        <div class="full-width panel-tittle bg-primary text-center tittles">
-                            LISTA DE VEHÍCULO
+            <div class="full-width header-well-icon">
+                <i class="zmdi zmdi-car"></i>
+            </div>
+            <div class="full-width header-well-text">
+                <p class="text-condensedLight">
+                    <b>LISTADO DE VEHÍCULOS</b><br />
+                    Presione sobre los 3 puntos para ver los detalles
+                </p>
+                <br />
+            </div>
+        </section>
+        <div class="full-width divider-menu-h"></div>
+        <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                @using (Html.BeginForm("List", "Vehiculos", FormMethod.Get))
+                {
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                        <button id="btn-help-search" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
+                        <div class="mdl-tooltip" for="btn-help-search">Ayuda</div>
+                        <label class="mdl-button mdl-js-button mdl-button--icon" for="searchVehicle" id="btn-searchVehicle">
+                            <i class="zmdi zmdi-search" onclick=""></i>
+                        </label>
+                        <div class="mdl-tooltip" for="btn-searchVehicle">Buscar</div>
+                        <div class="mdl-textfield__expandable-holder">
+                            @Html.TextBox("searchVehicle", null, new { @class = "mdl-textfield__input" })
                         </div>
-                        @using (Html.BeginForm("List", "Vehiculos", FormMethod.Get))
-                        {
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                                <label class="mdl-button mdl-js-button mdl-button--icon" for="searchVehicle" id="btn-searchVehicle">
-                                    <i class="zmdi zmdi-search" onclick=""></i>
-                                </label>
-                                <div class="mdl-tooltip" for="btn-searchVehicle">Buscar</div>
-                                <div class="mdl-textfield__expandable-holder">
-                                    @Html.TextBox("searchVehicle", null, new { @class = "mdl-textfield__input" })
-                                </div>
-                                <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color:none; visibility:hidden" />
-                            </div>
-                        }
-                        <nav class="full-width menu-categories">
-                            <ul class="list-unstyle text-center">
-                                <li><a href="@Url.Action("List", "Vehiculos")" style="color: #2e6da4">TODOS</a></li>
-                                @foreach (var item in ViewBag.VW_TV)
-                                {
-                                    <li><a href="#!" style="color: #2e6da4"> | </a></li>
-                                    <li><a href="@Url.Action("List", "Vehiculos", new { searchVehicle = @item.Text })" style="color: #2e6da4">@item.Text</a></li>
-                                }
-                            </ul>
-                            <ul class="list-unstyle text-center">
-                                <li><a href="@Url.Action("List", "Vehiculos")" style="color: #2e6da4">TODOS</a></li>
-                                @foreach (var item in ViewBag.VW_MAR)
-                                {
-                                    <li><a href="#!" style="color: #2e6da4"> | </a></li>
-                                    <li><a href="@Url.Action("List", "Vehiculos", new { searchVehicle = @item.Text })" style="color: #2e6da4">@item.Text</a></li>
-                                }                                        
-                            </ul>
-                        </nav>
-                        <div class="full-width text-center" style="padding: 30px 0;">
-                            @{var cont = 0;}
-                            @foreach (var item in Model)
-                            {
-                                <div class="mdl-card mdl-shadow--2dp full-width product-card">
-                                    <div class="mdl-card__title" style="justify-content:center">
-                                        <img src="@Url.Action("RetrieveImage", "Vehiculos", new { veh_id = @item.VEH_ID })" alt="product" class="img-responsive-list" />
-                                    </div>
-                                    <div class="mdl-card__supporting-text">
-                                        <small style="font-size:12px;">Año: @item.VEH_AÑO</small><br>
-                                        <small style="font-size:12px;">KMs: @item.VEH_KILOMETROS</small>
-                                    </div>
-                                    <div class="mdl-card__actions mdl-card--border">
-                                        @{cont = cont + 1;}
-
-                                        @using (Html.BeginForm("Acciones", "Vehiculos", new { veh_id = @item.VEH_ID }, FormMethod.Post))
-                                        {
-                                            <text>@item.MARCAS.MAR_DESCRIPCION @item.VEH_MODELO</text>
-                                            @Html.AntiForgeryToken()
-                                            @Html.ValidationSummary(true)
-                                            @Html.HiddenFor(i => item.VEH_ID, new { veh_id = @item.VEH_ID })
-
-                                            
-                                            <a id="btn-Detail@{@cont}" class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Vehiculos", new { veh_id = item.VEH_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
-                                            <div class="mdl-tooltip" for="btn-Detail@{@cont}">Detalle Vehículo</div>
-                                        }
-                                    </div>
-                                </div>
-                            }
-                        </div>
+                        <input type="submit" value="Filtrar" style="border: none; color: #2e6da4; background-color:none; visibility:hidden" />
                     </div>
+                }
+                <nav class="full-width menu-categories">
+                    <ul class="list-unstyle text-center">
+                        <li><a href="@Url.Action("List", "Vehiculos")" style="color: #2e6da4">TODOS</a></li>
+                        @foreach (var item in ViewBag.VW_TV)
+                        {
+                            <li><a href="#!" style="color: #2e6da4"> | </a></li>
+                            <li><a href="@Url.Action("List", "Vehiculos", new { searchVehicle = @item.Text })" style="color: #2e6da4">@item.Text</a></li>
+                        }
+                    </ul>
+                    <ul class="list-unstyle text-center">
+                        <li><a href="@Url.Action("List", "Vehiculos")" style="color: #2e6da4">TODOS</a></li>
+                        @foreach (var item in ViewBag.VW_MAR)
+                        {
+                            <li><a href="#!" style="color: #2e6da4"> | </a></li>
+                            <li><a href="@Url.Action("List", "Vehiculos", new { searchVehicle = @item.Text })" style="color: #2e6da4">@item.Text</a></li>
+                        }
+                    </ul>
+                </nav>
+                <div class="full-width text-center" style="padding: 30px 0;">
+                    @{var cont = 0;}
+                    @foreach (var item in Model)
+                    {
+                        <div class="mdl-card mdl-shadow--2dp full-width product-card">
+                            <div class="mdl-card__title" style="justify-content:center">
+                                <img src="@Url.Action("ShowImage", "Vehiculos", new { veh_id = @item.VEH_ID })" alt="Sin fotos cargadas" class="img-responsive-list" />
+                            </div>
+                            <div class="mdl-card__supporting-text">
+                                <small style="font-size:12px;">Año: @item.VEH_AÑO</small><br>
+                                <small style="font-size:12px;">KMs: @item.VEH_KILOMETROS</small>
+                            </div>
+                            <div class="mdl-card__actions mdl-card--border">
+                                @{cont = cont + 1;}
+
+                                @using (Html.BeginForm("Acciones", "Vehiculos", new { veh_id = @item.VEH_ID }, FormMethod.Post))
+                                {
+                                    <text>@item.MARCAS.MAR_DESCRIPCION @item.VEH_MODELO</text>
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true)
+                                    @Html.HiddenFor(i => item.VEH_ID, new { veh_id = @item.VEH_ID })
+
+
+                                    <a id="btn-Detail@{@cont}" class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Vehiculos", new { veh_id = item.VEH_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+                                    <div class="mdl-tooltip" for="btn-Detail@{@cont}">Detalle Vehículo</div>
+                                }
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
+
 </section>
 
 

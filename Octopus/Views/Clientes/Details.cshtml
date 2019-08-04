@@ -7,14 +7,15 @@
     Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
 
-@if (@Model.TC_ID.Equals(1))
+@*@if (@Model.TC_ID.Equals(1))
+
 {
     @:ShowCF();
 }
-else if (@Model.TC_ID.Equals(2)) 
+else if (@Model.TC_ID.Equals(2))
 {
     @:ShowRI();
-}
+}*@
 
 
 
@@ -23,16 +24,15 @@ else if (@Model.TC_ID.Equals(2))
     <div>
         <div id="help">
             <div class="text-right" style="padding-top:15px; padding-right:15px;">
-                <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
-
+                <button id="btn-help-top" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+                <div class="mdl-tooltip" for="btn-help-top">Ayuda</div>
             </div>
         </div>
         <div class="mdl-tabs__tab-bar">
             <a href="@Url.Action("Create","Clientes")" class="mdl-tabs__tab" id="btn-Nuevo">NUEVO</a>
             <div class="mdl-tooltip" for="btn-Nuevo">Nuevo Cliente</div>
             <a href="@Url.Action("List","Clientes")" class="mdl-tabs__tab" id="btn-Listar">LISTA</a>
-            @*<div class="mdl-tooltip" for="btn-Listar">Listar Clientes</div>
-                <a class="mdl-tabs__tab" style="color: #2e6da4">DETALLES</a>*@
+            <div class="mdl-tooltip" for="btn-Listar">Listado de Clientes</div>
         </div>
         <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
             <div class="mdl-grid">

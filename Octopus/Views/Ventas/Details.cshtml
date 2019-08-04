@@ -1,59 +1,141 @@
-﻿@model Octopus.Models.VENTAS
+﻿@using Octopus.Models
+@model Octopus.Models.VENTAS
+@using System.Web.UI.WebControls
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Ventas - Detalle";
     Layout = "~/Views/Shared/_HomePanel.cshtml";
 }
+//
 
-<h2>Details</h2>
 
-<div>
-    <h4>VENTAS</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MONTO)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.MONTO)
-        </dd>
+<!-- pageContent -->
+<section class="full-width pageContent">
+    <div>
+        <div id="help">
+            <div class="text-right" style="padding-top:15px; padding-right:15px;">
+                <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CLIENTES.CLI_DOC)
-        </dt>
+            </div>
+        </div>
+        <div>
+            <div class="mdl-tabs__tab-bar">
+                <a href="@Url.Action("List", "Ventas")" class="mdl-tabs__tab">LISTA</a>
+            </div>
+            <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+                <div class="mdl-grid">
+                    <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                        <div class="full-width panel mdl-shadow--2dp">
 
-        <dd>
-            @Html.DisplayFor(model => model.CLIENTES.CLI_DOC)
-        </dd>
+                            <div class="full-width header-well">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EMPLEADOS.EMP_NOMBRE)
-        </dt>
+                                <div class="full-width header-well-icon">
+                                    <i class="zmdi zmdi-search-in-file"></i>
+                                </div>
+                                <div class="full-width header-well-text">
+                                    <p class="text-condensedLight">
+                                        <b>DETALLE DE LA VENTA</b><br />
+                                        Se visualizará en esta sección el detalle de la Venta
+                                    </p>
+                                    <br />
+                                </div>
+                            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.EMPLEADOS.EMP_NOMBRE)
-        </dd>
+                            <div class="full-width panel-content">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FECHAS.FEC_NOMBREDIA)
-        </dt>
+                                @using (Html.BeginForm("Acciones", "Ventas", new { ven_id = @Model.VEN_ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
 
-        <dd>
-            @Html.DisplayFor(model => model.FECHAS.FEC_NOMBREDIA)
-        </dd>
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true)
 
-        <dt>
-            @Html.DisplayNameFor(model => model.VEHICULOS.VEH_MODELO)
-        </dt>
+                                 
+                                    <div class="mdl-grid">
 
-        <dd>
-            @Html.DisplayFor(model => model.VEHICULOS.VEH_MODELO)
-        </dd>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.VEN_ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+                                        <div id="DatosFecha" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                                            <h5 class="text-condensedLight" style="color: #2e6da4">DATOS PRINCIPALES</h5>
+                                            @Html.HiddenFor(m => m.FEC_ID)
+                                            @Html.HiddenFor(m => m.VEN_ID)
+                                        
+                                            <div class=" mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                                @Html.TextBoxFor(a => a.FechaVentaMostrar, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Fecha de la Venta</label>
+                                            </div>
+                                        </div>
+                                        <div class=" mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                            @Html.TextBoxFor(a => a.EMPLEADOS.NombreParaMostrar, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", disabled = "disabled" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Empleado que realizó la venta</label>
+                                        </div>
+                                        <div class=" mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                            @Html.TextBoxFor(a => a.SUCURSALES.SUC_DESCRIP, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", disabled = "disabled" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Sucursal en la que se realizó la venta</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                            @Html.TextBoxFor(a => a.CLIENTES.CLI_APELLIDO_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", disabled = "disabled" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Cliente</label>
+                                        </div>
+                                        <div id="VehiculoLM" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                                            <h5 class="text-condensedLight" style="color: #2e6da4">DATOS DEL VEHÍCULO</h5>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                                @Html.TextBoxFor(a => a.VEHICULOS.VEH_PAT_MARCA_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "7", disabled = "disabled" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Datos del Vehículo</label>
+                                            </div>
+                                        </div>
+
+                                        @if(Model.VEN_VEH_ENT_USADO == true )
+                                        { 
+                                        <div id="VehiculoRM mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                                            <h5 class="text-condensedLight" style="color: #2e6da4">VEHÍCULO ENTREGADO</h5>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                                @Html.TextBoxFor(a => a.VEN_VEH_PAT_USADO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "9", disabled = "disabled" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Patente Usado</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                                @Html.TextBoxFor(a => a.MARCAS.MAR_DESCRIPCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "10", disabled = "disabled" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Marca Usado</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                                @Html.TextBoxFor(a => a.VEN_VEH_MOD_USADO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "11", disabled = "disabled" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Modelo Usado</label>
+                                            </div>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
+                                                @Html.TextBoxFor(a => a.VEN_VEH_VAL_USADO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "12", disabled = "disabled" })
+                                                <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Valor Usado</label>
+                                            </div>
+                                            
+                                        </div>
+                                            
+                                        }
+                                        <div id="Precio" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop" style="text-align:center; margin:5px;">
+                                            <h3 class="text-condensedLight" style="color: #2e6da4">VALOR DE LA VENTA ($ ARS)</h3>
+                                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--4-col-desktop" style=" border-style: solid; border-width: 3px; padding: 5px; border-color: #2e6da4; text-align:center">
+                                                @Html.TextBoxFor(a => a.VEN_VALOR, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15", disabled = "disabled", @style = "text-align:center;" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <p class="text-center">
+                                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Edit" id="btn-EditVenta">
+                                            <i class="zmdi zmdi-edit" style="display: inline-block; font: normal normal normal 14px/1"></i>
+                                        </button>
+                                      
+                                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Delete" id="btn-EliminarVenta" onclick="return confirm('¿Está seguro que quiere eliminar al Venta del cliente @Model.EMPLEADOS.EMP_APELLIDO?');">
+
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                        <div class="mdl-tooltip">Editar Venta</div>
+                                        <div class="mdl-tooltip">Eliminar Venta</div>
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

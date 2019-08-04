@@ -13,8 +13,8 @@
     <div>
         <section id="help">
             <div class="text-right" style="padding-top:15px; padding-right:15px;">
-                <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
-
+                <button id="btn-help-top" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+                <div class="mdl-tooltip" for="btn-help-top">Ayuda</div>
             </div>
         </section>
         <div class="mdl-tabs__tab-bar">
@@ -43,8 +43,9 @@
                 @using (Html.BeginForm("List", "Clientes", FormMethod.Get))
                 {
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                        <button id="btn-exit" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
-                          <label class="mdl-button mdl-js-button mdl-button--icon" for="searchClient" id="btn-searchClient">
+                        <button id="btn-help-search" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
+                        <div class="mdl-tooltip" for="btn-help-search">Ayuda</div>
+                         <label class="mdl-button mdl-js-button mdl-button--icon" for="searchClient" id="btn-searchClient">
                             <i class="zmdi zmdi-search" onclick=""></i>
                         </label>
                         <div class="mdl-tooltip" for="btn-searchClient">Buscar</div>
@@ -63,8 +64,8 @@
                                 <th style="text-align: left"><b>RAZÓN SOCIAL - CUIT/L</b></th>
                                 <th style="text-align: left"><b>TELÉFONO</b></th>
                                 <th style="text-align: left"><b>MAIL</b></th>
-                                <th style="text-align: center"> <button id="btn-exit" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
-
+                                <th style="text-align: center"> <button id="btn-help-list" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -72,7 +73,7 @@
                             @foreach (var item in Model)
                             {
                                 <tr>
-                                    <td style="text-align: left">@Html.DisplayFor(modelItem => item.CLI_APELLIDO_NOMBRE)</td>
+                                    <td style="text-align: left"><b>@Html.DisplayFor(modelItem => item.CLI_APELLIDO_NOMBRE)</b></td>
                                     <td style="text-align: left">@Html.DisplayFor(modelItem => item.CLI_DOC)</td>
                                     <td style="text-align: left">@Html.DisplayFor(modelItem => item.CLI_RAZONSOCIAL_CUIT)</td>
                                     <td style="text-align: left">@Html.DisplayFor(modelItem => item.CLI_RI_TELEFONO)</td>
@@ -86,8 +87,8 @@
                 </div>
             </div>
         </div>
-
-        <div style="text-align:center;">
+        <div class="mdl-tooltip" for="btn-help-list">Ayuda</div>
+        <div style="text-align:center;" title="Paginación">
             @Html.PagedListPager(Model, page => Url.Action("List", "Clientes", new { page, search = Request.QueryString["search"], @class = "list-unstyle text-center" }))
         </div>
         </div>

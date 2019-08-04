@@ -12,20 +12,36 @@
 <section class="full-width pageContent">
     
     <div>
+        <div id="help">
+            <div class="text-right" style="padding-top:15px; padding-right:15px;">
+                <button id="btn-help-top" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+                <div class="mdl-tooltip" for="btn-help-top">Ayuda</div>
+            </div>
+        </div>
         <div class="mdl-tabs__tab-bar">
-            <a class="mdl-tabs__tab" style="color: #2e6da4">NUEVO</a>
+            <a class="mdl-tabs__tab" style="color: #2e6da4; font-weight: bold">NUEVO</a>
             <a href="@Url.Action("List", "Vehiculos")" class="mdl-tabs__tab" id="btn-Listar">LISTA</a>
             <div class="mdl-tooltip" for="btn-Listar">Listar Vehículos</div>
+        </div>
+        <div class="full-width header-well">
+
+            <div class="full-width header-well-icon">
+                <i class="zmdi zmdi-car"></i>
+            </div>
+            <div class="full-width header-well-text">
+                <p class="text-condensedLight">
+                    <b>AÑADIR VEHÍCULO</b><br />
+                    Complete los campos indicados para dar de alta un nuevo Vehículo
+                </p>
+            </div>
         </div>
         <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
             <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
                     <div class="full-width panel mdl-shadow--2dp">
-                        <div class="full-width panel-tittle bg-primary text-center tittles">
-                            NUEVO VEHÍCULO
-                        </div>
+
                         <div class="full-width panel-content">
-                            
+
                             @using (Html.BeginForm("Create", "Vehiculos", FormMethod.Post, new { enctype = "multipart/form-data" }))
                             {
                                 @Html.AntiForgeryToken()
@@ -53,7 +69,7 @@
                                 <div class="mdl-grid">
                                     <div id="VehiculoLU" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
                                         <h5 class="text-condensedLight" style="color: #2e6da4">SUCURSAL Y EX-PROPIETARIO</h5>
-                                        <div class="mdl-textfield mdl-js-textfield" >
+                                        <div class="mdl-textfield mdl-js-textfield">
                                             @Html.DropDownListFor(a => a.SUC_ID, (IEnumerable<SelectListItem>)ViewBag.SUC_ID, "SELECCIONE SUCURSAL *", new { @class = "mdl-textfield__input", tabindex = "1" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield">
@@ -61,7 +77,7 @@
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             <input type="date" class="mdl-textfield__input" name="fecha" tabindex="5" value="@DateTime.Now.ToString(string.Format("yyyy-MM-dd"))">
-                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4"></label>
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Fecha de Alta</label>
                                         </div>
                                     </div>
 
@@ -84,26 +100,26 @@
                                             @Html.DropDownListFor(a => a.VEH_TIPOVEHICULO, (IEnumerable<SelectListItem>)ViewBag.VEH_TIPOVEHICULO, "SELECCIONE TIPO DE VEHÍCULO *", new { @class = "mdl-textfield__input", tabindex = "7" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "9" })
+                                            @Html.TextBoxFor(a => a.VEH_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "9", title = "Se aceptan hasta 255 caracteres" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">MODELO</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_PATENTE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "11" })
+                                            @Html.TextBoxFor(a => a.VEH_PATENTE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "11", title = "Se aceptan hasta 10 caracteres" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PATENTE</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_CILINDRADAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "13" })
+                                            @Html.TextBoxFor(a => a.VEH_CILINDRADAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "13", title = "Se aceptan hasta 30 caracteres" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CILINDRADA</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_COLOR, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15" })
+                                            @Html.TextBoxFor(a => a.VEH_COLOR, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15", title = "Se aceptan hasta 255 caracteres" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">COLOR</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.DropDownListFor(a => a.VEH_TIPOCOMBUSTIBLE, (IEnumerable<SelectListItem>)ViewBag.VEH_TIPOCOMBUSTIBLE, "SELECCIONE TIPO DE COMBUSTIBLE *", new { @class = "mdl-textfield__input", tabindex = "17" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextAreaFor(a => a.VEH_DETALLES, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "19" })
+                                            @Html.TextAreaFor(a => a.VEH_DETALLES, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "19", title = "Se aceptan hasta 255 caracteres" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DETALLE</label>
                                         </div>
                                     </div>
@@ -114,26 +130,26 @@
                                             @Html.DropDownListFor(a => a.MAR_ID, (IEnumerable<SelectListItem>)ViewBag.MAR_ID, "SELECCIONE MARCA DE VEHÍCULO *", new { @class = "mdl-textfield__input", tabindex = "8" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_VERSION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "10" })
+                                            @Html.TextBoxFor(a => a.VEH_VERSION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "10",title = "Se aceptan hasta 30 caracteres"  })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">VERSIÓN</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_AÑO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "12" })
+                                            @Html.TextBoxFor(a => a.VEH_AÑO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "12", title = "Se aceptan hasta 30 números" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">AÑO</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_KILOMETROS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14" })
+                                            @Html.TextBoxFor(a => a.VEH_KILOMETROS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14", title = "Se aceptan hasta 30 números" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">KILÓMETROS</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_PUERTAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "16" })
+                                            @Html.TextBoxFor(a => a.VEH_PUERTAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "16", title = "Se aceptan hasta 50 caracteres" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CANTIDAD DE PUERTAS</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.DropDownListFor(a => a.MON_ID, (IEnumerable<SelectListItem>)ViewBag.MON_ID, "SELECCIONE MONEDA *", new { @class = "mdl-textfield__input", tabindex = "18" })
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_PRECIO_INGRESO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "20" })
+                                            @Html.TextBoxFor(a => a.VEH_PRECIO_INGRESO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "20", title = "Sólo se permiten números" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PRECIO DE INGRESO</label>
                                         </div>
                                     </div>
@@ -141,7 +157,7 @@
                                     <div id="VehiculoLD" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
                                         <h5 class="text-condensedLight" style="color: #2e6da4">DATOS DEL STEREO</h5>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_STEREO_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "21" })
+                                            @Html.TextBoxFor(a => a.VEH_STEREO_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "21", title = "Se aceptan hasta 150 caracteres." })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">MODELO DE ESTEREO</label>
                                         </div>
                                     </div>
@@ -149,7 +165,7 @@
                                     <div id="VehiculoRD" class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
                                         <h5 class="text-condensedLight">  &nbsp;</h5>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.VEH_STEREO_CODIGO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "22" })
+                                            @Html.TextBoxFor(a => a.VEH_STEREO_CODIGO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "22", title = "Se aceptan hasta 50 caracteres." })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CÓDIGO DE ESTEREO</label>
                                         </div>
                                     </div>
@@ -198,24 +214,24 @@
                                         <input type="file" name="image2" id="fileUpload" />
                                         <hr />
                                         <input type="file" name="image3" id="fileUpload" />
-                                        <hr /> 
+                                        <hr />
                                         <input type="file" name="image4" id="fileUpload" />
                                         <hr />
-                                       
+
                                     </div>
 
-                                    
+
                                 </div>
 
                                 <p class="text-center">
-                                    <button name="clearVehic" onclick="location.reload();" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-clearClient">
+                                    @*<button name="clearVehic" onclick="location.reload();" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-clearClient">
                                         <i class="zmdi zmdi-refresh-alt"></i>
-                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </button>&nbsp;&nbsp;&nbsp;&nbsp;*@
                                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addVehic">
                                         <i class="zmdi zmdi-plus"></i>
                                     </button>
                                     <div class="mdl-tooltip" for="btn-addVehic">Agregar Vehículo</div>
-                                    <div class="mdl-tooltip" for="btn-clearClient">Refrescar Campos</div>
+                                    @*<div class="mdl-tooltip" for="btn-clearClient">Refrescar Campos</div>*@
                                 </p>
                             }
                         </div>

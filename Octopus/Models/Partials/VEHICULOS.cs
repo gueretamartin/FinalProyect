@@ -100,7 +100,7 @@ namespace Octopus.Models
         {
             get
             {
-                return String.Format(VEH_PATENTE + " ||| " + MARCAS.MAR_DESCRIPCION + " " + VEH_MODELO + " " + VEH_VERSION);
+                return String.Format("Patente: " + VEH_PATENTE + " | " + MARCAS.MAR_DESCRIPCION + " " + VEH_MODELO + " " + VEH_VERSION);
             }
         }
 

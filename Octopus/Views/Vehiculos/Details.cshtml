@@ -15,7 +15,6 @@
 		<div class="mdl-tabs__tab-bar">
             <a href="@Url.Action("Create","Vehiculos")" class="mdl-tabs__tab" id="btn-Nuevo">NUEVO</a>
             <a href="@Url.Action("List", "Vehiculos")" class="mdl-tabs__tab" id="btn-Listar">LISTA</a>
-			<a class="mdl-tabs__tab" style="color: #2e6da4">DETALLES</a>
             <div class="mdl-tooltip" for="btn-Listar">Listar Vehículos</div>
             <div class="mdl-tooltip" for="btn-Nuevo">Nuevo Vehículos</div>
 		</div>
@@ -38,24 +37,26 @@
                                 <div style="text-align:center;"> 
                                 @{
                                 int cont = 0;
+                                if (Model.IMAGENES.Count != 0) { 
                                 foreach (var item in Model.IMAGENES)
                                 {
                                     if (cont == 0)
                                     {
                                         <div>
-                                            <a class="img-responsive-constrain4" data-fancybox="gallery" href="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID , img_id = @item.IMG_ID })"><img src="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID, img_id = @item.IMG_ID })" alt="product" id="img-responsive-detail-main"></a>
+                                            <a class="img-responsive-constrain4" data-fancybox="gallery" href="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID , img_id = @item.IMG_ID })"><img src="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID, img_id = @item.IMG_ID })" alt="product" id="img-responsive-detail-main" style="width: 400px; height: 250px;"></a>
                                         </div>
                                         <br />
                                         
                                     }
                                     else
                                     {
-                                        <a class="img-responsive-constrain4" data-fancybox="gallery" href="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID , img_id = @item.IMG_ID })">&nbsp;<img src="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID, img_id = @item.IMG_ID })" alt="product" id="img-responsive-detail">&nbsp;</a>
+                                        <a class="img-responsive-constrain4" data-fancybox="gallery" href="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID , img_id = @item.IMG_ID })">&nbsp;<img src="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID, img_id = @item.IMG_ID })" alt="product" id="img-responsive-detail" style="width:200px; height:100px;">&nbsp;</a>
             
                                     }
                                     cont++;
                                 }
-}
+                                }
+                            }
                                 </div>
 
 								<div class="mdl-grid">
@@ -70,7 +71,7 @@
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CLIENTE</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                            @Html.TextBoxFor(a => a.CLIENTES.CLI_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
+                                             @Html.TextBoxFor(a => a.CLIENTES.CLI_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">TELÉFONO DEL CLIENTE</label>
                                         </div>
 										<h5 class="text-condensedLight mdl-textfield--floating-label" style="color: #2e6da4">VEHICULO</h5>
@@ -100,7 +101,7 @@
 											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PUERTAS</label>
 										</div>
 										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextAreaFor(a => a.VEH_DETALLES, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "19", disabled = "disabled", @Style = "color:dimgrey" })
+											@Html.TextBoxFor(a => a.VEH_DETALLES, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "19", disabled = "disabled", @Style = "color:dimgrey" })
 											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DETALLES</label>
 										</div>
 										<h5 class="text-condensedLight" style="color: #2e6da4">STEREO</h5>

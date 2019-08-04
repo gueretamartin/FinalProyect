@@ -7,12 +7,94 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Octopus.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace Octopus.Controllers
 {
     public class VentasController : Controller
     {
         private OctopusEntities db = new OctopusEntities();
+
+        public ActionResult Edit(int? ven_id)
+        {
+
+            var model = new VENTAS();
+            model = db.VENTAS.SingleOrDefault(c => c.VEN_ID == ven_id);
+
+            //venNew.VEHICULOS = db.VEHICULOS.Include(v => v.SUCURSALES).Include(v => v.EMPLEADOS).Where(v => v.VEH_ID == vehsel.VEH_ID).FirstOrDefault();
+            //venNew.FEC_ID = int.Parse(string.Format("{0:yyyyMMdd}", DateTime.Now));
+            int valor = Convert.ToInt32(model.VEN_VALOR);
+            model.VEN_VALOR = valor;
+            //ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DESCRIPCIONES");
+            ViewBag.EMPLEADO_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_NOMBRE",model.EMP_ID);
+            //ViewBag.VEH_ID = new SelectList(db.VEHICULOS, "VEH_ID", "VEH_PAT_MARCA_MODELO");
+            ViewBag.SUCURSALES_ID = new SelectList(db.SUCURSALES, "SUC_ID", "SUC_DESCRIP",model.SUC_ID);
+            ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_ID",model.FEC_ID);
+            ViewBag.MAR_ID = new SelectList(db.MARCAS, "MAR_ID", "MAR_DESCRIPCION",model.VEN_VEH_MAR_ID_USADO);
+
+            var condiciones = (from c in db.CLIENTES
+                               select c.TC_ID).Distinct();
+            //ViewBag.TC_ID = new SelectList(condiciones);
+            ViewBag.TC_ID = new SelectList(db.TIPO_CLIENTE, "TC_ID", "TC_DESCRIPCION",model.CLIENTES.TIPO_CLIENTE);
+
+            
+            // CLIENTES RI
+            var clientes_ri = (from c in db.CLIENTES
+                               orderby c.CLI_RI_RAZONSOCIAL ascending
+                               where c.TC_ID == 2
+                               select c).Distinct();
+            ViewBag.CLI_RI_ID = new SelectList(clientes_ri, "CLI_ID", "CLI_RZ_CUIT",model.CLIENTES.CLI_ID);
+
+            //CLIENTES FINALES
+            var clientes_cf = (from c in db.CLIENTES
+                               orderby c.CLI_APELLIDO
+                               where c.TC_ID == 1
+                               select c).Distinct();
+            ViewBag.CLI_CF_ID = new SelectList(clientes_cf, "CLI_ID", "CLI_APELLIDO_CUIL", model.CLIENTES.CLI_ID);
+
+            //var empleados = db.EMPLEADOS.Where(c => c.EMP_ESTADO == 1);
+            ////var states = db.ESTADOS.Where(c => c.ES_ID == 2 || c.ES_ID == 1);
+            //var clientes = db.CLIENTES.Where(c => c.ES_ID == 1);
+            //var marcas = db.MARCAS;
+
+            //model.Marcas_List = new SelectList(marcas, "MAR_ID", "MAR_DESCRIPCION", model.PRE_MARCA);
+            //model.Estados_List = new SelectList(states, "ES_ID", "ES_DESCRIPCION", model.ES_ID);
+            ////model.Empleados_List = new SelectList(empleados, "EMP_ID", "EMP_APELLIDO_NOMBRE", model.EMP_ID);
+            //model.Clientes_List = new SelectList(clientes, "CLI_ID", "CLI_APELLIDO_NOMBRE", model.EMP_ID);
+
+            return View(model);
+
+        }
+
+        public ActionResult List(string searchVenta, int? page)
+        {
+
+            try
+            {
+                var ventas = from c in db.VENTAS select c;
+                ventas = ventas.Where(c => c.VEN_ESTADO == 51);
+                if (!String.IsNullOrEmpty(searchVenta))
+                {
+                    ventas = ventas.Where(c =>
+                           c.VEHICULOS.VEH_PATENTE.Contains(searchVenta)
+                          || c.VEHICULOS.MARCAS.MAR_DESCRIPCION.Contains(searchVenta)
+                          || c.VEHICULOS.VEH_MODELO.Contains(searchVenta)
+                          || c.CLIENTES.CLI_APELLIDO.Contains(searchVenta)
+                          || c.CLIENTES.CLI_NOMBRE.Contains(searchVenta)
+                          || c.EMPLEADOS.EMP_APELLIDO.Contains(searchVenta)
+                          || c.EMPLEADOS.EMP_NOMBRE.Contains(searchVenta)
+                           );
+
+                }
+                return View(ventas.ToList().ToPagedList(page ?? 1, 6));
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Home", "Home");
+            }
+
+        }
 
         // GET: /Ventas/
         public ActionResult Index()
@@ -39,6 +121,8 @@ namespace Octopus.Controllers
         // GET: /Ventas/Create
         public ActionResult Create(VEHICULOS vehsel)
         {
+            if (vehsel.VEH_ID !=0)
+            { 
             var vendido = (from v in db.VENTAS
                              where v.VEH_ID == vehsel.VEH_ID && v.VEN_ESTADO != 51 //VALIDA QUE NO ESTÉ VENDIDO
                              select v.VEH_ID).FirstOrDefault();
@@ -80,6 +164,9 @@ namespace Octopus.Controllers
             }
             else
                 return RedirectToAction("List", "Vehiculos");
+            }
+            else return RedirectToAction("Home", "Home");
+
         }
 
         // POST: /Ventas/Create
@@ -87,13 +174,14 @@ namespace Octopus.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VENTAS ventas, DateTime? fecha, int? CLI_RI_ID, int? CLI_CF_ID, int? TC_ID, int? SUCURSALES_ID, int? EMPLEADO_ID)
+        public ActionResult Create(VENTAS ventas, DateTime? fecha ,int? MAR_ID,int? CLI_RI_ID, int? CLI_CF_ID, int? TC_ID, int? SUCURSALES_ID, int? EMPLEADO_ID)
         {
             
             VENTAS venNew = new VENTAS();
             venNew.VEH_ID = ventas.VEH_ID;
             VEHICULOS vehSel = db.VEHICULOS.Include(v => v.SUCURSALES).Include(v => v.EMPLEADOS).Where(v => v.VEH_ID == venNew.VEH_ID).FirstOrDefault();
             venNew.VEHICULOS = vehSel;
+           
             //venNew.FEC_ID = int.Parse(string.Format("{0:yyyyMMdd}", DateTime.Now));
 
             bool error = false;
@@ -131,7 +219,7 @@ namespace Octopus.Controllers
                 ModelState.AddModelError("VEN_VALOR", "VALOR: Ingrese un valor de seña");
                 error = true;
             }
-
+            
             if (ventas.VEN_VEH_ENT_USADO == null)
             {
                 ModelState.AddModelError("VEN_VEH_ENT_USADO", "ENTREGA USADO: Debe seleccionar un valor");
@@ -237,6 +325,7 @@ namespace Octopus.Controllers
             ventas.EMPLEADOS = db.EMPLEADOS.Find(ventas.EMP_ID);
 
             ventas.VEN_ESTADO = 51;
+            ventas.VEN_VEH_MAR_ID_USADO = MAR_ID;
 
             if (ModelState.IsValid)
             {
@@ -248,7 +337,7 @@ namespace Octopus.Controllers
 
             try
             {
-                return RedirectToAction("UpdateState", "Vehiculos", new { veh_id = ventas.VEH_ID, ESTADO_ID = 33, operation = "Sale" });
+                return RedirectToAction("List", "Ventas");
             }
             catch (Exception ex)
             {
@@ -262,18 +351,19 @@ namespace Octopus.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="VEN_ID,FEC_ID,CLI_ID,VEH_ID,EMP_ID,MONTO")] VENTAS ventas)
+        public ActionResult Edit(VENTAS ventas)
         {
+
             if (ModelState.IsValid)
             {
                 db.Entry(ventas).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("List","Ventas");
             }
-            ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DOC", ventas.CLI_ID);
-            ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_NOMBRE", ventas.EMP_ID);
-            ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_NOMBREDIA", ventas.FEC_ID);
-            ViewBag.VEH_ID = new SelectList(db.VEHICULOS, "VEH_ID", "VEH_MODELO", ventas.VEH_ID);
+            //ViewBag.CLI_ID = new SelectList(db.CLIENTES, "CLI_ID", "CLI_DOC", ventas.CLI_ID);
+            //ViewBag.EMP_ID = new SelectList(db.EMPLEADOS, "EMP_ID", "EMP_NOMBRE", ventas.EMP_ID);
+            //ViewBag.FEC_ID = new SelectList(db.FECHAS, "FEC_ID", "FEC_NOMBREDIA", ventas.FEC_ID);
+            //ViewBag.VEH_ID = new SelectList(db.VEHICULOS, "VEH_ID", "VEH_MODELO", ventas.VEH_ID);
             return View(ventas);
         }
 
@@ -285,10 +375,16 @@ namespace Octopus.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             VENTAS ventas = db.VENTAS.Find(id);
-            if (ventas == null)
+            ventas.VEN_ESTADO = 52;
+
+            if (ModelState.IsValid)
             {
-                return HttpNotFound();
+                db.Entry(ventas).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("List", "Ventas");
             }
+
+          
             return View(ventas);
         }
 
@@ -302,7 +398,35 @@ namespace Octopus.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+         [HttpPost]
+        public ActionResult Acciones(int ven_id, string Action)
+        {
+            try
+            {
 
+                if (Action == "Edit")
+                {
+                    return RedirectToAction("Edit", new { ven_id = ven_id });
+                }
+                else if (Action == "Delete")
+                {
+                    return Delete(ven_id);
+                }
+                else if (Action == "Details")
+                {
+                    return RedirectToAction("Details", new { ven_id = ven_id });
+                }
+               
+                else
+                {
+                    return RedirectToAction("List");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }}
         protected override void Dispose(bool disposing)
         {
             if (disposing)

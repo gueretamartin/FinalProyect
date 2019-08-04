@@ -56,12 +56,12 @@
                 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp full-width">
                     <thead>
                         <tr>
-                            <th style="text-align:center"><b>VEHÍCULO</b></th>
-                            <th style="text-align:center"><b>CLIENTE</b></th>
-                            <th style="text-align:center"><b>SUCURSAL</b></th>
-                            <th style="text-align:center"><b>EMPLEADO</b></th>
-                            <th style="text-align:center"><b>VENCIMIENTO</b></th>
-                            <th style="text-align: center"> <button id="btn-exit" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
+                            <th style="text-align: left"><b>VEHÍCULO</b></th>
+                            <th style="text-align: left"><b>CLIENTE</b></th>
+                            <th style="text-align: left"><b>SUCURSAL</b></th>
+                            <th style="text-align: left"><b>EMPLEADO</b></th>
+                            <th style="text-align: left"><b>VENCIMIENTO</b></th>
+                            <th style="text-align: left"> <button id="btn-exit" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,18 +69,18 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td style="text-align:center"><b>@Html.DisplayFor(modelItem => item.VEHICULOS.VEH_PAT_MARCA_MODELO)</b></td>
+                                <td style="text-align:left"><b>@Html.DisplayFor(modelItem => item.VEHICULOS.VEH_PAT_MARCA_MODELO)</b></td>
                                 @if (item.CLIENTES.TC_ID.Equals(1))
                                 {
-                                    <td>@Html.DisplayFor(modelItem => item.CLIENTES.CLI_APELLIDO_NOMBRE)</td> }
+                                    <td style="text-align:left">@Html.DisplayFor(modelItem => item.CLIENTES.CLI_APELLIDO_NOMBRE)</td> }
                                 else
                                 {
-                                    <td>@Html.DisplayFor(modelItem => item.CLIENTES.CLI_RI_RAZONSOCIAL)</td> }
-                                <td style="text-align:center">@Html.DisplayFor(modelItem => item.SUCURSALES.SUC_DESCRIP)</td>
-                                <td style="text-align:center">@Html.DisplayFor(modelItem => item.EMPLEADOS.EMP_APELLIDO_NOMBRE)</td>
-                                <td style="text-align:center">@Html.DisplayFor(modelItem => item.FechaHastaR)</td>
+                                    <td style="text-align: left">@Html.DisplayFor(modelItem => item.CLIENTES.CLI_RI_RAZONSOCIAL)</td> }
+                                <td style="text-align: left">@Html.DisplayFor(modelItem => item.SUCURSALES.SUC_DESCRIP)</td>
+                                <td style="text-align: left">@Html.DisplayFor(modelItem => item.EMPLEADOS.EMP_APELLIDO_NOMBRE)</td>
+                                <td style="text-align: left">@Html.DisplayFor(modelItem => item.FechaHastaR)</td>
                                 @{cont = cont + 1;}
-                                <td style="text-align:center"><a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Reservas", new { res_id = item.RES_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a></td>
+                                <td style="text-align: left"><a class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Reservas", new { res_id = item.RES_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a></td>
                             </tr>
                         }
                     </tbody>

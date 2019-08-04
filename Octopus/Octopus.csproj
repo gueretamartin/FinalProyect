@@ -251,6 +251,7 @@
     <Compile Include="Models\Partials\RESERVAS.cs" />
     <Compile Include="Models\Partials\PRESUPUESTOS.cs" />
     <Compile Include="Models\Partials\EMPLEADOS.cs" />
+    <Compile Include="Models\Partials\VENTAS.cs" />
     <Compile Include="Models\Partials\VW_Statistics.cs" />
     <Compile Include="Models\Partials\USUARIOS.cs" />
     <Compile Include="Models\Partials\CLIENTES.cs" />
@@ -429,7 +430,6 @@
     <Content Include="Views\Presupuestos\Delete.cshtml" />
     <Content Include="Views\Presupuestos\Details.cshtml" />
     <Content Include="Views\Presupuestos\Edit.cshtml" />
-    <Content Include="Views\Presupuestos\List.cshtml" />
     <Content Include="Views\Vehiculos\Create.cshtml" />
     <Content Include="Views\Vehiculos\Delete.cshtml" />
     <Content Include="Views\Vehiculos\Details.cshtml" />
@@ -450,7 +450,8 @@
     <Content Include="Views\Ventas\Delete.cshtml" />
     <Content Include="Views\Ventas\Details.cshtml" />
     <Content Include="Views\Ventas\Edit.cshtml" />
-    <Content Include="Views\Ventas\Index.cshtml" />
+    <Content Include="Views\Presupuestos\List.cshtml" />
+    <Content Include="Views\Ventas\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
