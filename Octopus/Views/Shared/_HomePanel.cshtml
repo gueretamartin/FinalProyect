@@ -68,7 +68,8 @@
            
                 <nav class="navBar-options-list ">
                     <ul>
-                        <li class="nav-item dropleft">
+                        <li class="nav-item dropleft" id="username">
+                            <div class="mdl-tooltip" for="username">Nombre de Usuario</div>
                             <a class="nav-link" href="#" id="navbarDropdownMenuLink" style="color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                              
                               @Session["Username"].ToString()
@@ -109,7 +110,8 @@
             </div>
             <nav class="full-width">
                 <ul class="full-width list-unstyle menu-principal">
-                    <li class="full-width">
+                    <li class="full-width" id="btn-home">
+                        <div class="mdl-tooltip" for="btn-home">Inicio</div>
                         <a href="@Url.Action("Home","Home")" class="full-width">
                             <div class="navLateral-body-cl">
                                 <i class="zmdi zmdi-view-dashboard"></i>
@@ -120,7 +122,8 @@
                         </a>
                     </li>
                     <li class="full-width divider-menu-h"></li>
-                    <li class="full-width">
+                    <li class="full-width" id="btn-clientes">
+                        <div class="mdl-tooltip" for="btn-clientes">Clientes</div>
                         <a href="@Url.Action("List","Clientes")" class="full-width">
                             <div class="navLateral-body-cl">
                                 <i class="zmdi zmdi-star"></i>
@@ -131,7 +134,8 @@
                         </a>
                     </li>
                     <li class="full-width divider-menu-h"></li>
-                    <li class="full-width">
+                    <li class="full-width" id="btn-Vehiculos">
+                        <div class="mdl-tooltip" for="btn-Vehiculos">Vehiculos</div>
                         <a href="@Url.Action("List","Vehiculos")" class="full-width">
                             <div class="navLateral-body-cl">
                                 <i class="zmdi zmdi-car"></i>
@@ -144,7 +148,8 @@
             @if (Session["Rol"].ToString() == "0" || Session["Rol"].ToString() == "1") //Admin
                 {
                     <li class="full-width divider-menu-h"></li>
-                    <li class="full-width">
+                    <li class="full-width" id="btn-Empleados">
+                        <div class="mdl-tooltip" for="btn-Empleados">Empleados</div>
                         <a href="@Url.Action("List","Empleados")" class="full-width">
                             <div class="navLateral-body-cl">
                                 <i class="zmdi zmdi-face"></i>
@@ -158,31 +163,35 @@
                 @if (Session["Rol"].ToString() == "0") //Admin
                 {
                     <li class="full-width divider-menu-h"></li>
-                    <li class="full-width">
-                        <a href="@Url.Action("List","Sucursales")" class="full-width">
-                            <div class="navLateral-body-cl">
-                                <i class="zmdi zmdi-local-store"></i>
-                            </div>
-                            <div class="navLateral-body-cr hide-on-tablet">
-                                SUCURSALES
-                            </div>
-                        </a>
-                    </li>
-               
+    <li class="full-width" id="btn-Sucursales">
+        <div class="mdl-tooltip" for="btn-Sucursales">Sucursales</div>
+        <a href="@Url.Action("List","Sucursales")" class="full-width">
+            <div class="navLateral-body-cl">
+                <i class="zmdi zmdi-local-store"></i>
+            </div>
+            <div class="navLateral-body-cr hide-on-tablet">
+                SUCURSALES
+            </div>
+        </a>
+    </li>
+
                     <li class="full-width divider-menu-h"></li>
-                    <li class="full-width">
-                        <a href="@Url.Action("List","Usuarios")" class="full-width">
-                            <div class="navLateral-body-cl">
-                                <i class="zmdi zmdi-account-box"></i>
-                            </div>
-                            <div class="navLateral-body-cr hide-on-tablet">
-                                USUARIOS
-                            </div>
-                        </a>
-                    </li>
-                  }
+    <li class="full-width" id="btn-Usuarios">
+        <div class="mdl-tooltip" for="btn-Usuarios">Usuarios</div>
+        <a href="@Url.Action("List","Usuarios")" class="full-width">
+
+            <div class="navLateral-body-cl">
+                <i class="zmdi zmdi-account-box"></i>
+            </div>
+            <div class="navLateral-body-cr hide-on-tablet">
+                USUARIOS
+            </div>
+        </a>
+    </li>
+                }
                     <li class="full-width divider-menu-h"></li>
-                    <li class="full-width">
+                    <li class="full-width" id="btn-Reservas">
+                        <div class="mdl-tooltip" for="btn-Reservas">Reservas</div>
                         <a href="@Url.Action("List","Reservas")" class="full-width">
                             <div class="navLateral-body-cl">
                                 <i class="zmdi zmdi-case"></i>
@@ -204,7 +213,8 @@
                         </a>
                     </li>*@
                     <li class="full-width divider-menu-h"></li>
-                    <li class="full-width">
+                    <li class="full-width" id="btn-Ventas">
+                        <div class=" mdl-tooltip" for="btn-Ventas">Ventas</div>
                         <a href="@Url.Action("List","Ventas")" class="full-width">
 
                             <div class="navLateral-body-cl">
@@ -217,19 +227,21 @@
                     </li>
 
                     <li class="full-width divider-menu-h"></li>
-                    <li class="full-width">
+                    <li class="full-width" id="btn-Presupuestos">
+                        <div class=" mdl-tooltip" for="btn-Presupuestos">Presupuestos</div>
                         <a href="@Url.Action("List","Presupuestos")" class="full-width">
 
-                                 <div class="navLateral-body-cl">
-                                    <i class="zmdi zmdi-store"></i>
-                                </div>
-                                <div class="navLateral-body-cr hide-on-tablet">
-                                    PRESUPUESTOS
-                                </div>
-                            </a>
+                            <div class="navLateral-body-cl">
+                                <i class="zmdi zmdi-store"></i>
+                            </div>
+                            <div class="navLateral-body-cr hide-on-tablet">
+                                PRESUPUESTOS
+                            </div>
+                        </a>
                     </li>
                     <li class="full-width divider-menu-h"></li>
-                    <li class="full-width">
+                    <li class="full-width" id="btn-RPresupuestos">
+                        <div class=" mdl-tooltip" for="btn-RPresupuestos">Reportes Presupuestos</div>
                         <a href="@Url.Action("Report","Presupuestos")" class="full-width">
                             <div class="navLateral-body-cl">
                                 <i class="zmdi zmdi-search-in-file"></i>

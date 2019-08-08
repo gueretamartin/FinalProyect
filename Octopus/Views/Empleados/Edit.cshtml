@@ -64,29 +64,29 @@
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
                                             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
-                                                @Html.TextBoxFor(a => a.EMP_DNI, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", @readonly = "true" })
+                                                @Html.TextBoxFor(a => a.EMP_DNI, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", @readonly = "true", title = "Sólo se permiten letras y numeros" })
                                                 <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DNI*</label>
                                             </div>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
-                                            @Html.TextBoxFor(a => a.EMP_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2" })
+                                            @Html.TextBoxFor(a => a.EMP_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", title = "Sólo se permiten letras" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Nombre*</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
-                                            @Html.TextBoxFor(a => a.EMP_APELLIDO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3" })
+                                            @Html.TextBoxFor(a => a.EMP_APELLIDO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", title = "Sólo se permiten letras" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Apellido*</label>
                                         </div>
 
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
-                                            @Html.DropDownListFor(a => a.SUC_ID, Model.Sucursales_List, new { @class = "mdl-textfield__input", tabindex = "4" })
+                                            @Html.DropDownListFor(a => a.SUC_ID, Model.Sucursales_List, new { @class = "mdl-textfield__input", tabindex = "4", title = "Seleccione una Sucursal" })
                                             <label class="mdl-textfield__label" style="color: #2e6da4">Sucursales*</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
-                                            @Html.DropDownListFor(a => a.EMP_CARGO, Model.Cargos_List, new { @class = "mdl-textfield__input", tabindex = "5" })
+                                            @Html.DropDownListFor(a => a.EMP_CARGO, Model.Cargos_List, new { @class = "mdl-textfield__input", tabindex = "5", title = "Seleccione un cargo" })
                                             <label class="mdl-textfield__label" style="color: #2e6da4">Cliente*</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
-                                            @Html.TextBoxFor(a => a.EMP_EMAIL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6" })
+                                            @Html.TextBoxFor(a => a.EMP_EMAIL, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6", title = "example@example.com" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">E-Mail*</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">

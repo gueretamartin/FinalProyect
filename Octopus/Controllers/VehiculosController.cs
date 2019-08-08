@@ -412,7 +412,11 @@ namespace Octopus.Controllers
             {
 
             byte[] imagen = GetImageFromDataBase(veh_id);
-            return File(imagen, "image/jpg");
+            if (imagen != null)
+            {
+                return File(imagen, "image/jpg");
+            }
+            else return null;
            }
             else
             {
@@ -449,11 +453,15 @@ namespace Octopus.Controllers
              VEHICULOS veh = new VEHICULOS();
             veh = db.VEHICULOS.First(v => v.VEH_ID.Equals(veh_id) );
            
-                int imageID = db.IMAGENES.Where(i => i.VEH_ID == veh_id).Max(i => i.IMG_ID);
+                IMAGENES image = db.IMAGENES.FirstOrDefault(i => i.VEH_ID == veh_id);
+          
+            if(image != null)
+                {
+                    byte[] imagenBytes = (from i in db.IMAGENES where i.IMG_ID == image.IMG_ID select i.IMG_IMAGE).First();
 
-                byte[] imagenBytes = (from i in db.IMAGENES where i.IMG_ID == imageID select i.IMG_IMAGE).First();
-
-                return imagenBytes;
+                    return imagenBytes;
+                }
+                else return null;
             
         }
 

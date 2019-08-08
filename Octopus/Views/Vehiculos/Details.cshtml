@@ -11,75 +11,94 @@
 <!-- pageContent -->
 <section class="full-width pageContent">
 
-	<div>
-		<div class="mdl-tabs__tab-bar">
+    <div>
+        <div id="help">
+            <div class="text-right" style="padding-top:15px; padding-right:15px;">
+                <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+
+            </div>
+        </div>
+        <div class="mdl-tabs__tab-bar">
             <a href="@Url.Action("Create","Vehiculos")" class="mdl-tabs__tab" id="btn-Nuevo">NUEVO</a>
             <a href="@Url.Action("List", "Vehiculos")" class="mdl-tabs__tab" id="btn-Listar">LISTA</a>
             <div class="mdl-tooltip" for="btn-Listar">Listar Vehículos</div>
             <div class="mdl-tooltip" for="btn-Nuevo">Nuevo Vehículos</div>
-		</div>
-		<div class="mdl-tabs__panel is-active" id="tabNewAdmin">
-			<div class="mdl-grid">
-				<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
-					<div class="full-width panel mdl-shadow--2dp">
-						<div class="full-width panel-tittle bg-primary text-center tittles">
-							@Model.VEH_PAT_MARCA_MODELO
-						</div>
-						<div class="full-width panel-content">
+        </div>
+        <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div class="full-width panel mdl-shadow--2dp">
+
+                        <div class="full-width header-well">
+
+                            <div class="full-width header-well-icon">
+                                <i class="zmdi zmdi-search-in-file"></i>
+                            </div>
+                            <div class="full-width header-well-text">
+                                <p class="text-condensedLight">
+                                    <b>DETALLE DEL VEHÍCULO</b><br />
+                                    Se visualizará en esta sección el detalle del Vehículo
+                                </p>
+                                <br />
+                            </div>
+                        </div>
+
+                        <div class="full-width panel-content">
 
 
-							@using (Html.BeginForm("Acciones", "Vehiculos", new { veh_id = @Model.VEH_ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
-							{
-								@Html.AntiForgeryToken()
-								@Html.ValidationSummary(true)
+                            @using (Html.BeginForm("Acciones", "Vehiculos", new { veh_id = @Model.VEH_ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true)
 
 
-                                <div style="text-align:center;"> 
-                                @{
+                                <div style="text-align:center;">
+                                    @{
                                 int cont = 0;
-                                if (Model.IMAGENES.Count != 0) { 
-                                foreach (var item in Model.IMAGENES)
+                                if (Model.IMAGENES.Count != 0)
                                 {
-                                    if (cont == 0)
+                                    foreach (var item in Model.IMAGENES)
                                     {
-                                        <div>
-                                            <a class="img-responsive-constrain4" data-fancybox="gallery" href="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID , img_id = @item.IMG_ID })"><img src="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID, img_id = @item.IMG_ID })" alt="product" id="img-responsive-detail-main" style="width: 400px; height: 250px;"></a>
-                                        </div>
-                                        <br />
-                                        
+                                        if (cont == 0)
+                                        {
+                                            <div>
+                                                <a class="img-responsive-constrain4" data-fancybox="gallery" href="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID , img_id = @item.IMG_ID })"><img src="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID, img_id = @item.IMG_ID })" alt="product" id="img-responsive-detail-main" style="width: 400px; height: 250px;"></a>
+                                            </div>
+                                            <br />
+
+                                        }
+                                        else
+                                        {
+                                            <a class="img-responsive-constrain4" data-fancybox="gallery" href="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID , img_id = @item.IMG_ID })">&nbsp;<img src="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID, img_id = @item.IMG_ID })" alt="product" id="img-responsive-detail" style="width:200px; height:100px;">&nbsp;</a>
+
+                                        }
+                                        cont++;
                                     }
-                                    else
-                                    {
-                                        <a class="img-responsive-constrain4" data-fancybox="gallery" href="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID , img_id = @item.IMG_ID })">&nbsp;<img src="@Url.Action("RetrieveImages", "Vehiculos", new { veh_id = @item.VEH_ID, img_id = @item.IMG_ID })" alt="product" id="img-responsive-detail" style="width:200px; height:100px;">&nbsp;</a>
-            
+                                }
                                     }
-                                    cont++;
-                                }
-                                }
-                            }
                                 </div>
 
-								<div class="mdl-grid">
-									<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-										<h5 class="text-condensedLight" style="color: #2e6da4">SUCURSAL Y CLIENTE</h5>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextBoxFor(a => a.SUCURSALES.SUC_DESCRIP, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
-											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">SUCURSAL</label>
-										</div>
+                                <div class="mdl-grid">
+                                    <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">SUCURSAL Y CLIENTE</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.SUCURSALES.SUC_DESCRIP, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">SUCURSAL</label>
+                                        </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.TextBoxFor(a => a.CLIENTES.CLI_APELLIDO_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "3", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CLIENTE</label>
                                         </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                             @Html.TextBoxFor(a => a.CLIENTES.CLI_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
+                                            @Html.TextBoxFor(a => a.CLIENTES.CLI_TELEFONO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "5", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">TELÉFONO DEL CLIENTE</label>
                                         </div>
-										<h5 class="text-condensedLight mdl-textfield--floating-label" style="color: #2e6da4">VEHICULO</h5>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextBoxFor(a => a.VEH_PATENTE, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "7", disabled = "disabled", @Style = "color:dimgrey" })
-											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PATENTE</label>
+                                        <h5 class="text-condensedLight mdl-textfield--floating-label" style="color: #2e6da4">VEHICULO</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEH_PATENTE, new { @class = "mdl-textfield__input", @typeof = "number", tabindex = "7", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PATENTE</label>
 
-										</div>
+                                        </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.TextBoxFor(a => a.MARCAS.MAR_DESCRIPCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "9", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">MARCA</label>
@@ -92,58 +111,58 @@
                                             @Html.TextBoxFor(a => a.VEH_CILINDRADAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "13", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CILINDRADA</label>
                                         </div>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextBoxFor(a => a.VEH_COLOR, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15", disabled = "disabled", @Style = "color:dimgrey" })
-											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">COLOR</label>
-										</div>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextBoxFor(a => a.VEH_PUERTAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "17", disabled = "disabled", @Style = "color:dimgrey" })
-											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PUERTAS</label>
-										</div>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextBoxFor(a => a.VEH_DETALLES, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "19", disabled = "disabled", @Style = "color:dimgrey" })
-											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DETALLES</label>
-										</div>
-										<h5 class="text-condensedLight" style="color: #2e6da4">STEREO</h5>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextBoxFor(a => a.VEH_STEREO_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "21", disabled = "disabled", @Style = "color:dimgrey" })
-											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">MODELO DE ESTEREO</label>
-										</div>
-										<h5 class="text-condensedLight" style="color: #2e6da4">VARIOS</h5>
-										<br />
-										<label class="mdl-radio" for="option-1" style="color: dimgrey">
-											@Html.CheckBoxFor(model => model.VEH_CIERRE, new { tabindex = "23" , @disabled = "disabled", @Style = "color:dimgrey", @class = "zmdi zmdi-check-circl" }) CIERRE &nbsp;&nbsp;&nbsp;
-										</label><br />
-										<label class="mdl-radio" for="option-1" style="color: dimgrey">
-											@Html.CheckBoxFor(model => model.VEH_LLANTAS, new { tabindex = "24", disabled = "disabled", @Style = "color:dimgrey" }) LLANTAS &nbsp;&nbsp;&nbsp;
-										</label><br />
-										<label class="mdl-radio" for="option-1" style="color: dimgrey">
-											@Html.CheckBoxFor(model => model.VEH_AIRBAG, new { tabindex = "25", disabled = "disabled", @Style = "color:dimgrey" }) AIRBAG &nbsp;&nbsp;&nbsp;
-										</label><br />
-										<label class="mdl-radio" for="option-1" style="color: dimgrey">
-											@Html.CheckBoxFor(model => model.VEH_AIRE, new { tabindex = "26", disabled = "disabled", @Style = "color:dimgrey" }) AIRE &nbsp;&nbsp;&nbsp;
-										</label><br />
-										<label class="mdl-radio" for="option-1" style="color: dimgrey">
-											@Html.CheckBoxFor(model => model.VEH_LEVANTA_VIDRIOS, new { tabindex = "27", disabled = "disabled", @Style = "color:dimgrey" }) LEVANTA VIDRIOS &nbsp;&nbsp;&nbsp;
-										</label><br />
-										<label class="mdl-radio" for="option-1" style="color: dimgrey">
-											@Html.CheckBoxFor(model => model.VEH_ESPEJOS_AUTOM, new { tabindex = "28", disabled = "disabled", @Style = "color:dimgrey" }) ESPEJOS AUTOMÁTICOS &nbsp;&nbsp;&nbsp;
-										</label><br />
-										<label class="mdl-radio" for="option-1" style="color: dimgrey">
-											@Html.CheckBoxFor(model => model.VEH_ASIENTOS_CUERO, new { tabindex = "29", disabled = "disabled", @Style = "color:dimgrey" }) ASIENTOS DE CUERO &nbsp;&nbsp;&nbsp;
-										</label><br />
-										<label class="mdl-radio" for="option-1" style="color: dimgrey">
-											@Html.CheckBoxFor(model => model.VEH_FRENOS_ABS, new { tabindex = "30", disabled = "disabled", @Style = "color:dimgrey" }) FRENOS ABS &nbsp;&nbsp;&nbsp;
-										</label><br />
-										<label class="mdl-radio" for="option-1" style="color: dimgrey">
-											@Html.CheckBoxFor(model => model.VEH_NEBLINEROS, new { tabindex = "31", disabled = "disabled", @Style = "color:dimgrey" }) NEBLINEROS &nbsp;&nbsp;&nbsp;
-										</label><br />
-										<label class="mdl-radio" for="option-1" style="color: dimgrey">
-											@Html.CheckBoxFor(model => model.VEH_RUEDA_AUXILIAR, new { tabindex = "32", disabled = "disabled", @Style = "color:dimgrey" }) RUEDA AUXILIAR &nbsp;&nbsp;&nbsp;
-										</label><br />
-									</div>
-									<div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
-										<h5 class="text-condensedLight">  &nbsp;</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEH_COLOR, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "15", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">COLOR</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEH_PUERTAS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "17", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PUERTAS</label>
+                                        </div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEH_DETALLES, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "19", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">DETALLES</label>
+                                        </div>
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">STEREO</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEH_STEREO_MODELO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "21", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">MODELO DE ESTEREO</label>
+                                        </div>
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">VARIOS</h5>
+                                        <br />
+                                        <label class="mdl-radio" for="option-1" style="color: dimgrey">
+                                            @Html.CheckBoxFor(model => model.VEH_CIERRE, new { tabindex = "23", @disabled = "disabled", @Style = "color:dimgrey", @class = "zmdi zmdi-check-circl" }) CIERRE &nbsp;&nbsp;&nbsp;
+                                        </label><br />
+                                        <label class="mdl-radio" for="option-1" style="color: dimgrey">
+                                            @Html.CheckBoxFor(model => model.VEH_LLANTAS, new { tabindex = "24", disabled = "disabled", @Style = "color:dimgrey" }) LLANTAS &nbsp;&nbsp;&nbsp;
+                                        </label><br />
+                                        <label class="mdl-radio" for="option-1" style="color: dimgrey">
+                                            @Html.CheckBoxFor(model => model.VEH_AIRBAG, new { tabindex = "25", disabled = "disabled", @Style = "color:dimgrey" }) AIRBAG &nbsp;&nbsp;&nbsp;
+                                        </label><br />
+                                        <label class="mdl-radio" for="option-1" style="color: dimgrey">
+                                            @Html.CheckBoxFor(model => model.VEH_AIRE, new { tabindex = "26", disabled = "disabled", @Style = "color:dimgrey" }) AIRE &nbsp;&nbsp;&nbsp;
+                                        </label><br />
+                                        <label class="mdl-radio" for="option-1" style="color: dimgrey">
+                                            @Html.CheckBoxFor(model => model.VEH_LEVANTA_VIDRIOS, new { tabindex = "27", disabled = "disabled", @Style = "color:dimgrey" }) LEVANTA VIDRIOS &nbsp;&nbsp;&nbsp;
+                                        </label><br />
+                                        <label class="mdl-radio" for="option-1" style="color: dimgrey">
+                                            @Html.CheckBoxFor(model => model.VEH_ESPEJOS_AUTOM, new { tabindex = "28", disabled = "disabled", @Style = "color:dimgrey" }) ESPEJOS AUTOMÁTICOS &nbsp;&nbsp;&nbsp;
+                                        </label><br />
+                                        <label class="mdl-radio" for="option-1" style="color: dimgrey">
+                                            @Html.CheckBoxFor(model => model.VEH_ASIENTOS_CUERO, new { tabindex = "29", disabled = "disabled", @Style = "color:dimgrey" }) ASIENTOS DE CUERO &nbsp;&nbsp;&nbsp;
+                                        </label><br />
+                                        <label class="mdl-radio" for="option-1" style="color: dimgrey">
+                                            @Html.CheckBoxFor(model => model.VEH_FRENOS_ABS, new { tabindex = "30", disabled = "disabled", @Style = "color:dimgrey" }) FRENOS ABS &nbsp;&nbsp;&nbsp;
+                                        </label><br />
+                                        <label class="mdl-radio" for="option-1" style="color: dimgrey">
+                                            @Html.CheckBoxFor(model => model.VEH_NEBLINEROS, new { tabindex = "31", disabled = "disabled", @Style = "color:dimgrey" }) NEBLINEROS &nbsp;&nbsp;&nbsp;
+                                        </label><br />
+                                        <label class="mdl-radio" for="option-1" style="color: dimgrey">
+                                            @Html.CheckBoxFor(model => model.VEH_RUEDA_AUXILIAR, new { tabindex = "32", disabled = "disabled", @Style = "color:dimgrey" }) RUEDA AUXILIAR &nbsp;&nbsp;&nbsp;
+                                        </label><br />
+                                    </div>
+                                    <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--6-col-desktop">
+                                        <h5 class="text-condensedLight">  &nbsp;</h5>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.TextBoxFor(a => a.EMPLEADOS.EMP_APELLIDO_NOMBRE, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "2", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">EMPLEADO</label>
@@ -152,11 +171,11 @@
                                             @Html.TextBoxFor(a => a.CLIENTES.CLI_LOCALIDAD, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "4", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">LOCALIDAD DEL CLIENTE</label>
                                         </div>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextBoxFor(a => a.FECHAS.FEC_FECHA, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6", Value = String.Format("{0:dd/MM/yyyy}", Model.FECHAS.FEC_FECHA), disabled = "disabled", @Style = "color:dimgrey" })
-											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">FECHA DE INGRESO</label>
-										</div>
-										<h5 class="text-condensedLight">  &nbsp;</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.FECHAS.FEC_FECHA, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "6", Value = String.Format("{0:dd/MM/yyyy}", Model.FECHAS.FEC_FECHA), disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">FECHA DE INGRESO</label>
+                                        </div>
+                                        <h5 class="text-condensedLight">  &nbsp;</h5>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.TextBoxFor(a => a.TIPO_VEHICULOS.TV_DESCRIPCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "8", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">TIPO DE VEHÍCULO</label>
@@ -173,54 +192,54 @@
                                             @Html.TextBoxFor(a => a.VEH_KILOMETROS, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "14", Value = String.Format("{0:n0}", Model.VEH_KILOMETROS), disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">KILÓMETROS</label>
                                         </div>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextBoxFor(a => a.TIPO_COMBUSTIBLES.TCOM_DESCRIPCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "16", disabled = "disabled", @Style = "color:dimgrey" })
-											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">TIPO DE COMBUSTIBLE</label>                                      
-										</div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.TIPO_COMBUSTIBLES.TCOM_DESCRIPCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "16", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">TIPO DE COMBUSTIBLE</label>
+                                        </div>
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                                             @Html.TextBoxFor(a => a.MONEDAS.MON_DESCRIPCION, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "18", disabled = "disabled", @Style = "color:dimgrey" })
                                             <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">MONEDA</label>
                                         </div>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextBoxFor(a => a.VEH_PRECIO_INGRESO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "20", Value = String.Format("{0:C0}", Model.VEH_PRECIO_INGRESO), disabled = "disabled", @Style = "color:dimgrey" })
-											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PRECIO DE INGRESO</label>
-										</div>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEH_PRECIO_INGRESO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "20", Value = String.Format("{0:C0}", Model.VEH_PRECIO_INGRESO), disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">PRECIO DE INGRESO</label>
+                                        </div>
 
 
-										<h5 class="text-condensedLight">  &nbsp;</h5>
-										<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-											@Html.TextBoxFor(a => a.VEH_STEREO_CODIGO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "22", disabled = "disabled", @Style = "color:dimgrey" })
-											<label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CÓDIGO DE ESTEREO</label>
-										</div>
-										<h5 class="text-condensedLight" style="color: #2e6da4">&nbsp;</h5>
-										<br />
-									</div>
-								</div>
+                                        <h5 class="text-condensedLight">  &nbsp;</h5>
+                                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                            @Html.TextBoxFor(a => a.VEH_STEREO_CODIGO, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "22", disabled = "disabled", @Style = "color:dimgrey" })
+                                            <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">CÓDIGO DE ESTEREO</label>
+                                        </div>
+                                        <h5 class="text-condensedLight" style="color: #2e6da4">&nbsp;</h5>
+                                        <br />
+                                    </div>
+                                </div>
 
-								<p class="text-center">
-									<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Edit" id="btn-EditVehic">
-										<i class="zmdi zmdi-edit" style="display: inline-block; font: normal normal normal 14px/1"></i>
-									</button>
-									<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Delete" id="btn-DeleteVehic">
-										<i class="zmdi zmdi-delete"></i>
-									</button>
-									<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Reserve" id="btn-ReserveVehic">
-										<i class="zmdi zmdi-label"></i>
-									</button>
-									<button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Sell" id="btn-SellVehic">
-										<i class="zmdi zmdi-shopping-cart" ></i>
-									</button>
-									<div class="mdl-tooltip" for="btn-EditVehic">Editar Vehículo</div>
-									<div class="mdl-tooltip" for="btn-DeleteVehic">Eliminar Vehículo</div>
-									<div class="mdl-tooltip" for="btn-ReserveVehic">Reservar Vehículo</div>
-									<div class="mdl-tooltip" for="btn-SellVehic">Vender Vehículo</div>
-								</p>
-								
-							}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                <p class="text-center">
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Edit" id="btn-EditVehic">
+                                        <i class="zmdi zmdi-edit" style="display: inline-block; font: normal normal normal 14px/1"></i>
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Delete" id="btn-DeleteVehic">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Reserve" id="btn-ReserveVehic">
+                                        <i class="zmdi zmdi-label"></i>
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" name="Action" value="Sell" id="btn-SellVehic">
+                                        <i class="zmdi zmdi-shopping-cart"></i>
+                                    </button>
+                                    <div class="mdl-tooltip" for="btn-EditVehic">Editar Vehículo</div>
+                                    <div class="mdl-tooltip" for="btn-DeleteVehic">Eliminar Vehículo</div>
+                                    <div class="mdl-tooltip" for="btn-ReserveVehic">Reservar Vehículo</div>
+                                    <div class="mdl-tooltip" for="btn-SellVehic">Vender Vehículo</div>
+                                </p>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

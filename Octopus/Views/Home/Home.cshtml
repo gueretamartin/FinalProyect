@@ -13,21 +13,22 @@
         <h3 class="text-center tittles">ESTADÍSTICAS</h3>
         <!-- Tiles -->
         @foreach (var item in Model)
-        {
-           <a href="@Url.Action("List", @item.Tipo)" class="full-width">
-            <article class="full-width tile">
-                <div class="tile-text">
-                    <span class="text-condensedLight">
-                        @Html.DisplayFor(modelItem => item.CANTIDAD)
-                        <br>
-                        <small>
-                            @Html.DisplayFor(modelItem => item.Tipo)
-                        </small>
-                    </span>
-                </div>
-                <i class="zmdi zmdi-account tile-icon"></i>
-            </article>
-           </a>
-        }
+{
+    <a href="@Url.Action("List", @item.Tipo)" class="full-width" >
+        <article class="full-width tile">
+            <div class="mdl-tooltip" for=@item.Tipo>@item.Tipo</div>
+            <div class="tile-text" id=@item.Tipo>
+                <span class="text-condensedLight">
+                    @Html.DisplayFor(modelItem => item.CANTIDAD)
+                    <br>
+                    <small>
+                        @Html.DisplayFor(modelItem => item.Tipo)
+                    </small>
+                </span>
+            </div>
+            <i class="zmdi zmdi-account tile-icon"></i>
+        </article>
+    </a>
+}
     </section>
 </section>
