@@ -9,8 +9,8 @@
 <section class="full-width pageContent">
     <section id="help">
         <div class="text-right" style="padding-top:15px; padding-right:15px;">
-            <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
-
+            <button id="btn-help-top" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+            <div class="mdl-tooltip" for="btn-help-top">Ayuda</div>
         </div>
     </section>
     <div class="mdl-tabs__tab-bar">
@@ -40,8 +40,8 @@
             @using (Html.BeginForm("List", "Reservas", FormMethod.Get))
             {
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                    <button id="btn-exit" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
-
+                    <button id="btn-help-search" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
+                    <div class="mdl-tooltip" for="btn-help-search">Ayuda</div>
                     <label class="mdl-button mdl-js-button mdl-button--icon" for="searchReserve" id="btn-searchReserve">
                         <i class="zmdi zmdi-search" onclick=""></i>
                     </label>
@@ -62,6 +62,7 @@
                             <th style="text-align: left"><b>EMPLEADO</b></th>
                             <th style="text-align: left"><b>VENCIMIENTO</b></th>
                             <th style="text-align: left"> <button id="btn-exit" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
+                            <div class="mdl-tooltip" for="btn-exit">Ayuda</div>
                         </tr>
                     </thead>
                     <tbody>

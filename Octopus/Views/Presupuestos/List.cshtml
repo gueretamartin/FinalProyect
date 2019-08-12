@@ -18,15 +18,17 @@
 <section class="full-width pageContent">
     <section id="help">
         <div class="text-right" style="padding-top:15px; padding-right:15px;">
-            <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
-           
+            <button id="btn-help-top" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+            <div class="mdl-tooltip" for="btn-help-top">Ayuda</div>
         </div>
     </section>
 
     <div class="mdl-tabs__tab-bar">
-        <a href="@Url.Action("Create", "Presupuestos")" class="mdl-tabs__tab" >NUEVO</a>
-        <a  class="mdl-tabs__tab" id="btn-Listar" style="color: #2e6da4; font-weight: bold">LISTA</a>
-        <div class="mdl-tooltip" for="btn-Listar">Listar Vehículos</div>
+        <a href="@Url.Action("Create", "Presupuestos")" class="mdl-tabs__tab" id="btn-Nuevo">NUEVO</a>
+        <div class="mdl-tooltip" for="btn-Nuevo">Nuevo Presupuesto</div>
+        <a class="mdl-tabs__tab" id="btn-Listar" style="color: #2e6da4; font-weight: bold">LISTA</a>
+
+        <div class="mdl-tooltip" for="btn-ListarI">Listar Vehículos</div>
     </div>
 
     <section class="full-width header-well">
@@ -50,8 +52,9 @@
             {
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
                     
-                    <button id="btn-exit" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
-                   
+                    <button id="btn-help-search" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
+                    <div class="mdl-tooltip" for="btn-help-search">Ayuda</div>
+
                     <label class="mdl-button mdl-js-button mdl-button--icon" for="searchPresupuesto" id="btn-searchPresupuesto">
                         <i class="zmdi zmdi-search" onclick=""></i>
                     </label>
@@ -73,8 +76,8 @@
                             <th style="text-align: left"><b>AÑO</b></th>
                             <th style="text-align: left"><b>PATENTE</b></th>
                             <th style="text-align: left"><b>VENCIMIENTO</b></th>
-                            <th style="text-align: center"> <button id="btn-exit" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
-
+                            <th style="text-align: center"> <button id="btn-detail" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
+                            <div class="mdl-tooltip" for="btn-detail">Ayuda</div>
 </tr>
                     </thead>
                     <tbody>
@@ -82,7 +85,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td style="text-align: left">@Html.DisplayFor(modelItem => item.CLIENTES.CLI_APELLIDO_NOMBRE)</td>
+                                <td style="text-align: left"><b>@Html.DisplayFor(modelItem => item.CLIENTES.CLI_APELLIDO_NOMBRE)</b></td>
                                 <td style="text-align: left">@Html.DisplayFor(modelItem => item.MARCAS.MAR_DESCRIPCION)</td>
                                 <td style="text-align: left">@Html.DisplayFor(modelItem => item.PRE_MODELO)</td>
                                 <td style="text-align: left">@Html.DisplayFor(modelItem => item.PRE_VERSION)</td>

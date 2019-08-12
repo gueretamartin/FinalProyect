@@ -13,7 +13,8 @@
     <div>
         <div id="help">
             <div class="text-right" style="padding-top:15px; padding-right:15px;">
-                <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+                <button id="btn-help-top" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+                <div class="mdl-tooltip" for="btn-help-top">Ayuda</div>
             </div>
         </div>
         <div class="mdl-tabs__tab-bar">
@@ -54,7 +55,7 @@
 
                                 <div class="mdl-grid">
                                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
-                                        @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1" })
+                                        @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", title = "Sólo se permiten letras (50)" })
                                         <label class="mdl-textfield__label" for="NameAdmin" style="color: #2e6da4">Usuario*</label>
                                     </div>
 
@@ -81,7 +82,8 @@
 
                                 <p class="text-center">
                                     <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-addAdmin" data-toggle="tooltip" data-placement="top" title="Agregar Usuario">
-                                        <i class="zmdi zmdi-account-add"></i>
+                                        <div class="mdl-tooltip" for="btn-addAdmin">Agregar Usuario</div> 
+                                         <i class="zmdi zmdi-account-add"></i>
                                     </button>
                                 </p>
                             }

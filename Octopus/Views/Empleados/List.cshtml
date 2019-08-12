@@ -81,7 +81,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td style="text-align: left">@Html.DisplayFor(modelItem => item.EMP_APELLIDO_NOMBRE)</td>
+                                <td style="text-align: left"><b>@Html.DisplayFor(modelItem => item.EMP_APELLIDO_NOMBRE)</b></td>
                                 <td style="text-align: left">@Html.DisplayFor(modelItem => item.EMP_DNI)</td>
                                 <td style="text-align: left">@Html.DisplayFor(modelItem => item.CARGOS.CARGO_DESC)</td>
                                 <td style="text-align: left">@Html.DisplayFor(modelItem => item.EMP_EMAIL)</td>

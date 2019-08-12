@@ -25,14 +25,18 @@
 
     <section id="help">
         <div class="text-right" style="padding-top:15px; padding-right:15px;">
-            <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+            <button id="btn-help-top" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+            <div class="mdl-tooltip" for="btn-help-top">Ayuda</div>
         </div>
     </section>
 
     <div class="mdl-tabs__tab-bar">
-        <a href="@Url.Action("Create","Usuarios")" class="mdl-tabs__tab">NUEVO</a>
-        <a href="@Url.Action("List","Usuarios")" class="mdl-tabs__tab">LISTA ACTIVOS</a>
-        <a class="mdl-tabs__tab" style="color: #2e6da4; font-weight: bold">LISTA INACTIVOS</a>
+        <a href="@Url.Action("Create","Usuarios")" class="mdl-tabs__tab" id="btn-Nuevo">NUEVO</a>
+        <a href="@Url.Action("List","Usuarios")" class="mdl-tabs__tab" id="lista-a">LISTA ACTIVOS</a>
+        <a class="mdl-tabs__tab" style="color: #2e6da4; font-weight: bold" id="lista-i">LISTA INACTIVOS</a>
+        <div class="mdl-tooltip" for="btn-Nuevo">Nuevo Usuario</div>
+        <div class="mdl-tooltip" for="lista-a">Lista Usuarios Activos</div>
+        <div class="mdl-tooltip" for="lista-i">Lista Usuarios Inactivos</div>
     </div>
 
     <section class="full-width header-well">
@@ -57,8 +61,8 @@
             @using (Html.BeginForm("ListInactivos", "Usuarios", FormMethod.Get))
             {
                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                    <button id="btn-exit" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
-
+                    <button id="btn-help-search" type="button" class="btn btn-info help-search"><i class="zmdi zmdi-pin-help"></i></button>
+                    <div class="mdl-tooltip" for="btn-help-search">Ayuda</div>
                     <label class="mdl-button mdl-js-button mdl-button--icon" for="searchUsuario">
                         <i class="zmdi zmdi-search" onclick="Ocultar()"></i>
                     </label>
@@ -77,7 +81,7 @@
                                 <th style="text-align: left"><b>ROL</b></th>
                                 <th style="text-align: left"><b>EMPLEADO</b></th>
                                 <th style="text-align: center"> <button id="btn-exit" type="button" class="btn btn-info help-detail"><i class="zmdi zmdi-pin-help"></i></button></th>
-
+                                <div class="mdl-tooltip" for="btn-exit">Ayuda</div>
                             </tr>
                         </thead>
                         <tbody>

@@ -86,16 +86,17 @@
 
                                 @using (Html.BeginForm("Acciones", "Vehiculos", new { veh_id = @item.VEH_ID }, FormMethod.Post))
                                 {
-                                    <text>@item.MARCAS.MAR_DESCRIPCION @item.VEH_MODELO</text>
-                                    @Html.AntiForgeryToken()
-                                    @Html.ValidationSummary(true)
-                                    @Html.HiddenFor(i => item.VEH_ID, new { veh_id = @item.VEH_ID })
+                                    <text><b>
+    @item.MARCAS.MAR_DESCRIPCION @item.VEH_MODELO</b></text>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(i => item.VEH_ID, new { veh_id = @item.VEH_ID })
 
 
-                                    <a id="btn-Detail@{@cont}" class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Vehiculos", new { veh_id = item.VEH_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
-                                    <div class="mdl-tooltip" for="btn-Detail@{@cont}">Detalle Vehículo</div>
+    <a id="btn-Detail@{@cont}" class="mdl-list__item-secondary-action" href="@Url.Action("Details", "Vehiculos", new { veh_id = item.VEH_ID })"><i class="zmdi zmdi-more" style="color: #2e6da4"></i></a>
+    <div class="mdl-tooltip" for="btn-Detail@{@cont}">Detalle Vehículo</div>
                                 }
-                            </div>
+</div>
                         </div>
                     }
                 </div>

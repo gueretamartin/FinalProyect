@@ -12,16 +12,18 @@
 <section class="full-width pageContent">
     <div id="help">
         <div class="text-right" style="padding-top:15px; padding-right:15px;">
-            <button id="btn-exit" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
-
+            <button id="btn-help-top" type="button" class="btn btn-info help"><i class="zmdi zmdi-pin-help"></i> Ayuda</button>
+            <div class="mdl-tooltip" for="btn-help-top">Ayuda</div>
         </div>
     </div>
     <div>
         <div class="mdl-tabs__tab-bar">
-            <a href="@Url.Action("Create","Usuarios")" class="mdl-tabs__tab">NUEVO</a>
-            <a href="@Url.Action("List", "Usuarios")" class="mdl-tabs__tab" id="btn-Listar">LISTA ACTIVOS</a>
-            <a href="@Url.Action("ListInactivos", "Usuarios")" class="mdl-tabs__tab" id="btn-Listar">LISTA INACTIVOS</a>
-
+            <a href="@Url.Action("Create","Usuarios")" class="mdl-tabs__tab" id="btn-Nuevo">NUEVO</a>
+            <a href="@Url.Action("List", "Usuarios")" class="mdl-tabs__tab" id="lista-a">LISTA ACTIVOS</a>
+            <a href="@Url.Action("ListInactivos", "Usuarios")" class="mdl-tabs__tab"  id="lista-i">LISTA INACTIVOS</a>
+            <div class="mdl-tooltip" for="btn-Nuevo">Nuevo Usuario</div>
+            <div class="mdl-tooltip" for="lista-a">Lista Usuarios Activos</div>
+            <div class="mdl-tooltip" for="lista-i">Lista Usuarios Inactivos</div>
         </div>
         <div class="mdl-tabs__panel is-active" id="tabNewAdmin">
             <div class="mdl-grid">
@@ -55,7 +57,7 @@
 
                                     <div class="mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
                                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--4-col-phone mdl-cell--8-col-tablet mdl-cell--5-col-desktop">
-                                            @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", @readonly = "true" })
+                                            @Html.TextBoxFor(a => a.Usuario, new { @class = "mdl-textfield__input", @typeof = "text", tabindex = "1", @readonly = "true", title = "Sólo se permiten letras (50)" })
                                             <label class="mdl-textfield__label" style="color: #2e6da4">Usuario</label>
                                         </div>
 
@@ -86,7 +88,8 @@
                                 </div>
                                 <p class="text-center">
                                     <button name="Action" value="Edit" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored bg-primary" id="btn-editClient" data-toggle="tooltip" data-placement="top" title="Guardar Cambios">
-                                        <i class="zmdi zmdi-save"></i>
+                                        <div class="mdl-tooltip" for="btn-editClient">Guardar Cambios</div> 
+                                       <i class="zmdi zmdi-save"></i>
                                     </button>&nbsp;&nbsp;&nbsp;&nbsp;
                                 </p>
                             }
